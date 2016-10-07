@@ -1,0 +1,22 @@
+<h1>Users#new</h1>
+
+<div class="row">
+  <%= form_for(@user) do |f| %>
+      <!--<= form_messages_for @user %>-->
+      <!--TODO form helper for error messages-->
+      <% @user.errors.full_messages.reject(&:blank?).each do |message| %>
+        <%= message %>
+      <% end %>
+      <div class="row form-group">
+        <div>
+          <%= f.label t('user.login') %>
+          <%= f.text_field :login, class: 'form-control' %>
+        </div>
+        <div>
+          <%= f.label t('user.password') %>
+          <%= f.text_field :password, class: 'form-control' %>
+        </div>
+      </div>
+  <%= f.submit t('user.create'), class: "btn btn-primary" %>
+  <% end %>
+</div>
