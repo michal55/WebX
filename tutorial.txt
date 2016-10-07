@@ -1,8 +1,10 @@
 Skript pre instalaciu DB:
 <doplnit>
 
-Otvorenie DB v konzole
+Otvorenie DB v konzole (nasledne si vytvorte usera 'webx' ktory bude db obsluhovat):
 sudo -u postgres psql
+
+postgres=# CREATE USER webx SUPERUSER PASSWORD 'webx';
 
 Vytvorenie DB (dev a test):
 rake db:create
