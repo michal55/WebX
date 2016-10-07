@@ -1,0 +1,20 @@
+Skript pre instalaciu DB:
+<doplnit>
+
+Otvorenie DB v konzole
+sudo -u postgres psql
+
+Vytvorenie DB (dev a test):
+rake db:create
+
+Nastavenie DB:
+rake db:setup
+
+Spustenie migracii:
+rake db:migrate
+
+Spustenie rails konzoly (vhodne pre skusanie prikazov napr slectov a pod):
+rails console
+
+Web pre tutorial:
+https://www.railstutorial.org/
