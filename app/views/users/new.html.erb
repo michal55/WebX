@@ -1,5 +1,6 @@
-<h1>Users#new</h1>
+<h1>Registracia</h1>
 
+<div class="container">
 <div class="row">
   <%= form_for(@user) do |f| %>
       <!--<= form_messages_for @user %>-->
@@ -7,16 +8,20 @@
       <% @user.errors.full_messages.reject(&:blank?).each do |message| %>
         <%= message %>
       <% end %>
+
+      <div class="col-md-6">
       <div class="row form-group">
         <div>
-          <%= f.label t('user.login') %>
+          <%= f.label 'login' %>
           <%= f.text_field :login, class: 'form-control' %>
         </div>
         <div>
-          <%= f.label t('user.password') %>
+          <%= f.label 'password' %>
           <%= f.text_field :password, class: 'form-control' %>
         </div>
       </div>
-  <%= f.submit t('user.create'), class: "btn btn-primary" %>
+  <%= f.submit 'Submit', class: "btn btn-primary" %>
+      </div>
   <% end %>
+</div>
 </div>
