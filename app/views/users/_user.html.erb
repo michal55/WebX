@@ -1,0 +1,9 @@
+<div class="col-md-4">
+  <p><%= link_to(user.email, user_path(user)) %></p>
+</div>
+<div class="col-md-4">
+  <p><%= user.role %></p>
+</div>
+<div class="col-md-4">
+  <%= user.created_at.to_date %>
+</div>
