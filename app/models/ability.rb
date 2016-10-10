@@ -1,6 +1,7 @@
 class Ability
   include CanCan::Ability
   def initialize(user)
+    user ||= User.new(:role => 'user')
     case user.role.to_sym
       # non-admin can only :show himself
       when :admin

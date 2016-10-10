@@ -7,7 +7,6 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
-    # puts current_user.role if current_user.role.to_sym
   end
 
   def create
