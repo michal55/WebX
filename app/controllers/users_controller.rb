@@ -1,10 +1,13 @@
 class UsersController < ApplicationController
+  load_and_authorize_resource :unless => :devise_controller?
+
   def new
     @user = User.new
   end
 
   def index
     @users = User.all
+    # puts current_user.role if current_user.role.to_sym
   end
 
   def create
