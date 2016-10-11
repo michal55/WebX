@@ -1,6 +1,8 @@
 Instalacia rbenv:
 https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-14-04
 
+gem install rails -v 4.2.6
+
 Skript pre instalaciu DB:
 <doplnit>
 
