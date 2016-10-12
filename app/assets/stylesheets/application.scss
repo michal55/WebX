@@ -66,6 +66,14 @@ $secondary-color: #FF005E;
 			color: $secondary-color;
 		}
 	}
+
+	.shared-link {
+		display: inline-block;
+	}
+
+	.form-control {
+		margin-bottom: 20px;
+	}
 }
 
 body {
