@@ -1,10 +1,15 @@
-</div> <nav class="navbar navbar-default">
+<nav class="navbar navbar-default">
   <div class="container">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">WebX</a>
     </div>
-    <ul class="nav navbar-nav">
-      <li><%= link_to 'Home', root_path %></li>
+    <ul class="nav navbar-nav navbar-left">
+      <li><a href="/Webx">Home</a></li>
+      <!--<li><a href="/users">Administracia</a></li>-->
+      <li><%= link_to('Administracia', users_path) if can? :manage, User %></li>
+
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
       <% if user_signed_in? %>
           <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
           <li><%= link_to('Account', user_path(current_user)) %></li>
@@ -12,9 +17,6 @@
           <li><%= link_to('Log in', new_user_session_path) %></li>
           <li><%= link_to('Register', new_user_registration_path) %></li>
       <% end %>
-      <!--<li><a href="/users">Administracia</a></li>-->
-      <li><%= link_to('Administracia', users_path) if can? :manage, User %></li>
-
     </ul>
   </div>
 </nav>
