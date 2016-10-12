@@ -42,13 +42,4 @@ Rails.application.configure do
   # config.action_mailer.perform_deliveries = true
   config.action_mailer.default_url_options = { host: 'http://localhost', port: 3000 }
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-      user_name:  'tim.16.fiit.1617@gmail.com',
-      password:   '12345678',
-      domain:     'localhost:3000',
-      address:    'smtp.gmail.com',
-      port:       '587',
-      authentication: 'plain'
-  }
-
 end
