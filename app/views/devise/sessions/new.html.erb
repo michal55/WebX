@@ -4,11 +4,8 @@
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
 
-      <% flash.each do |key, value|  %>
-          <div class="<%= flash_class(key) %>">
-            <%= value %>
-          </div>
-      <% end  %>
+      <%= alert if alert %>
+
 
       <div class="field">
         <%= f.label :email %><br />
