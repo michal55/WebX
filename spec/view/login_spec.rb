@@ -3,6 +3,8 @@ require 'rails_helper'
 describe 'the login process', :type => :feature do
   it 'logs in valid user' do
     user = create(:user)
+    user.confirm!
+    expect(user.confirmed?).to eq true
     visit 'login'
     fill_in 'user[email]', with: user.email
     fill_in 'user[password]', with: user.password
@@ -38,6 +40,19 @@ describe 'the login process', :type => :feature do
 
     # Expect admin link to be present
     expect(page).to have_link('Administracia', href: '/users')
+
+  end
+
+  it 'logs in unconfirmed user'do
+      user = create(:user)
+      expect(user.confirmed?).to eq false
+
+      visit 'login'
+      fill_in 'user[email]', with: user.email
+      fill_in 'user[password]', with: user.password
+      click_button 'Log in'
+
+      expect(page).to have_link('Logout', href: '/logout')#, href: destroy_user_session_path)
 
   end
 end
