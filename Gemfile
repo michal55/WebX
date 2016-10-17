@@ -33,6 +33,13 @@ gem 'bootstrap-sass', '~> 3.3.6'
 
 gem 'devise', '~> 3.4.1'
 
+# Test suite related gems
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'capybara'
+end
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
