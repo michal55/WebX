@@ -29,6 +29,8 @@ describe 'the login process', :type => :feature do
 
   it 'logs in valid admin' do
     admin = create(:admin)
+    admin.role = 'admin'
+    admin.save!
     visit 'login'
     fill_in 'user[email]', with: admin.email
     fill_in 'user[password]', with: admin.password
@@ -36,5 +38,6 @@ describe 'the login process', :type => :feature do
 
     # Expect admin link to be present
     expect(page).to have_link('Administracia', href: '/users')
+
   end
 end

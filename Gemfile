@@ -35,8 +35,9 @@ gem 'devise', '~> 3.4.1'
 
 # Test suite related gems
 group :development, :test do
-  gem 'rspec-rails'
-  gem 'factory_girl_rails'
+  gem "rspec", "~> 3.0"
+  gem 'rspec-rails', '~> 3.5'
+  gem 'factory_girl_rails', '~> 4.5'
   gem 'capybara'
 end
 
