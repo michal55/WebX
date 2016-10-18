@@ -6,14 +6,17 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
+<% if user_signed_in? %>
 <body>
-
+<% else %>
+<body class="intro-page">
+<% end %>
 <%= render 'layouts/header' %>
-<%= yield %>
+	<div class="row main-content">
+		<div class="col-md-12">
+ 			<%= yield %>
+ 		</div>
+	</div>
 <%= render 'layouts/footer' %>
-
-
-
-
 </body>
 </html>
