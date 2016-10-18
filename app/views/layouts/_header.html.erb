@@ -4,7 +4,7 @@
       <a class="navbar-brand" href="#">WebX</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="/Webx">Home</a></li>
+      <li><%= link_to 'Home', root_path %></li>
       <% if user_signed_in? %>
           <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
           <li><%= link_to('Account', user_path(current_user)) %></li>
