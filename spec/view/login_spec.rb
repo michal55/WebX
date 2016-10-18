@@ -26,8 +26,8 @@ describe 'the login process', :type => :feature do
     fill_in 'user[password]', with: 'invalid_' + user.password
     click_button 'Log in'
 
-    # Expect log in button to be still present
-    expect(page).to have_link('Log in', href: new_user_session_path)
+    # Expect log in to be still active
+    expect(page.current_path).to eq new_user_session_path
   end
 
   it 'logs in valid admin' do
@@ -40,7 +40,7 @@ describe 'the login process', :type => :feature do
     click_button 'Log in'
 
     # Expect admin link to be present
-    expect(page).to have_link('Administracia', href:  users_path )
+    expect(page).to have_link('Administration', href:  users_path )
 
   end
 
