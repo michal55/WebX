@@ -13,12 +13,12 @@
 
       <div class="field">
         <%= f.label :email %>
-        <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+        <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'email' %>
       </div>
 
       <div class="field">
         <%= f.label :password %>
-        <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+        <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'password' %>
       </div>
 
       <% if devise_mapping.rememberable? -%>
@@ -28,9 +28,10 @@
         </div>
       <% end -%>
 
-      <div class="actions">
+      <div class="login-group">
         <%= f.submit "Log in", class: "btn btn-primary" %>
-        <%= render "devise/shared/links" %>
+        <%= link_to "Sign up", new_registration_path(resource_name), class: 'btn' %>
       </div>
+      <%= render "devise/shared/links" %>
     <% end %>
 </div>
