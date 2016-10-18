@@ -1,39 +1,49 @@
 <div class="container">
-    <h1>Email: <%= @user.email %></h1>
-    <p>Datum registracie <%= @user.created_at.to_date %></p>
-    <p>Rola: <%= @user.role %></p>
-    <% if can? :manage, User %>
-      <%= form_for(@user, method: :patch) do |f| %>
-          <div class="form-group">
-            <%= f.label(:id) %>
-            <%= f.text_field(:id, class: 'form-control', disabled: true) %>
-          </div>
+    <div class="col-md-6">
+        <% if can? :manage, User %>
+          <%= form_for(@user, method: :patch) do |f| %>
 
-          <div class="form-group">
-            <%= f.label(:email) %>
-            <%= f.text_field(:email, class: 'form-control',disabled: true) %>
-          </div>
+              <div class="form-group">
+                <%= f.label(:id) %>
+                <%= f.text_field(:id, class: 'form-control', disabled: true) %>
+              </div>
 
-          <div class="form-group">
-            <%= f.label(:sign_in_count) %>
-            <%= f.text_field(:sign_in_count, class: 'form-control', disabled: true) %>
-          </div>
+              <div class="form-group">
+                <%= f.label(:email) %>
+                <%= f.text_field(:email, class: 'form-control',disabled: true) %>
+              </div>
 
-          <div class="form-group">
-            <%= f.label(:last_sign_in_at) %>
-            <%= f.text_field(:last_sign_in_at, class: 'form-control', disabled: true) %>
-          </div>
+              <div class="form-group">
+                <%= f.label(:sign_in_count) %>
+                <%= f.text_field(:sign_in_count, class: 'form-control', disabled: true) %>
+              </div>
 
-          <div class="form-group">
-            <%= f.label(:role) %>
-            <%= f.text_field(:role, class: 'form-control') %>
-          </div>
+              <div class="form-group">
+                <%= f.label('Registered') %>
+                <%= f.date_field(:created_at, class: 'form-control', disabled: true) %>
+              </div>
 
-          <div class="form-group">
-            <%= f.submit('Save', class: 'btn btn-primary') %>
-            <%= link_to('Back',  users_path , class: 'btn btn-default') %>
-          </div>
+              <div class="form-group">
+                <%= f.label(:last_sign_in_at) %>
+                <%= f.datetime_local_field(:last_sign_in_at, class: 'form-control', disabled: true) %>
+              </div>
 
-      <% end %>
-    <% end%>
+              <div class="form-group">
+                <%= f.label(:confirmed_at) %>
+                <%= f.date_field(:confirmed_at, class: 'form-control', disabled: true) %>
+              </div>
+
+              <div class="form-group">
+                <%= f.label(:role) %>
+                <%= f.select :role, ['user', 'admin'], {}, class: 'form-control' %>
+              </div>
+
+              <div class="form-group">
+                <%= f.submit('Save', class: 'btn btn-primary') %>
+                <%= link_to('Back',  users_path , class: 'btn btn-default') %>
+              </div>
+
+          <% end %>
+        <% end%>
+    </div>
 </div>
