@@ -22,7 +22,7 @@
   <div class="col-md-2">
     <div class="row">
       <h2>
-        <%= link_to 'Settings', edit_user_registration_path(@user) if @user == current_user %>
+        <%= link_to t('users.settings'), edit_user_registration_path(@user) if @user == current_user %>
       </h2>
     </div>
   </div>
