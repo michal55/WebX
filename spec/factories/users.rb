@@ -5,4 +5,8 @@ FactoryGirl.define do
     role :user
   end
 
+  factory :other_user, class: User do
+    email 'test1@example.com'
+    password 'password'
+  end
 end

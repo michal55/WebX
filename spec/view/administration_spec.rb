@@ -7,23 +7,19 @@ describe 'manage users', :type => :feature do
 
     user = create(:user)
 
-    visit  new_user_registration_path
-    fill_in 'user[email]', with: 'xyz@xyz.xy'
-    fill_in 'user[password]', with: '12345678'
-    fill_in 'user[password_confirmation]', with: '12345678'
-    click_button 'Sign up'
-
-    admin = User.find_by(:email => 'xyz@xyz.xy')
+    admin = create(:other_user)
     admin.role = 'admin'
-    admin.save!
+    admin.save
+
+    visit new_user_session_path
+    fill_in 'user[email]', with: admin.email
+    fill_in 'user[password]', with: admin.password
+    click_button 'Log in'
 
     visit users_path
-
-    click_link user.email
+    find_link('edit', href: user_path(user)).click
     expect(page).to have_field('Email', with: user.email, disabled: true)
-
     page.select 'admin', from: 'Role'
-
     click_button 'Save'
 
     expect(User.find_by_id(user.id).role).to eq 'admin'

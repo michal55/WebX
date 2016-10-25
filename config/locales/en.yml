@@ -27,6 +27,7 @@ en:
 
   users:
     header: "All users"
+    settings: "Settings"
     table_email: "E-mail"
     table_role: "Role"
     table_date: "Date of registration"
@@ -52,10 +53,11 @@ en:
       minimum: " characters minimum"
       submit: "Sign up"
     login:
+      email_placeholder: 'email'
+      header: "Log in"
       info1: "got passion for crawling?"
       info2: "welcome back"
-      header: "Log in"
-      email_placeholder: 'email'
+      logout: "Logout"
       password_placeholder: 'password'
       submit: "Log in"
     unlock:
@@ -79,3 +81,5 @@ en:
       body1: "Your account has been locked due to an excessive number of unsuccessful sign in attempts."
       body2: "Click the link below to unlock your account:"
 
+  projects:
+    index: "Projects"

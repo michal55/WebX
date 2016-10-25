@@ -19,7 +19,10 @@ class UsersController < ApplicationController
 
     @user.save!
     redirect_to(users_path)
+  end
 
+  def profile
+    @user = User.find(params[:id])
   end
 
 end
