@@ -4,16 +4,16 @@
       <%= link_to('WebX', root_path, class: 'navbar-brand') %>
     </div>
     <ul class="nav navbar-nav navbar-left">
-      <li><%= link_to('Administration', users_path) if can? :manage, User %></li>
+      <li><%= link_to(t('layout.administration'), users_path) if can? :manage, User %></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <% if user_signed_in? %>
           <li><%= link_to(destroy_user_session_path, :method => :delete) do %>
-            <i class="glyphicon glyphicon-log-out"></i> Logout
+            <i class="glyphicon glyphicon-log-out"></i> <%=t('layout.logout')%>
             <% end %>
           </li>
           <li><%= link_to(user_path(current_user)) do %>
-            <i class="glyphicon glyphicon-user"></i> Account
+            <i class="glyphicon glyphicon-user"></i> <%=t('layout.account')%>
             <% end %>
           </li>
       <% end %>
