@@ -9,10 +9,10 @@
         <%= f.email_field :email, autofocus: true, class: 'form-control' %>
 
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-            <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+            <div><%= t('devise.confirmations.waiting_for_confirmation')%><%= resource.unconfirmed_email %></div>
         <% end %>
 
-        <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+        <%= f.label :password %> <i>(<%= t('devise.passwords.no_change') %>)</i><br />
         <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
 
         <%= f.label :password_confirmation %><br />

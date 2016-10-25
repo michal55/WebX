@@ -81,3 +81,5 @@ en:
       body1: "Your account has been locked due to an excessive number of unsuccessful sign in attempts."
       body2: "Click the link below to unlock your account:"
 
+  projects:
+    index: "Projects"
