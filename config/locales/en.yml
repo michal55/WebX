@@ -20,4 +20,62 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  layout:
+    administration: 'Administration'
+    logout: "Logout"
+    account: "Account"
+
+  users:
+    header: "All users"
+    table_email: "E-mail"
+    table_role: "Role"
+    table_date: "Date of registration"
+
+  auth:
+    reset:
+      header: "Resend confirmation instructions"
+    change:
+      header:  "Change your password"
+      new:     "New password"
+      confirm: "Confirm new password"
+      submit:  "Change my password"
+    forgot:
+      header:  "Forgot your password?"
+      submit:  "Send me reset password instructions"
+    register:
+      info1: "able to discover?"
+      info2: "yes we are"
+      header: "Sign up"
+      email_placeholder: 'email'
+      password_placeholder: 'password'
+      retype_placeholder: 'retype password'
+      minimum: " characters minimum"
+      submit: "Sign up"
+    login:
+      info1: "got passion for crawling?"
+      info2: "welcome back"
+      header: "Log in"
+      email_placeholder: 'email'
+      password_placeholder: 'password'
+      submit: "Log in"
+    unlock:
+      did_not: "Didn't receive unlock instructions?"
+      header: "Resend unlock instructions"
+      submit: "Resend unlock instructions"
+    confirm:
+      did_not:  "Didn't receive confirmation instructions?"
+
+  email:
+    normal:
+      header: 'Welcome'
+      body:   'You can confirm your account email through the link below:'
+    reset:
+      header: 'Hello'
+      body1: 'Someone has requested a link to change your password. You can do this through the link below.'
+      body2: "If you didn't request this, please ignore this email."
+      body3: "Your password won't change until you access the link above and create a new one."
+    locked:
+      header: 'Hello'
+      body1: "Your account has been locked due to an excessive number of unsuccessful sign in attempts."
+      body2: "Click the link below to unlock your account:"
+

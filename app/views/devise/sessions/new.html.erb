@@ -1,9 +1,9 @@
 <div class="sign-in-label">
-  <span>got passion for crawling?</span>
-  <span class="phrase">welcome back</span>
+  <span><%=t('auth.login.info1')%></span>
+  <span class="phrase"><%=t('auth.login.info2')%></span>
 </div>
 <div class="container col-md-offset-4 col-md-4 login-form">
-    <h2>Log in</h2>
+    <h2><%=t('auth.login.header')%></h2>
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
@@ -13,12 +13,12 @@
 
       <div class="field">
         <%= f.label :email %>
-        <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'email' %>
+        <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: t('auth.register.email_placeholder') %>
       </div>
 
       <div class="field">
         <%= f.label :password %>
-        <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'password' %>
+        <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: t('auth.register.password_placeholder') %>
       </div>
 
       <% if devise_mapping.rememberable? -%>
@@ -29,8 +29,8 @@
       <% end -%>
 
       <div class="login-group">
-        <%= f.submit "Log in", class: "btn btn-primary" %>
-        <%= link_to "Sign up", new_registration_path(resource_name), class: 'btn' %>
+        <%= f.submit t('auth.login.submit'), class: "btn btn-primary" %>
+        <%= link_to t('auth.register.header'), new_registration_path(resource_name), class: 'btn' %>
       </div>
       <%= render "devise/shared/links" %>
     <% end %>
