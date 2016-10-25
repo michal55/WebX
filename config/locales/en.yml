@@ -83,3 +83,11 @@ en:
 
   projects:
     index: "Projects"
+    new: "Create new project"
+    edit: "Edit project"
+
+  buttons:
+    delete: "Delete"
+    edit: "Edit"
+    create: "Create"
+    submit: "Save"
