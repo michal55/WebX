@@ -10,7 +10,7 @@ set :repo_url, 'https://server-deployer:gZdsjkR8EePxvmQ@github.com/michal55/WebX
 set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/var/www/webx'
-set :rbenv_ruby, '2.2.3'
+set :rbenv_ruby, '2.3.1'
 # Default value for :scm is :git
 # set :scm, :git
 
