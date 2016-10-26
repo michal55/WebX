@@ -1,10 +1,10 @@
 <nav class="navbar navbar-default">
   <div class="container">
     <div class="navbar-header">
-      <%= link_to('WebX', root_path, class: 'navbar-brand') %>
+      <%= link_to 'WebX', root_path, class: 'navbar-brand' %>
     </div>
     <ul class="nav navbar-nav navbar-left">
-      <li><%= link_to(t('layout.administration'), users_path) if can? :manage, User %></li>
+      <li><%= link_to t('layout.administration'), users_path if can? :manage, User %></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <% if user_signed_in? %>

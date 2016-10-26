@@ -1,21 +1,18 @@
 <div class="container">
   <div class="col-md-4">
     <div class="row">
-      <h2>Insert selfie here</h2>
-    </div>
-    <div class="row">
-      <h2>Name</h2>
-      <%= @user.name %>
-    </div>
-
-    <div class="row">
-      <h2>Surname</h2>
-      <%= @user.surname %>
-    </div>
-
-    <div class="row">
-      <h2><%= t('users.table_email') %></h2>
-      <%= @user.email %>
+      <div class="col-md-12">
+        <h2><%= @user.name %></h2>
+      </div>
+      <div class="col-md-12">
+        <h2><%= @user.surname %></h2>
+      </div>
+      <div class="col-md-12">
+        <h3><%= @user.email %></h3>
+      </div>
+      <div class="col-md-12">
+        <p>Joined: <%= @user.created_at.strftime("%d/%m/%Y") %></p>
+      </div>
     </div>
   </div>
 
