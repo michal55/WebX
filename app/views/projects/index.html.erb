@@ -1,6 +1,10 @@
 <%= link_to(t('projects.new'), new_project_path )%>
 <ol>
 <% @projects.each do |p| %>
-  <li><%=p.name%><%=link_to(t('buttons.edit'), edit_project_path(p.id) )%></li>
+ 	<li>
+	  <%=p.name%>
+	  <%=link_to(t('buttons.edit'), edit_project_path(p.id) )%>
+	  <%=link_to(t('scripts.index'), project_scripts_path(p.id) )%>
+	</li>
 <% end%>
 </ol>

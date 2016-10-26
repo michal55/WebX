@@ -1,6 +1,5 @@
 class ProjectsController < ApplicationController
 
-
   def index
     @projects = Project.where(user_id: current_user.id)
   end
@@ -18,10 +17,6 @@ class ProjectsController < ApplicationController
 
   def edit
     @project = Project.find(params[:id])
-  end
-
-  def show
-
   end
 
   def update

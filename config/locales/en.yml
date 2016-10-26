@@ -86,6 +86,11 @@ en:
     new: "Create new project"
     edit: "Edit project"
 
+  scripts:
+    index: "scripts"
+    new: "Create new script"
+    edit: "Edit script"
+
   buttons:
     delete: "Delete"
     edit: "Edit"
