@@ -1,0 +1,35 @@
+language: ruby
+rvm:
+- 2.3.1
+env:
+  global:
+  - RAILS_VERSION='4.2.6'
+  - PGPORT=5433
+  - PGHOST=localhost
+  - secure: x0qSRONc8+rcpl0cYXUDRt3myxoPsQq+iVCgiBgxgvSP4LgMbTrgRvw2ZoTjizxAQYuoD7NrmU1/eu6Q48hvAbl25pERXVb5uyYLNWJO/dkfjCuKUqJJJOQOV5yDATDOyQy33BavM5J7MVHhm30+rcUPzcvZnxoTJSsfV4bmnMoKQOIRqlQxMKJgWHVPxM6kdGKwndO03NsBRk+plstJoehnABm5D8Dm/wOT+qOWKRKoo7T3iF8XqZh29sx97dqXTDqOwZOv+FjW7doEYOm2srQldg3HgUcjqgcdXt7WiZyf6sMgh2dQd3ykeOa2X78e8+Q+VVvMAQoNSXxgBcSsegWfWnyrlUYmHmyLT/Q42fJt04VEkDeVOEoL1/5X5GXt+a7bxoNQtQG/HSLGNEXyVweZiJGEGUKOZbAk0gIxi4KtAbLaNEsJq5xECanzFrgf4w2dP8Bcnypes19vsmfx/RI3UqdKvxfNHoT/sATGsyPlfRGGyQWpA+TuoB06KyBMed/qQDnIiHXR6wm9bQsKYrB0632yLa/DLUH5g5R4QaB1Wb9UUgOAsrLyw3Y0YVQa2F+LsCDWw+8LWxPVvWKXGyuEhNHay3cTiFMRScB61TZv/gYTkKSn6vOVOBXhDGdmrS5qx6IsuXtgGWh0D4B1N0CkQOql9fg54a2/pJVM/F8=
+branches:
+  only:
+  - master
+  - development
+  - staging
+before_script:
+- sudo cp /etc/postgresql/9.4/main/pg_hba.conf /etc/postgresql/9.5/main/pg_hba.conf
+- sudo /etc/init.d/postgresql restart
+- psql --version
+- psql -c "CREATE USER webx SUPERUSER PASSWORD 'webx';" -U postgres
+- bundle exec rake db:create
+- bundle exec rake db:migrate
+- bundle exec rails --version
+addons:
+  apt:
+    sources:
+    - precise-pgdg-9.5
+    packages:
+    - postgresql-9.5
+    - postgresql-contrib-9.5
+  postgresql: 9.5
+after_success:
+- openssl aes-256-cbc -k $DEPLOY_KEY -in config/deploy_id_rsa_enc_travis -d -a -out
+  config/deploy_id_rsa
+- "[[ $TRAVIS_BRANCH = 'staging' ]] && bundle exec cap staging deploy"
+- "[[ $TRAVIS_BRANCH = 'master' ]] && bundle exec cap master deploy"
