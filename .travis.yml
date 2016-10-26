@@ -11,8 +11,6 @@ branches:
     - development
     - staging
 before_script:
-  - gem install bundler -v 0.13
-  - bundle install
   - psql -c "CREATE USER webx SUPERUSER PASSWORD 'webx';" -U postgres
   - rake db:create
   - rake db:migrate
