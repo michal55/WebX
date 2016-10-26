@@ -16,6 +16,7 @@ before_script:
   - sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main 9.5" >> /etc/apt/sources.list.d/postgresql.list'
   - sudo apt-get update
   - sudo apt-get install postgresql-9.5
+  - psql --version
   - psql -c "CREATE USER webx SUPERUSER PASSWORD 'webx';" -U postgres
   - rake db:create
   - rake db:migrate
