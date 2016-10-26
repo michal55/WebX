@@ -3,17 +3,20 @@
   <span class="phrase"><%=t('auth.register.info2')%></span>
 </div>
 <div class="container col-md-offset-4 col-md-4 login-form">
-    <h2><%=t('auth.register.header')%></h2>
-    <div class="form-group">
+  <h2><%=t('auth.register.header')%></h2>
+  <div class="form-group">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-      <%= devise_error_messages! %>
+        <%= devise_error_messages! %>
 
         <%= f.label :email %>
         <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: t('auth.register.email_placeholder')%>
 
+        <%= f.label :name %>
+        <%= f.text_field :name,  autofocus: true, class: 'form-control', placeholder: t('auth.register.name')%>
+
         <%= f.label :password %>
         <% if @validatable %>
-        <em>(<%= @minimum_password_length %> characters minimum)</em>
+            <em>(<%= @minimum_password_length %> characters minimum)</em>
         <% end %>
         <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: t('auth.register.password_placeholder') %>
 
@@ -21,12 +24,12 @@
         <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', placeholder: t('auth.register.retype_placeholder') %>
 
         <div class="login-group">
-            <%= f.submit t('auth.register.submit'), class: "btn btn-primary" %>
-            <%= link_to t('auth.login.header'), new_session_path(resource_name), class: 'btn' %>
+          <%= f.submit t('auth.register.submit'), class: "btn btn-primary" %>
+          <%= link_to t('auth.login.header'), new_session_path(resource_name), class: 'btn' %>
         </div>
         <%= render "devise/shared/links" %>
     <% end %>
 
-    
-    </div>
+
+  </div>
 </div>
