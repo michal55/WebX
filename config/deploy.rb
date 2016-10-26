@@ -9,7 +9,7 @@ set :repo_url, 'https://server-deployer:gZdsjkR8EePxvmQ@github.com/michal55/WebX
 
 set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/var/www/Webx'
+set :deploy_to, '/var/www/webx'
 set :rbenv_ruby, '2.2.3'
 # Default value for :scm is :git
 # set :scm, :git
@@ -101,9 +101,9 @@ namespace :deploy do
   task :server_setup do
     on roles(:web) do |host|
       within "#{current_path}" do
-        execute "cd #{fetch(:working_dir)}; rm -f /etc/nginx/sites-available/Webx.conf; "\
+        execute "cd #{fetch(:working_dir)}; rm -f /etc/nginx/sites-available/webx.conf; "\
 		"rm -f /etc/init.d/unicorn-#{fetch(:application)}; "\
-		"sed \"s/\\[server_name\\]/`hostname -A`/\" < config/nginx.conf | sed \"s/\\*\\.\\[server_name\\]/\\*\\.`hostname -A`/\"| sed \"s|\\[path_to_root_web\\]|`pwd`|\" > /etc/nginx/sites-available/Webx.conf; "\
+		"sed \"s/\\[server_name\\]/`hostname -A`/\" < config/nginx.conf | sed \"s/\\*\\.\\[server_name\\]/\\*\\.`hostname -A`/\"| sed \"s|\\[path_to_root_web\\]|`pwd`|\" > /etc/nginx/sites-available/webx.conf; "\
 		"sed \"s|\\[APP_ROOT\\]|#{fetch(:working_dir)}|\" < config/unicorn.init | sed \"s/\\[APP_NAME\\]/#{fetch(:application)}/\" | sed \"s/\\[USER\\]/#{fetch(:user)}/\" > /etc/init.d/unicorn-#{fetch(:application)}; "\
 		"chmod +x /etc/init.d/unicorn-#{fetch(:application)}; "\
 		"/etc/init.d/unicorn-#{fetch(:application)} stop; "\
@@ -116,7 +116,7 @@ namespace :deploy do
   after 'deploy', 'deploy:db_create' 
   after 'deploy:db_create', 'deploy:db_migrate'
   after 'deploy:db_migrate', 'deploy:rake_precompile'
-  after 'deploy:rake_precompile', 'deploy:server_setup'
+#  after 'deploy:rake_precompile', 'deploy:server_setup'
 
 
 end

@@ -24,7 +24,7 @@ server '147.175.149.171', user: 'root', roles: %w{app db web}, my_property: :my_
 
 # Configuration
 # =============
-set :working_dir , '/var/www/Webx/current/'
+set :working_dir , '/var/www/webx/current/'
 set :user, 'root'
 
 # You can set any configuration variable like in config/deploy.rb
