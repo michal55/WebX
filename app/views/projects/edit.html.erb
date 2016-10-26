@@ -6,7 +6,7 @@
 	    <%= f.text_field(:name, class: 'form-control') %>
         <div class="login-group">
             <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
-    		<%= link_to(t('buttons.delete'), project_path, method: :delete, class: 'btn') %>
+    		<%= link_to(t('buttons.delete'), project_path, method: :delete, class: 'btn btn-danger') %>
         </div>
     <% end %> 
     </div>

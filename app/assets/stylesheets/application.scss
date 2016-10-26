@@ -96,8 +96,6 @@ h5 {
 	* {
 		width: 49%;
 	}
-	margin-bottom: 8px;
-	margin-top: 8px;
 }
 
 body {
@@ -156,6 +154,15 @@ a.btn:hover {
 	}
 }
 
+.btn-danger {
+
+	&:hover {
+		background-color: black;
+		border-color: $secondary-color*0.9;
+		color: red !important;
+	}
+}
+
 .form-control:focus {
   border-color: $primary-color;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 8px $light-max;
@@ -176,4 +183,11 @@ a.btn:hover {
 .table-striped>tbody>tr:nth-child(odd)>td, 
 .table-striped>tbody>tr:nth-child(odd)>th {
    background-color: $light-max;
+ }
+
+ .form-group {
+ 	*{
+ 		margin-top: 4px;
+ 		margin-bottom: 4px;
+ 	}
  }
