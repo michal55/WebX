@@ -1,13 +1,12 @@
-<%= form_for(@project_new) do |f|  %>
-
-    <h1><%= t('projects.new') %></h1>
-
-
-      <%= f.label(:name) %>
-      <%= f.text_field(:name, class: 'form-control') %>
-
-
-      <%= f.submit(t('buttons.create'), class: 'btn btn-primary') %>
-
-
-<% end %>
+<div class="container col-md-offset-4 col-md-4 login-form">
+    <div class="form-group">
+    <%= form_for(@project_new) do |f|  %>
+    	<h1><%= t('projects.new') %></h1>
+	    <%= f.label(:name) %>
+	    <%= f.text_field(:name, class: 'form-control') %>
+        <div class="login-group">
+            <%= f.submit(t('buttons.create'), class: 'btn btn-primary') %>
+        </div>
+    <% end %> 
+    </div>
+</div>

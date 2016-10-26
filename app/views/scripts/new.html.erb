@@ -1,13 +1,13 @@
-<%= form_for([@project, @script_new], :url => project_scripts_path(@project)) do |f|  %>
+<div class="container col-md-offset-4 col-md-4 login-form">
+    <div class="form-group">
+    <%= form_for([@project, @script_new], :url => project_scripts_path(@project)) do |f|  %>
+    	<h1><%= t('scripts.new') %></h1>
+	    <%= f.label(:name) %>
+	    <%= f.text_field(:name, class: 'form-control') %>
+        <div class="login-group">
+            <%= f.submit(t('buttons.create'), class: 'btn btn-primary') %>
+        </div>
+    <% end %> 
+    </div>
+</div>
 
-    <h1><%= t('script.new') %></h1>
-
-
-      <%= f.label(:name) %>
-      <%= f.text_field(:name, class: 'form-control') %>
-
-
-      <%= f.submit(t('buttons.create'), class: 'btn btn-primary') %>
-
-
-<% end %>

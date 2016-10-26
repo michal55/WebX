@@ -90,16 +90,15 @@ h5 {
 		background-color: rgba(0,0,0,0.2);
 		border: 0;
 	}
-
-	.login-group {
-		* {
-			width: 49%;
-		}
-		margin-bottom: 8px;
-		margin-top: 8px;
-	}
 }
 
+.login-group {
+	* {
+		width: 49%;
+	}
+	margin-bottom: 8px;
+	margin-top: 8px;
+}
 
 body {
 	background-color: $light-max;
@@ -108,9 +107,12 @@ body {
 a {
 	color: $primary-color;
 
-	&:hover {
+	&.btn:hover, &:hover {
 		color: ($primary-color*0.5 + $secondary-color)/1.5;
 	}
+}
+
+a.btn:hover {
 }
 
 .main-content {
@@ -167,10 +169,11 @@ a {
   		border-image-slice: 1;
   		border-left: 0;
   		border-right: 0;
+  		background-image: url(/Webx/assets/main.jpg);
 	}
 }
 
 .table-striped>tbody>tr:nth-child(odd)>td, 
 .table-striped>tbody>tr:nth-child(odd)>th {
-   background-color: $light-max; 
+   background-color: $light-max;
  }

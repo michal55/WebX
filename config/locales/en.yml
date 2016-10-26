@@ -82,14 +82,23 @@ en:
       body2: "Click the link below to unlock your account:"
 
   projects:
-    index: "Projects"
-    new: "Create new project"
+    index: "My Projects"
+    new_button: "+ project"
+    new: "New project"
     edit: "Edit project"
+    scripts: 'Scripts'
+    columns:
+      name: 'Project'
+      action: 'access'
 
   scripts:
-    index: "scripts"
-    new: "Create new script"
+    index: "Scripts"
+    new_button: "+ script"
+    new: "New script"
     edit: "Edit script"
+    columns:
+      name: 'Script'
+      action: 'Actions'
 
   buttons:
     delete: "Delete"
