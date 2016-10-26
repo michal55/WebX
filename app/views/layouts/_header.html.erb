@@ -16,6 +16,9 @@
             <i class="glyphicon glyphicon-user"></i> <%= t('layout.account') %>
             <% end %>
           </li>
+          <li>
+            <%= link_to t('users.settings'), edit_user_registration_path(current_user) %>
+          </li>
       <% end %>
     </ul>
   </div>

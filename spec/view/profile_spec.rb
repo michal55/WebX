@@ -8,10 +8,10 @@ describe 'check profile', :type => :feature do
 
     fill_in 'user[email]', with: user.email
     fill_in 'user[password]', with: user.password
-    click_button 'Log in'
+    click_button I18n.t('auth.login.submit')
 
     visit profile_path(user)
-    expect(page).to have_link('Settings')
+    expect(page).to have_link(I18n.t('users.settings'))
 
   end
 
@@ -24,10 +24,10 @@ describe 'check profile', :type => :feature do
     visit new_user_session_path
     fill_in 'user[email]', with: admin.email
     fill_in 'user[password]', with: admin.password
-    click_button 'Log in'
+    click_button I18n.t('auth.login.submit')
 
     visit profile_path(user)
-    expect(page).to_not have_link('Settings')
+    expect(page).to_not have_link(I18n.t('users.settings'))
 
   end
 end
