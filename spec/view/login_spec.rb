@@ -13,7 +13,7 @@ describe 'the login process', :type => :feature do
 
     # Expect logout button to be present
     # FIXME:
-    # destroy_user_session_path == '/Webx/logout'
+    # destroy_user_session_path == '/webx/logout'
     # page.body contains "/logout"
     # Why it works with new_user_session_path?
     expect(page).to have_link('Logout', href: destroy_user_session_path)
