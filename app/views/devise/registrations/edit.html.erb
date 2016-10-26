@@ -11,6 +11,9 @@
         <%= f.label :name %>
         <%= f.text_field :name,  autofocus: true, class: 'form-control' %>
 
+        <%= f.label :surname %>
+        <%= f.text_field :surname,  autofocus: true, class: 'form-control', placeholder: t('auth.register.name')%>
+
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
             <div><%= t('devise.confirmations.waiting_for_confirmation')%><%= resource.unconfirmed_email %></div>
         <% end %>

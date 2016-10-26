@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20161026111838) do
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
     t.string   "name"
+    t.string   "surname"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
