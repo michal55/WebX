@@ -23,6 +23,8 @@ $light-medium: #CFD8DC;
 $light-min: #607D8B;
 $secondary-color: #FFEB3B;
 
+$danger: #d9534f;
+
 h1 {
 	font-size: 2em;
 }
@@ -155,11 +157,10 @@ a.btn:hover {
 }
 
 .btn-danger {
-
 	&:hover {
-		background-color: black;
-		border-color: $secondary-color*0.9;
-		color: red !important;
+		background-color: $primary-color;
+		border-color: $primary-color*0.8;
+		color: $danger !important;
 	}
 }
 

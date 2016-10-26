@@ -4,9 +4,10 @@
     	<h1><%= t('projects.edit') %></h1>
 	    <%= f.label(:name) %>
 	    <%= f.text_field(:name, class: 'form-control') %>
+	    <%= link_to(t('buttons.delete'), project_path, method: :delete, class: 'btn btn-danger btn-block') %>
         <div class="login-group">
             <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
-    		<%= link_to(t('buttons.delete'), project_path, method: :delete, class: 'btn btn-danger') %>
+            <%= link_to(t('buttons.back'), projects_path, class: 'btn') %>
         </div>
     <% end %> 
     </div>
