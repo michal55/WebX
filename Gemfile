@@ -28,6 +28,7 @@ gem 'cancan'
 
 # OAuth2 provider functionality
 gem 'doorkeeper'
+gem 'oauth2'
 
 gem 'unicorn'
 
