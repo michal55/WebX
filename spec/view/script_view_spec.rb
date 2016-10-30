@@ -7,7 +7,7 @@ describe 'see scripts', :type => :feature do
     script = create(:script)
     project = script.project
     user = script.project.user
-    user.confirm!
+    user.confirm
     expect(user.confirmed?).to eq true
     visit new_user_session_path
 
