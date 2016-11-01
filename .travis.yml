@@ -33,3 +33,5 @@ after_success:
   config/deploy_id_rsa
 - "[[ $TRAVIS_BRANCH = 'staging' ]] && bundle exec cap staging deploy"
 - "[[ $TRAVIS_BRANCH = 'master' ]] && bundle exec cap master deploy"
+notifications:
+  slack: teamwebx:VHTdNTZxyP8rHumLGGBdv3PU
