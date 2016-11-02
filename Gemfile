@@ -28,6 +28,7 @@ gem 'cancan'
 
 gem 'unicorn'
 
+gem 'grape'
 # Boostrap
 gem 'bootstrap-sass', '~> 3.3.6'
 
