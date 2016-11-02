@@ -1,10 +1,10 @@
 module API
-  module V1
-    class Posts < Grape::API
-      version 'v1'
+  module User_auth
+    class User_auth < Grape::API
+      version 'user_auth'
       format :json
  
-      resource :posts do
+      resource :user_auth do
         desc "Return list of recent posts"
         get do
           User.all
