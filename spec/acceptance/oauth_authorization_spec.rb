@@ -1,7 +1,7 @@
 require 'acceptance/acceptance_helper'
 
 feature 'OAuth authorization' do
-  let(:app) { create(:client_application) }
+  let(:app) { create(:doorkeeper_application) }
   let(:user) { create(:user) }
 
   scenario 'auth ok' do
