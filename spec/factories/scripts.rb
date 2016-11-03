@@ -4,6 +4,7 @@ FactoryGirl.define do
     name 'Script_Factory'
     after(:create) do |script|
       script.project = FactoryGirl.create(:project)
+      script.save!
     end
   end
 end

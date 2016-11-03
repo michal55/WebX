@@ -6,4 +6,5 @@ RSpec.describe Script, type: :model do
     expect(x.project.user.email).to eq('test@example.com')
   end
 
+
 end
