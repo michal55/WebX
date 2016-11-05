@@ -1,7 +1,7 @@
 module API
-  module User_auth
+  module Data
     class Root < Grape::API
-      mount API::User_auth::User_auth
+      mount API::Data::General
     end
   end
 end

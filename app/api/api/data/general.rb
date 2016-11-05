@@ -1,19 +1,18 @@
 require 'doorkeeper/grape/helpers'
 
 module API
-  module User_auth
-    class User_auth < Grape::API
+  module Data
+    class General < Grape::API
       helpers Doorkeeper::Grape::Helpers
-      version 'user_auth'
+      version 'v0'
       format :json
 
       before do
         doorkeeper_authorize!
       end
 
-      resource :user_auth do
-        desc "Return list of recent posts"
-        get do
+      resource :data do
+        get :user do
           User.find(doorkeeper_token[:resource_owner_id])
         end
       end

@@ -30,9 +30,10 @@ gem 'cancan'
 gem 'doorkeeper'
 gem 'oauth2'
 
+gem 'grape'
+
 gem 'unicorn'
 
-gem 'grape'
 # Boostrap
 gem 'bootstrap-sass', '~> 3.3.6'
 
