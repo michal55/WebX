@@ -4,7 +4,6 @@ module API
   module Data
     class General < Grape::API
       helpers Doorkeeper::Grape::Helpers
-      version 'v0'
       format :json
 
       before do
