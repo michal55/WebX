@@ -40,13 +40,13 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'devise', '~> 3.4.1'
 
 # Paranoia
-gem "paranoia", "~> 2.0"
+gem 'paranoia', '~> 2.0'
 
-gem "nestive"
+gem 'nestive'
 
 # Test suite related gems
 group :development, :test do
-  gem "rspec", "~> 3.0"
+  gem 'rspec', '~> 3.0'
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails', '~> 4.5'
   gem 'capybara'
@@ -80,4 +80,3 @@ group :development do
 
   gem 'better_errors'
 end
-

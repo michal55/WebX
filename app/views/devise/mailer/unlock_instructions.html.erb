@@ -1,7 +1,4 @@
 <p><%=t('email.locked.header')%> <%= @resource.email %>!</p>
-
 <p><%=t('email.locked.body1')%></p>
-
 <p><%=t('email.locked.body2')%></p>
-
 <p><%= link_to 'Unlock my account', unlock_url(@resource, unlock_token: @token) %></p>
