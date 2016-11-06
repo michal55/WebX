@@ -23,6 +23,8 @@ $light-medium: #CFD8DC;
 $light-min: #607D8B;
 $secondary-color: #FFEB3B;
 
+$danger: #d9534f;
+
 h1 {
 	font-size: 2em;
 }
@@ -90,16 +92,13 @@ h5 {
 		background-color: rgba(0,0,0,0.2);
 		border: 0;
 	}
-
-	.login-group {
-		* {
-			width: 49%;
-		}
-		margin-bottom: 8px;
-		margin-top: 8px;
-	}
 }
 
+.login-group {
+	* {
+		width: 49%;
+	}
+}
 
 body {
 	background-color: $light-max;
@@ -108,9 +107,12 @@ body {
 a {
 	color: $primary-color;
 
-	&:hover {
+	&.btn:hover, &:hover {
 		color: ($primary-color*0.5 + $secondary-color)/1.5;
 	}
+}
+
+a.btn:hover {
 }
 
 .main-content {
@@ -154,6 +156,14 @@ a {
 	}
 }
 
+.btn-danger {
+	&:hover {
+		background-color: $primary-color;
+		border-color: $primary-color*0.8;
+		color: $danger !important;
+	}
+}
+
 .form-control:focus {
   border-color: $primary-color;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 8px $light-max;
@@ -167,10 +177,18 @@ a {
   		border-image-slice: 1;
   		border-left: 0;
   		border-right: 0;
+  		background-image: url(/webx/assets/main.jpg);
 	}
 }
 
 .table-striped>tbody>tr:nth-child(odd)>td, 
 .table-striped>tbody>tr:nth-child(odd)>th {
-   background-color: $light-max; 
+   background-color: $light-max;
+ }
+
+ .form-group {
+ 	*{
+ 		margin-top: 4px;
+ 		margin-bottom: 4px;
+ 	}
  }

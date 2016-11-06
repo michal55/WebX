@@ -39,6 +39,11 @@ gem 'bootstrap-sass', '~> 3.3.6'
 
 gem 'devise', '~> 3.4.1'
 
+# Paranoia
+gem "paranoia", "~> 2.0"
+
+gem "nestive"
+
 # Test suite related gems
 group :development, :test do
   gem "rspec", "~> 3.0"
