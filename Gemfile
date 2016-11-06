@@ -26,6 +26,12 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 #authorization
 gem 'cancan'
 
+# OAuth2 provider functionality
+gem 'doorkeeper'
+gem 'oauth2'
+
+gem 'grape'
+
 gem 'unicorn'
 
 # Boostrap
