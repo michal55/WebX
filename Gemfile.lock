@@ -151,6 +151,8 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.9.1)
     multi_json (1.12.1)
+    nestive (0.6.0)
+      rails (>= 3.0.0)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     mustermann (0.4.0)
@@ -300,6 +302,7 @@ DEPENDENCIES
   grape
   jbuilder (~> 2.0)
   jquery-rails
+  nestive
   oauth2
   paranoia (~> 2.0)
   pg (= 0.18.4)
