@@ -66,7 +66,7 @@ describe 'Register', :type => :feature do
     # is logged in
     expect(page).to have_link('Logout', href: destroy_user_session_path )
 
-    sleep 5
+    sleep 1
 
     click_link 'Logout'
     visit new_user_registration_path

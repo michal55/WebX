@@ -26,12 +26,23 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 #authorization
 gem 'cancan'
 
+# OAuth2 provider functionality
+gem 'doorkeeper'
+gem 'oauth2'
+
+gem 'grape'
+
 gem 'unicorn'
 
 # Boostrap
 gem 'bootstrap-sass', '~> 3.3.6'
 
 gem 'devise', '~> 3.4.1'
+
+# Paranoia
+gem "paranoia", "~> 2.0"
+
+gem "nestive"
 
 # Test suite related gems
 group :development, :test do

@@ -1,0 +1,15 @@
+<div class="container col-md-offset-4 col-md-4 login-form">
+  <div class="form-group">
+    <%= form_for([@project, @script], :url => project_script_path(@project,@script)) do |f|  %>
+        <h1><%= t('scripts.edit') %></h1>
+        <%= f.label(:name) %>
+        <%= f.text_field(:name, class: 'form-control') %>
+        <%= link_to(t('buttons.delete'), project_script_path, method: :delete, class: 'btn btn-danger btn-block') %>
+        <div class="login-group">
+          <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
+          <%= link_to(t('buttons.back'), project_scripts_path(@project.id), class: 'btn') %>
+        </div>
+    <% end %>
+  </div>
+</div>
+
