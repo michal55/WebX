@@ -21,7 +21,7 @@
 
 en:
   layout:
-    administration: 'Administration'
+    administration: "Administration"
     logout: "Logout"
     account: "Account"
 
@@ -47,18 +47,18 @@ en:
       info1: "able to discover?"
       info2: "yes we are"
       header: "Sign up"
-      email_placeholder: 'email'
-      password_placeholder: 'password'
-      retype_placeholder: 'retype password'
+      email_placeholder: "email"
+      password_placeholder: "password"
+      retype_placeholder: "retype password"
       minimum: " characters minimum"
       submit: "Sign up"
     login:
-      email_placeholder: 'email'
+      email_placeholder: "email"
       header: "Log in"
       info1: "got passion for crawling?"
       info2: "welcome back"
       logout: "Logout"
-      password_placeholder: 'password'
+      password_placeholder: "password"
       submit: "Log in"
     unlock:
       did_not: "Didn't receive unlock instructions?"
@@ -69,15 +69,15 @@ en:
 
   email:
     normal:
-      header: 'Welcome'
-      body:   'You can confirm your account email through the link below:'
+      header: "Welcome"
+      body:   "You can confirm your account email through the link below:"
     reset:
-      header: 'Hello'
-      body1: 'Someone has requested a link to change your password. You can do this through the link below.'
+      header: "Hello"
+      body1: "Someone has requested a link to change your password. You can do this through the link below."
       body2: "If you didn't request this, please ignore this email."
       body3: "Your password won't change until you access the link above and create a new one."
     locked:
-      header: 'Hello'
+      header: "Hello"
       body1: "Your account has been locked due to an excessive number of unsuccessful sign in attempts."
       body2: "Click the link below to unlock your account:"
 
@@ -86,10 +86,10 @@ en:
     new_button: "+ project"
     new: "New project"
     edit: "Edit project"
-    scripts: 'Scripts'
+    scripts: "Scripts"
     columns:
-      name: 'Project'
-      action: 'access'
+      name: "Project"
+      action: "access"
 
   scripts:
     index: "Scripts"
@@ -97,8 +97,8 @@ en:
     new: "New script"
     edit: "Edit script"
     columns:
-      name: 'Script'
-      action: 'Actions'
+      name: "Script"
+      action: "Actions"
 
   buttons:
     delete: "Delete"

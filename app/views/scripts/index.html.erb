@@ -8,20 +8,20 @@
       <div class="panel-body">
         <table class="table table-striped table-hover">
           <thead>
-            <tr>
-              <th>
-                <%=t('scripts.columns.name')%>
-              </th>
-            </tr>
+          <tr>
+            <th>
+              <%=t('scripts.columns.name')%>
+            </th>
+          </tr>
           </thead>
           <tbody>
-            <% @scripts.each do |s| %>
-                <tr>
-                	<td>
-	  					<%=link_to(s.name, edit_project_script_path(@project.id, s.id) )%>
-	  				</td>
-                </tr>
-            <% end %>
+          <% @scripts.each do |s| %>
+              <tr>
+                <td>
+                  <%=link_to(s.name, edit_project_script_path(@project.id, s.id) )%>
+                </td>
+              </tr>
+          <% end %>
           </tbody>
         </table>
       </div>

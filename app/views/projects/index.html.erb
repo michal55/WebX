@@ -20,14 +20,14 @@
           <tbody>
             <% @projects.each do |p| %>
             	<tr>
-				 	<td>
-					  <%=link_to(p.name, edit_project_path(p.id) )%>
-					</td>
-					<td>
-					  <%=link_to(t('projects.columns.action'), project_scripts_path(p.id) )%>
-					</td>
-				</tr>
-			<% end%>
+                <td>
+                  <%=link_to(p.name, edit_project_path(p.id) )%>
+                </td>
+                <td>
+                  <%=link_to(t('projects.columns.action'), project_scripts_path(p.id) )%>
+                </td>
+              </tr>
+            <% end%>
           </tbody>
         </table>
       </div>

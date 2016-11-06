@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
 
   def create
     @project_new = Project.new
-    @project_new.assign_attributes({name: params[:project][:name], user_id:  current_user.id })
+    @project_new.assign_attributes({name: params[:project][:name], user_id: current_user.id})
     @project_new.save!
     redirect_to projects_path
   end

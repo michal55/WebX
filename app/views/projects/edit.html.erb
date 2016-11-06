@@ -1,15 +1,15 @@
 <div class="container col-md-offset-4 col-md-4 login-form">
-    <div class="form-group">
+  <div class="form-group">
     <%= form_for(@project) do |f|  %>
-    	<h1><%= t('projects.edit') %></h1>
-	    <%= f.label(:name) %>
-	    <%= f.text_field(:name, class: 'form-control') %>
-	    <%= link_to(t('buttons.delete'), project_path, method: :delete, class: 'btn btn-danger btn-block') %>
+        <h1><%= t('projects.edit') %></h1>
+        <%= f.label(:name) %>
+        <%= f.text_field(:name, class: 'form-control') %>
+        <%= link_to(t('buttons.delete'), project_path, method: :delete, class: 'btn btn-danger btn-block') %>
         <div class="login-group">
-            <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
-            <%= link_to(t('buttons.back'), projects_path, class: 'btn') %>
+          <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
+          <%= link_to(t('buttons.back'), projects_path, class: 'btn') %>
         </div>
-    <% end %> 
-    </div>
+    <% end %>
+  </div>
 </div>
 
