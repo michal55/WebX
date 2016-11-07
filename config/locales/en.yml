@@ -48,6 +48,8 @@ en:
       info2: "yes we are"
       header: "Sign up"
       email_placeholder: "email"
+      name: "Name"
+      surname: "Surname"
       password_placeholder: "password"
       retype_placeholder: "retype password"
       minimum: " characters minimum"

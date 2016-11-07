@@ -14,7 +14,7 @@ describe 'manage users', :type => :feature do
     visit new_user_session_path
     fill_in 'user[email]', with: admin.email
     fill_in 'user[password]', with: admin.password
-    click_button 'Log in'
+    click_button I18n.t('auth.login.submit')
 
     visit users_path
     find_link('edit', href: user_path(user)).click
