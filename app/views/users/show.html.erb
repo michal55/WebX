@@ -1,49 +1,32 @@
-<div class="container">
-    <div class="col-md-6">
-        <% if can? :manage, User %>
-          <%= form_for(@user, method: :patch) do |f| %>
+<%= extends :basic_form do %>
+  <% if can? :manage, User %>
+    <%= form_for(@user, method: :patch) do |f| %>
 
-              <div class="form-group">
-                <%= f.label(:id) %>
-                <%= f.text_field(:id, class: 'form-control', disabled: true) %>
-              </div>
+      <%= f.label(:id) %>
+      <%= f.text_field(:id, class: 'form-control', disabled: true) %>
 
-              <div class="form-group">
-                <%= f.label(:email) %>
-                <%= f.text_field(:email, class: 'form-control',disabled: true) %>
-              </div>
+      <%= f.label(:email) %>
+      <%= f.text_field(:email, class: 'form-control',disabled: true) %>
 
-              <div class="form-group">
-                <%= f.label(:sign_in_count) %>
-                <%= f.text_field(:sign_in_count, class: 'form-control', disabled: true) %>
-              </div>
+      <%= f.label(:sign_in_count) %>
+      <%= f.text_field(:sign_in_count, class: 'form-control', disabled: true) %>
 
-              <div class="form-group">
-                <%= f.label('Registered') %>
-                <%= f.date_field(:created_at, class: 'form-control', disabled: true) %>
-              </div>
+      <%= f.label('Registered') %>
+      <%= f.date_field(:created_at, class: 'form-control', disabled: true) %>
 
-              <div class="form-group">
-                <%= f.label(:last_sign_in_at) %>
-                <%= f.datetime_local_field(:last_sign_in_at, class: 'form-control', disabled: true) %>
-              </div>
+      <%= f.label(:last_sign_in_at) %>
+      <%= f.datetime_local_field(:last_sign_in_at, class: 'form-control', disabled: true) %>
 
-              <div class="form-group">
-                <%= f.label(:confirmed_at) %>
-                <%= f.date_field(:confirmed_at, class: 'form-control', disabled: true) %>
-              </div>
+      <%= f.label(:confirmed_at) %>
+      <%= f.date_field(:confirmed_at, class: 'form-control', disabled: true) %>
 
-              <div class="form-group">
-                <%= f.label(:role) %>
-                <%= f.select :role, ['user', 'admin'], {}, class: 'form-control' %>
-              </div>
+      <%= f.label(:role) %>
+      <%= f.select :role, ['user', 'admin'], {}, class: 'form-control' %>
 
-              <div class="form-group">
-                <%= f.submit('Save', class: 'btn btn-primary') %>
-                <%= link_to('Back',  users_path , class: 'btn btn-default') %>
-              </div>
-
-          <% end %>
-        <% end%>
-    </div>
-</div>
+      <div class="login-group">
+        <%= f.submit('Save', class: 'btn btn-primary') %>
+        <%= link_to('Back',  users_path , class: 'btn btn-default') %>
+      </div>
+    <% end %>
+  <% end%>
+<% end%>
