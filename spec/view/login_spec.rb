@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'the login process', :type => :feature do
   it 'logs in valid user' do
     user = create(:user)
-    user.confirm!
+    user.confirm
     expect(user.confirmed?).to eq true
     visit new_user_session_path
 

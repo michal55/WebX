@@ -40,12 +40,12 @@ before_filter :configure_account_update_params, only: [:update]
 
   # You can put the params you want to permit in the empty array.
   def configure_sign_up_params
-    devise_parameter_sanitizer.for(:sign_up) << [:name, :surname]
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :surname])
   end
 
   # You can put the params you want to permit in the empty array.
   def configure_account_update_params
-    devise_parameter_sanitizer.for(:account_update) << [:name, :surname]
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :surname])
   end
 
   # The path used after sign up.
