@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :scripts
+    resources :data_schemas
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

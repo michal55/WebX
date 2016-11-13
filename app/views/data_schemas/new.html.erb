@@ -1,0 +1,13 @@
+<%= extends :basic_form do %>
+  <%= form_for([@project, @data_schema], :url => project_data_schemas_path(@project)) do |f|  %>
+    <h1><%= t('data_schemas.new') %></h1>
+    <%= f.label(:name) %>
+    <%= f.text_field(:name, class: 'form-control') %>
+    <%= f.label(t('data_schemas.type')) %>
+    <%= f.select(:data_type, DataSchema.data_types)%>
+    <div class="login-group">
+      <%= f.submit(t('buttons.create'), class: 'btn btn-primary') %>
+    </div>
+  <% end %>
+<% end%>
+

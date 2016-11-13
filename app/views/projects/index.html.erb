@@ -13,6 +13,9 @@
         <th>
           <%=t('projects.columns.scripts')%>
         </th>
+        <th>
+          <%=t('projects.columns.data_schema')%>
+        </th>
       </tr>
       </thead>
       <tbody>
@@ -23,6 +26,9 @@
           </td>
           <td>
             <%=link_to(t('projects.columns.action'), project_scripts_path(p.id) )%>
+          </td>
+          <td>
+            <%=link_to(t('projects.columns.action'), project_data_schemas_path(p.id) )%>
           </td>
         </tr>
       <% end%>

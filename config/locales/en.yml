@@ -88,10 +88,12 @@ en:
     new_button: "+ project"
     new: "New project"
     edit: "Edit project"
-    scripts: "Scripts"
     columns:
       name: "Project"
       action: "access"
+      scripts: "Scripts"
+      data_schema: "Data Schema"
+
 
   scripts:
     index: "Scripts"
@@ -100,6 +102,17 @@ en:
     edit: "Edit script"
     columns:
       name: "Script"
+      action: "Actions"
+
+  data_schemas:
+    index: "Data Schema"
+    new_button: "+ column"
+    new: "New column"
+    edit: "Edit column"
+    type: "Type"
+    columns:
+      name: "Column"
+      type: "Type"
       action: "Actions"
 
   buttons:

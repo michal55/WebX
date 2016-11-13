@@ -5,6 +5,4 @@ class Project < ActiveRecord::Base
 
   acts_as_paranoid
 
-  enum sentiment_final_class: {string: 0, integer: 1, float: 2}
-
 end
