@@ -17,4 +17,23 @@ class DataSchemasController < ApplicationController
     @data_schema.save!
     redirect_to project_data_schemas_path
   end
+
+  def edit
+    @data_schema = DataSchema.find(params[:id])
+    @project = @data_schema.project
+  end
+
+  def update
+    @data_schema = DataSchema.find(params[:id])
+    @data_schema.name = params[:data_schema][:name]
+    @data_schema.data_type = params[:data_schema][:data_type].to_i
+    @data_schema.save!
+    redirect_to project_data_schemas_path
+  end
+
+  def destroy
+    @data_schema = DataSchema.find(params[:id])
+    @data_schema.destroy!
+    redirect_to project_data_schemas_path
+  end
 end

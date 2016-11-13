@@ -1,5 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe DataSchema, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "FactoryGirl should create data schema with associations" do
+    x = create(:data_schema)
+    expect(x.project.user.email).to eq('test@example.com')
+  end
 end
