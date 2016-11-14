@@ -25,6 +25,10 @@ module API
               error!('401 Unauthorized', 401) unless Project.find_by(id: params[:id]).user_id == doorkeeper_token[:resource_owner_id]
               Script.where(project_id: params[:id])
             end
+
+            get '/:id/data_schemas' do
+              DataSchema.where(project_id: params[:id])
+            end
           end
         end
 
