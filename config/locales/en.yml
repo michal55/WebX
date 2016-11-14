@@ -106,12 +106,11 @@ en:
 
   data_schemas:
     index: "Data Schema"
-    new_button: "+ column"
-    new: "New column"
-    edit: "Edit column"
+    new: "New field"
+    edit: "Edit field"
     type: "Type"
     columns:
-      name: "Column"
+      name: "Field"
       type: "Type"
       action: "Actions"
 

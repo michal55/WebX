@@ -3,12 +3,9 @@ class DataSchemasController < ApplicationController
   def index
     @project = Project.find(params[:project_id])
     @data_schema = DataSchema.where(project: @project)
-  end
+    @data_schema_new = DataSchema.new
+    @data_schema_new.project = @project
 
-  def new
-    @project = Project.find(params[:project_id])
-    @data_schema = DataSchema.new
-    @data_schema.project = @project
   end
 
   def create
