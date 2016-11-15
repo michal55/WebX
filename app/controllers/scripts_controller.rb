@@ -1,7 +1,9 @@
 class ScriptsController < ApplicationController
+  load_and_authorize_resource :except => [:create]
   def index
     @scripts = Script.where(project_id: params[:project_id])
     @project = Project.find(params[:project_id])
+    authorize! :read, @project
   end
 
   def new

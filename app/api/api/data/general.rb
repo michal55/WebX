@@ -5,7 +5,7 @@ module API
     class General < Grape::API
       helpers Doorkeeper::Grape::Helpers
       format :json
-
+      
       before do
         doorkeeper_authorize!
       end
@@ -22,6 +22,7 @@ module API
 
           resource :project do
             get '/:id/scripts' do
+              error!('401 Unauthorized', 401) unless Project.find_by(id: params[:id]).user_id == doorkeeper_token[:resource_owner_id]
               Script.where(project_id: params[:id])
             end
           end

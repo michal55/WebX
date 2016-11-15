@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
-
+  load_and_authorize_resource :except => [:create]
+#  skip_authorize_resource :only => [:new, :index, :create]
   def index
     @projects = Project.where(user_id: current_user.id)
   end
