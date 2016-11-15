@@ -25,7 +25,6 @@ gem 'sdoc', '>= 0.4.0', group: :doc
 
 # Authorization
 gem 'cancancan'
-gem 'grape-cancan'
 
 # OAuth2 provider functionality
 gem 'doorkeeper'
