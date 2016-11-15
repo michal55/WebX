@@ -6,8 +6,12 @@ class Ability
       # non-admin can only :show himself
       when :admin
         can :manage, User
+        can [:update, :destroy, :edit, :read, :create], Project
+        can [:update, :destroy, :edit, :index, :create], Script
       else
         can(:show, User) {|resource| resource == user}
+        can [:update, :destroy, :edit, :read, :create], Project, user_id: user.id
+        can [:update, :destroy, :edit, :index, :create], Script, project_id: Project.where(user_id: user.id).ids
     end
 
     can(:profile, User)

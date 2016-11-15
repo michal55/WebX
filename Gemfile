@@ -24,7 +24,7 @@ gem 'jbuilder', '>= 2.0'
 gem 'sdoc', '>= 0.4.0', group: :doc
 
 # Authorization
-gem 'cancan'
+gem 'cancancan'
 
 # OAuth2 provider functionality
 gem 'doorkeeper'

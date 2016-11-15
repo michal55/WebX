@@ -57,7 +57,7 @@ GEM
       sass (>= 3.3.4)
     builder (3.2.2)
     byebug (9.0.6)
-    cancan (1.6.10)
+    cancancan (1.15.0)
     capistrano (3.6.1)
       airbrussh (>= 1.0.0)
       capistrano-harrow
@@ -285,7 +285,7 @@ DEPENDENCIES
   better_errors
   bootstrap-sass (>= 3.3.6)
   byebug
-  cancan
+  cancancan
   capistrano (= 3.6.1)
   capistrano-bundler
   capistrano-ext (= 1.2.1)
