@@ -9,10 +9,10 @@
         <%= f.email_field :email, autofocus: true, class: 'form-control' %>
 
         <%= f.label :name %>
-        <%= f.text_field :name,  autofocus: true, class: 'form-control' %>
+        <%= f.text_field :name,  autofocus: true, class: 'form-control',  placeholder: t('auth.register.name') %>
 
         <%= f.label :surname %>
-        <%= f.text_field :surname,  autofocus: true, class: 'form-control', placeholder: t('auth.register.name')%>
+        <%= f.text_field :surname,  autofocus: true, class: 'form-control', placeholder: t('auth.register.surname')%>
 
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
             <div><%= t('devise.confirmations.waiting_for_confirmation')%><%= resource.unconfirmed_email %></div>
@@ -25,7 +25,7 @@
         <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
 
         <%= f.label :current_password %> <br />
-        <%= f.password_field :current_password, autocomplete: "off", class: 'form-control' %>
+        <%= f.password_field :current_password, autocomplete: "off", class: 'form-control', placeholder: t('auth.register.confirm')%>
 
         <div class="login-group">
           <%= f.submit "Update", class: "btn btn-primary"%>
