@@ -192,3 +192,19 @@ a.btn:hover {
  		margin-bottom: 4px;
  	}
  }
+
+input.input-group-addon {
+	width: 60px;
+	padding: 0;
+	border: 0;
+	height: 100%;
+}
+
+span#basic-addon1.input-group-addon {
+	padding: 0;
+}
+
+div.form-group {
+	margin: 0;
+}
+

@@ -6,27 +6,19 @@
     <table class="table table-striped table-hover">
       <thead>
       <tr>
-        <th>
-          <%=t('data_schemas.columns.name')%>
-        </th>
-        <th>
-          <%=t('data_schemas.columns.type')%>
-        </th>
+        <th> <%=t('data_schemas.columns.name')%> </th>
+        <th> <%=t('data_schemas.columns.type')%> </th>
       </tr>
       </thead>
       <tbody>
+      <%= render 'data_schemas/new'%>
       <% @data_schema.each do |d| %>
         <tr>
-          <td>
-            <%=link_to(d.name, edit_project_data_schema_path(@project.id, d.id) )%>
-          </td>
-          <td>
-            <%= d.data_type%>
-          </td>
+          <td> <%=link_to(d.name, edit_project_data_schema_path(@project.id, d.id) )%> </td>
+          <td style="width:200px" > <%= d.data_type%> </td>
         </tr>
       <% end %>
       </tbody>
     </table>
   <% end %>
 <% end %>
-<%= render 'data_schemas/new'%>
