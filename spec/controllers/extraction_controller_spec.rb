@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe ExtractionController, type: :controller do
+RSpec.describe ExtractionsController, type: :controller do
 
 end
