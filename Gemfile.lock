@@ -41,7 +41,7 @@ GEM
     airbrussh (1.1.1)
       sshkit (>= 1.6.1, != 1.7.0)
     arel (6.0.3)
-    autoprefixer-rails (6.5.2)
+    autoprefixer-rails (6.5.3)
       execjs
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
@@ -173,7 +173,7 @@ GEM
       activerecord (>= 4.0, < 5.1)
     pg (0.19.0)
     public_suffix (2.0.4)
-    rack (1.6.4)
+    rack (1.6.5)
     rack-accept (0.4.5)
       rack (>= 0.4)
     rack-test (0.6.3)
@@ -315,4 +315,4 @@ DEPENDENCIES
   web-console (>= 2.0)
 
 BUNDLED WITH
-   1.13.6
+   1.13.2

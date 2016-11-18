@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161112131312) do
+ActiveRecord::Schema.define(version: 20161118141659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,20 @@ ActiveRecord::Schema.define(version: 20161112131312) do
   end
 
   add_index "data_schemas", ["deleted_at"], name: "index_data_schemas_on_deleted_at", using: :btree
+
+  create_table "extraction_data", force: :cascade do |t|
+    t.string   "field_name"
+    t.string   "value"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "extraction_id"
+  end
+
+  create_table "extractions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "script_id"
+  end
 
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", null: false
