@@ -9,7 +9,11 @@ Rails.application.routes.draw do
   get 'users/:id/profile' => 'users#profile', as: :profile
 
   resources :projects do
-    resources :scripts
+    resources :scripts do
+      resources :extractions do
+        resources :extraction_datum
+      end
+    end
     resources :data_schemas
   end
 
