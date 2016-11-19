@@ -1,8 +1,28 @@
 <%= extends :basic_panel do %>
   <%= extends :basic_panel_heading do %>
-    
+    <h1> Extraction <%= @extraction.created_at %> </h1>
+    <div>
+      <%= link_to(@project.name, edit_project_path(@project.id))%>
+      /
+      <%= link_to(@script.name, edit_project_script_path(@project.id, @script.id))%>
+    </div>
   <% end %>
   <%= extends :basic_panel_body do %>
-
+   <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th> Field </th>
+        <th> Value </th>
+      </tr>
+      </thead>
+      <tbody>
+        <% @extraction_datum.each do |d| %>
+        <tr>
+          <td> <%= d.field_name %> </td>
+          <td> <%= d.value %> </td>
+        </tr>
+      <% end%>
+      </tbody>
+    </table>
   <% end %>
 <% end %>
