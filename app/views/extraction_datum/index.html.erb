@@ -1,10 +1,13 @@
 <%= extends :basic_panel do %>
   <%= extends :basic_panel_heading do %>
     <h1> Extraction <%= @extraction.created_at %> </h1>
-    <div>
-      <%= link_to(@project.name, edit_project_path(@project.id))%>
-      /
-      <%= link_to(@script.name, edit_project_script_path(@project.id, @script.id))%>
+    <div class="row">
+      <div class="col-md-6">
+        <ol class="breadcrumb">
+          <li><%= link_to(@project.name, edit_project_path(@project.id))%></li>
+          <li><%= link_to(@script.name, edit_project_script_path(@project.id, @script.id))%></li>
+        </ol>
+      </div>
     </div>
   <% end %>
   <%= extends :basic_panel_body do %>
