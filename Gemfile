@@ -26,6 +26,9 @@ gem 'sdoc', '>= 0.4.0', group: :doc
 # Authorization
 gem 'cancancan'
 
+# Crawling
+gem 'nokogiri'
+
 # OAuth2 provider functionality
 gem 'doorkeeper'
 gem 'oauth2'

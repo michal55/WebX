@@ -300,6 +300,7 @@ DEPENDENCIES
   jbuilder (>= 2.0)
   jquery-rails
   nestive
+  nokogiri
   oauth2
   paranoia (>= 2.0)
   pg (>= 0.18.4)
