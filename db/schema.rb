@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161120040553) do
+ActiveRecord::Schema.define(version: 20161121085751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 20161120040553) do
     t.integer  "data_type"
     t.integer  "project_id"
     t.datetime "deleted_at"
-    t.string   "xpath"
   end
 
   add_index "data_schemas", ["deleted_at"], name: "index_data_schemas_on_deleted_at", using: :btree
@@ -102,6 +101,7 @@ ActiveRecord::Schema.define(version: 20161120040553) do
     t.integer  "project_id"
     t.datetime "deleted_at"
     t.string   "url"
+    t.json     "xpaths"
   end
 
   add_index "scripts", ["deleted_at"], name: "index_scripts_on_deleted_at", using: :btree

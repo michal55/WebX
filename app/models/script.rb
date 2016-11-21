@@ -1,5 +1,4 @@
 class Script < ActiveRecord::Base
-  # require 'nokogiri'
   belongs_to :project
   acts_as_paranoid
   validates :name, :presence => true
@@ -9,13 +8,13 @@ class Script < ActiveRecord::Base
     extraction = Extraction.new
     extraction.script_id = self.id
     extraction.save
-    schemas = self.project.data_schemas
+    xpaths = self.xpaths
 
-    schemas.each do |s|
+    xpaths.each do |x|
       extraction_datum = ExtractionDatum.new
       extraction_datum.extraction_id = extraction.id
-      extraction_datum.field_name = s.name
-      extraction_datum.value = @doc.xpath assert_text s.xpath
+      extraction_datum.field_name = x['name']
+      extraction_datum.value = @doc.xpath assert_text x['value']
       extraction_datum.save
     end
 
