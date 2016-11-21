@@ -115,6 +115,11 @@ en:
       type: "Type"
       action: "Actions"
 
+  extraction_datum:
+    columns:
+      field: "Field"
+      value: "Value"
+
   buttons:
     delete: "Delete"
     edit: "Edit"
