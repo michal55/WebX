@@ -25,3 +25,16 @@ rails console
 
 Web pre tutorial:
 https://www.railstutorial.org/
+
+BG joby:
+- treba mat nainstalovany a spusteny REDIS
+- pouzivame DB 7-10 (ine mam zabrate ja [Rasťo], ak by niekto pouzival niektore z týchto tak mozme dat vyssie cisla. Max je 32)
+
+Skript pre spustenie Resque na BG joby:
+ resque-pool --environment development
+
+Skript pre spustenie Resque-Schedulera pre casovo planovane joby:
+ rake resque:scheduler
+
+Cron syntax
+ https://en.wikipedia.org/wiki/Cron

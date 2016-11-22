@@ -1,0 +1,8 @@
+queue:
+  cron: "0 1 * * *" # vzdy o 1:00
+  class: "SampleResqueJob"
+  queue: sample_resque_job
+  args:
+  description: "Popis"
+
+
