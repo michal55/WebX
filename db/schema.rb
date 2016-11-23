@@ -100,7 +100,6 @@ ActiveRecord::Schema.define(version: 20161121085751) do
     t.datetime "updated_at", null: false
     t.integer  "project_id"
     t.datetime "deleted_at"
-    t.string   "url"
     t.json     "xpaths"
   end
 
