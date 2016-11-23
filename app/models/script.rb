@@ -13,7 +13,7 @@ class Script < ActiveRecord::Base
     xpaths.each do |x|
       extraction_datum = ExtractionDatum.new
       extraction_datum.extraction_id = extraction.id
-      extraction_datum.field_name = x['name']
+      extraction_datum.field_name = x['name']   #TODO FK miesto nazvov
       extraction_datum.value = @doc.xpath assert_text x['value']
       extraction_datum.save
     end
