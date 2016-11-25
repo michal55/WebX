@@ -40,10 +40,6 @@ module API
             end
 
             get '/:id/scripts/:id_script' do
-              puts params[:id_script].respond_to?(:to_i)
-              puts Script.find_by(id: 11).project_id == params[:id_script]
-              puts params[:id]
-              puts params[:id_script]
               error!('401 Unauthorized', 401) unless Script.find_by(id: params[:id_script]).project_id == params[:id].to_i and Project.find_by(id: params[:id]).user_id == doorkeeper_token[:resource_owner_id]
               xpaths = Script.find_by(id: params[:id_script]).xpaths
               if xpaths == nil
@@ -51,7 +47,6 @@ module API
                 DataSchema.where(project_id: params[:id]).each do |d| xpaths["data"].append("name" => d.name, "value" => "") end
                 xpaths.to_json
               else
-                #xpaths = JSON.parse(xpaths)
                 names = DataSchema.where(project_id: params[:id]).pluck("name")
                 del_indx = []
                 xpaths["data"].each do |xpath|
