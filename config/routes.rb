@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :scripts do
+      resources :frequencies
       resources :extractions do
         resources :extraction_datum
       end
