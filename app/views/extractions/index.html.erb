@@ -13,12 +13,8 @@
       <tbody>
         <% @extraction.each do |e| %>
           <tr>
-            <td>
-              <%=link_to(e.created_at, project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id) )%>
-            </td>
-            <td>
-              <%=link_to(e.updated_at, project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id) )%>
-            </td>
+            <td> <%=link_to(e.created_at, project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id) )%> </td>
+            <td> <%=link_to(e.updated_at, project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id) )%> </td>
           </tr>
         <% end %>
       </tbody>

@@ -103,7 +103,9 @@ en:
     edit: "Edit script"
     columns:
       name: "Script"
+      extract: "Extractions"
       action: "Actions"
+      access: "access"
 
   data_schemas:
     index: "Data Schema"
