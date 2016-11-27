@@ -120,6 +120,12 @@ en:
       field: "Field"
       value: "Value"
 
+  extractions:
+    index: "Extractions"
+    columns:
+      created_at: "Created"
+      updated_at: "Updated"
+
   buttons:
     delete: "Delete"
     edit: "Edit"
