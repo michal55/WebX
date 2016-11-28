@@ -1,7 +1,6 @@
 require 'doorkeeper/grape/helpers'
 require 'json'
 
-
 module API
   module Data
     class General < Grape::API
@@ -33,7 +32,7 @@ module API
             end
 
             put '/:id/scripts/:id_script' do
-             error!('401 Unauthorized', 401) unless Script.find_by(id: params[:id_script]).project_id == params[:id].to_i and Project.find_by(id: params[:id]).user_id == doorkeeper_token[:resource_owner_id]
+              error!('401 Unauthorized', 401) unless Script.find_by(id: params[:id_script]).project_id == params[:id].to_i and Project.find_by(id: params[:id]).user_id == doorkeeper_token[:resource_owner_id]
               script = Script.find_by(id: params[:id_script])
               script.xpaths = request.body.read
               script.save!
