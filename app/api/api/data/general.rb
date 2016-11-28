@@ -44,7 +44,7 @@ module API
               if xpaths == nil
                 xpaths = {"url" => "" , "data" => []}
                 DataSchema.where(project_id: params[:id]).each do |d| xpaths["data"].append("name" => d.name, "value" => "") end
-                xpaths.to_json
+                xpaths
               else
                 names = DataSchema.where(project_id: params[:id]).pluck("name")
                 del_indx = []
@@ -57,7 +57,7 @@ module API
                 end
                 del_indx.each do |indx| xpaths["data"].delete_at(indx) end
                 names.each do |name| xpaths["data"].append("name" => name, "value" => "") end
-                xpaths.to_json
+                xpaths
               end
             end
           end           
