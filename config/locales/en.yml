@@ -105,6 +105,7 @@ en:
       name: "Script"
       extract: "Extractions"
       action: "Actions"
+      frequencies: "Frequencies"
       access: "access"
 
   data_schemas:
@@ -134,3 +135,15 @@ en:
     create: "Create"
     submit: "Save"
     back: "Back"
+
+  frequencies:
+    index: "Frequencies"
+    new: "New frequency"
+    new_button: "+ frequency"
+    edit: "Edit"
+    action: "Edit"
+    columns:
+      interval: "Interval"
+      period: "Period"
+      first_exec: "First execution"
+      edit: "Edit frequency"

@@ -14,6 +14,30 @@ class FrequenciesController < ApplicationController
   end
 
   def index
-    @frequency = Frequency.where(script_id: params[:script_id])
+    @frequencies = Frequency.where(script_id: params[:script_id])
+    @script = Script.find(params[:script_id])
+    @project = Project.find(params[:project_id])
+  end
+
+  def edit
+    @frequency = Frequency.find(params[:id])
+    @script = Script.find(params[:script_id])
+    @project = Project.find(params[:project_id])
+    authorize! :read, @project
+  end
+
+  def update
+    @frequency = Frequency.find(params[:id])
+    @frequency.interval = params[:frequency][:interval]
+    @frequency.period = params[:frequency][:period]
+    @frequency.first_exec = params[:frequency][:first_exec]
+    @frequency.save!
+    redirect_to project_script_frequencies_path
+  end
+
+  def destroy
+    @frequency = Frequency.find(params[:id])
+    @frequency.destroy!
+    redirect_to project_script_frequencies_path
   end
 end
