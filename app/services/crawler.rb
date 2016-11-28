@@ -15,7 +15,9 @@ module Crawler
       extraction_datum.save
     end
 
-    extraction.execution_time = Time.now - extraction.created_at
+    script.last_run = Time.now
+    script.save
+    extraction.execution_time = script.last_run - extraction.created_at
     extraction.success = true
     extraction.save
 
