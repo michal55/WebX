@@ -25,7 +25,7 @@ describe 'see scripts', :type => :feature do
     expect(page).to have_link(I18n.t('buttons.back'), href: projects_path)
 
     visit project_scripts_path(project.id)
-    expect(page).to have_link(script.name, href: edit_project_script_path(project.id,script.id))
+    expect(page).to have_link(script.name, href: project_script_path(project.id,script.id))
 
     visit edit_project_script_path(project.id,script.id)
     expect(page).to have_link(I18n.t('buttons.delete'), href: project_script_path(project.id,script.id))

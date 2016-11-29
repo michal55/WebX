@@ -10,7 +10,7 @@
         <%= link_to(t('buttons.delete'), project_script_frequency_path(@project.id, @script.id, @frequency.id), method: :delete, class: 'btn btn-danger btn-block') %>
         <div class="login-group">
           <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
-          <%= link_to(t('buttons.back'), project_script_frequencies_path(@project.id, @script.id), class: 'btn') %>
+          <%= link_to(t('buttons.back'), :back, class: 'btn') %>
         </div>
     <% end %>
 <% end %>
