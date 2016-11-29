@@ -54,10 +54,10 @@ describe 'API data/', type: :request do
       project_id = script.project_id
       script_id = script.id
       access_token = create(:doorkeeper_token, resource_owner_id: Project.find_by(id: project_id).user_id)
-      put "/api/data/user/project/#{project_id}/scripts/#{script_id}", format: :json, access_token: access_token.token ,'ACCEPT' => "application/json", 'CONTENT_TYPE' => 'application/json'#, body => "{\"url\":\"\",\"data\":[{\"name\":\"Integer\",\"value\":\"\"},{\"name\":\"String\",\"value\":\"\"}]}"
+      put "/api/data/user/project/#{project_id}/scripts/#{script_id}", format: :json, access_token: access_token.token ,'ACCEPT' => "application/json", 'CONTENT_TYPE' => 'application/json',"url"=>"www.google.com", "data"=>[{"name"=>"Integer", "value"=>"12345"}, {"name"=>"String", "value"=>"tralala"}]#, body => "{\"url\":\"\",\"data\":[{\"name\":\"Integer\",\"value\":\"\"},{\"name\":\"String\",\"value\":\"\"}]}"
       expect(response.response_code).to eq(200)
-      #script.reload
-      #expect(script.xpaths).to eq("{\"url\":\"\",\"data\":[{\"name\":\"Integer\",\"value\":\"\"},{\"name\":\"String\",\"value\":\"\"}]}")
+      script.reload
+      expect(script.xpaths.to_json).to eq("{\"url\":\"www.google.com\",\"data\":[{\"name\":\"Integer\",\"value\":\"12345\"},{\"name\":\"String\",\"value\":\"tralala\"}]}")
     end
 
   end

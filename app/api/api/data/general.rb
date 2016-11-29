@@ -30,11 +30,14 @@ module API
             get '/:id/data_schemas' do
               DataSchema.where(project_id: params[:id])
             end
-
+            params do
+              requires :url, type: String
+              requires :data, type: Array
+            end
             put '/:id/scripts/:id_script' do
               error!('401 Unauthorized', 401) unless Script.find_by(id: params[:id_script]).project_id == params[:id].to_i and Project.find_by(id: params[:id]).user_id == doorkeeper_token[:resource_owner_id]
               script = Script.find_by(id: params[:id_script])
-              script.xpaths = request.body.read
+              script.xpaths = {"url" => params[:url], "data" => params[:data]} #request.body.read
               script.save!
             end
 
