@@ -1,8 +1,13 @@
-queue:
+queue_sample:
   cron: "0 * * * *"
   class: "SampleResqueJob"
   queue: sample_resque_job
   args:
   description: "Popis"
 
-
+queue_crawler:
+  cron: "*/5 * * * *"
+  class: "CrawlerInitializer"
+  queue: crawler_initializer
+  args:
+  description: "Find jobs suitable for crawling"
