@@ -122,12 +122,17 @@ en:
     columns:
       field: "Field"
       value: "Value"
+    index: "Data"
 
   extractions:
     index: "Extractions"
     columns:
       created_at: "Created"
+      executed: "Executed"
+      execution_time: "Execution time"
+      status: "Status"
       updated_at: "Updated"
+
 
   buttons:
     delete: "Delete"

@@ -11,7 +11,7 @@
           <%=t('scripts.columns.name')%>
         </th>
         <th>
-          <%=t('scripts.columns.frequencies')%>
+          <%= t('scripts.columns.extract') %>
         </th>
       </tr>
       </thead>
@@ -20,6 +20,9 @@
         <tr>
           <td>
             <%=link_to(s.name, project_script_path(@project.id, s.id) )%>
+          </td>
+          <td>
+            <%= link_to(t('scripts.columns.access'), project_script_extractions_path(@project.id, s.id)) %>
           </td>
         </tr>
       <% end %>
