@@ -35,3 +35,5 @@ after_success:
 - "[[ $TRAVIS_BRANCH = 'master' ]] && bundle exec cap master deploy"
 notifications:
   slack: teamwebx:VHTdNTZxyP8rHumLGGBdv3PU
+services:
+- redis-server
