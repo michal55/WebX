@@ -10,7 +10,8 @@
 <%= render 'layouts/header' %>
 	<div class="row main-content">
 		<div class="col-md-12">
- 			<%= yield %>
+ 		    <%= yield %>
+            <%= yield :javascript %>
  		</div>
 	</div>
 <%= render 'layouts/footer' %>
