@@ -11,20 +11,26 @@ class CrawlerInitializer
 
   # Action
   def self.perform()
-    # Get scripts where first exec is in history and last exec is null || last exec + period * frequency < now
-    # run crawler in loop
-    # update last run
-    # for skrit.na_vykonanmie?.first do |s|
-    #     s.lastrun =  now
-    #     new tread(crawler.execute(s)) #10minut
-    # end
+    puts('CRAWLER ENQUE')
+    
+    time_now = Time.now
+    frequencies = find_frequencies(time_now)
+    puts(frequencies.length)
+
+    frequencies.each do |f|
+      f.last_run = time_now
+      f.save!
+      script = f.script
+      Thread.new { Crawler.execute(script) }
+    end
 
   end
 
-  def self.find_scripts
-    t = Time.now
-    freqencies = Frequency.where("first_exec < '#{Time.now}' AND last_run IS NULL")
-    freqencies << Frequency.where("'date' last_run + interval period  > '#{Time.now}'")
+  def self.find_frequencies(time)
+
+    freqencies = Frequency.where("first_exec < '#{time}' AND last_run IS NULL")
+    freqencies + Frequency.where("EXTRACT(EPOCH FROM last_run) + epoch < #{time.to_i}")
+    return freqencies
   end
 
 
