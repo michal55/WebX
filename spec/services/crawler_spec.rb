@@ -18,7 +18,10 @@ describe 'Extracting data from rubygems.org' do
     script.save
     Crawler.execute(script)
     extraction = Extraction.find_by(script_id: script.id)
+    expect(extraction.success).to eq true
     expect(extraction.extraction_data[0].value).to eq "Gems"
     expect(extraction.extraction_data[1].value).to eq "Find, install, and publish RubyGems."
+    script = Script.find(script.id)
+    expect(script.last_run).to be > script.created_at
   end
 end
