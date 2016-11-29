@@ -1,18 +1,18 @@
 class SampleResqueJob
 
-  # Zabezpecime opakovanie jobu, ak zlyhal.
+  # Retry the failed job
   extend Resque::Plugins::Retry
   extend Resque::Plugins::ExponentialBackoff
 
   @queue = :sample_resque_job
 
-  # Failnuty job sa obnovi o 1 minutu, potom znovu o 5 minut a napokon o 30 minut.
+  # Failed job restore times
   @backoff_strategy = [60, 5*60, 30*60, 2*60*60]
 
-  # Akcia pre Resque.
+  # Action
   def self.perform()
     puts 'Resque Sample'
-
+    sleep(5)
   end
 
 
