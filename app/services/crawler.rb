@@ -5,19 +5,21 @@ module Crawler
     @doc = Nokogiri::HTML(open(script_json['url']))
     extraction = Extraction.new
     extraction.script_id = script.id
-    extraction.save
+    extraction.save!
 
     script_json['data'].each do |x|
       extraction_datum = ExtractionDatum.new
       extraction_datum.extraction_id = extraction.id
       extraction_datum.field_name = x['name']   #TODO FK miesto nazvov
       extraction_datum.value = @doc.xpath assert_text x['value']
-      extraction_datum.save
+      extraction_datum.save!
     end
 
-    extraction.execution_time = Time.now - extraction.created_at
+    script.last_run = Time.now
+    script.save!
+    extraction.execution_time = script.last_run - extraction.created_at
     extraction.success = true
-    extraction.save
+    extraction.save!
 
   end
 
