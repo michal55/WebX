@@ -103,7 +103,9 @@ en:
     edit: "Edit script"
     columns:
       name: "Script"
+      extract: "Extractions"
       action: "Actions"
+      access: "access"
 
   data_schemas:
     index: "Data Schema"
@@ -119,6 +121,12 @@ en:
     columns:
       field: "Field"
       value: "Value"
+
+  extractions:
+    index: "Extractions"
+    columns:
+      created_at: "Created"
+      updated_at: "Updated"
 
   buttons:
     delete: "Delete"
