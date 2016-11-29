@@ -20,6 +20,12 @@ class ScriptsController < ApplicationController
     redirect_to project_scripts_path
   end
 
+  def show
+    @script = Script.find(params[:id])
+    @project = Project.find(params[:project_id])
+    @new_frequency = Frequency.new(script: @script)
+  end
+
   def edit
     @script = Script.find(params[:id])
     @project = Project.find(params[:project_id])

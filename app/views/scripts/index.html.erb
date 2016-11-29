@@ -11,7 +11,7 @@
           <%=t('scripts.columns.name')%>
         </th>
         <th>
-          <%=t('scripts.columns.extract')%>
+          <%= t('scripts.columns.extract') %>
         </th>
       </tr>
       </thead>
@@ -19,10 +19,10 @@
       <% @scripts.each do |s| %>
         <tr>
           <td>
-            <%=link_to(s.name, edit_project_script_path(@project.id, s.id) )%>
+            <%=link_to(s.name, project_script_path(@project.id, s.id) )%>
           </td>
           <td>
-            <%=link_to(t('scripts.columns.access'), project_script_extractions_path(@project.id, s.id) )%>
+            <%= link_to(t('scripts.columns.access'), project_script_extractions_path(@project.id, s.id)) %>
           </td>
         </tr>
       <% end %>

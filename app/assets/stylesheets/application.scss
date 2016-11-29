@@ -10,12 +10,15 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require jquery-ui
+ *= require bootstrap-datetimepicker
  *= require_tree .
  *= require_self
  */
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "bootstrap-datetimepicker";
 
 $primary-color: #263238;
 $light-max: #ECEFF1;

@@ -1,0 +1,11 @@
+<%= extends :basic_panel do %>
+    <%= extends :basic_panel_heading do %>
+        <h1><%= @script.name %></h1>
+    <% end %>
+    <%= extends :basic_panel_body do %>
+        <h3><%= link_to 'Edit', edit_project_script_path(@project.id, @script.id) %></h3>
+        <%= text_area_tag 'xpaths', @script.xpaths, rows: 10, cols: 70  %>
+        <%= render 'frequencies/new', script: @script, project: @project, frequency: @new_frequency %>
+        <%= render 'frequencies/index', script: @script, project: @project, frequencies: @script.frequencies %>
+    <% end %>
+<% end %>
