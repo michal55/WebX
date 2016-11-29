@@ -1,7 +1,7 @@
 require 'rspec'
 require 'rails_helper'
 
-describe 'Extracting data from Lipsum.com' do
+describe 'Extracting data from rubygems.org' do
 
   it 'should extract first header' do
     script = create(:script)
