@@ -14,33 +14,15 @@ class CrawlerInitializer
     puts('CRAWLER ENQUE')
 
     time_now = Time.now
-    frequencies_new,frequencies = find_frequencies(time_now)
-    puts(frequencies_new.length, frequencies.length)
-
-    frequencies_new.each do |f|
-      # First run frequencies
-      f.last_run = time_now
-      f.save!
-      script = f.script
-      Crawler.execute(script)
-    end
-
+    frequencies = Frequency.active(time_now)
+    puts frequencies.size
     frequencies.each do |f|
-      # Regular run
-      f.last_run = time_now
+      f.last_run = time_now #TODO last_run + interval*period
       f.save!
       script = f.script
       Crawler.execute(script)
     end
 
   end
-
-  def self.find_frequencies(time)
-
-    freqencies_new = Frequency.where("first_exec < '#{time}' AND last_run IS NULL")
-    freqencies = Frequency.where("EXTRACT(EPOCH FROM last_run) + epoch < '#{time.to_i}'")
-    return freqencies_new,freqencies
-  end
-
 
 end
