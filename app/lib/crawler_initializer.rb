@@ -11,16 +11,24 @@ class CrawlerInitializer
 
   # Action
   def self.perform()
-    puts('CRAWLER ENQUE')
+    puts('[DEBUG] CRAWLER ENQUE')
 
     time_now = Time.now
-    frequencies = Frequency.active(time_now)
-    puts frequencies.size
+    frequencies = Frequency.all
+
     frequencies.each do |f|
-      f.last_run = time_now #TODO last_run + interval*period
+      should_run = f.last_run + eval(f.interval.to_s + '.' + f.period)
+
+      if should_run > time_now
+        # should run in future, not now
+        next
+      end
+
+      f.last_run = time_now
       f.save!
       script = f.script
-      Crawler.execute(script)
+      print("[DEBUG] Enqueing script: ", script.name,' | Frequency: ', f.id, "\n")
+      Resque.enqueue(CrawlerExecuter,script.id)
     end
 
   end
