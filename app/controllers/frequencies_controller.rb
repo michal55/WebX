@@ -40,4 +40,5 @@ class FrequenciesController < ApplicationController
     @frequency.destroy!
     redirect_to :back
   end
+
 end

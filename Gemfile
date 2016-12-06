@@ -38,6 +38,15 @@ gem 'grape'
 
 gem 'unicorn'
 
+# A Ruby client library for Redis.
+gem 'redis', '>=3.2'
+
+gem 'resque-web', require: 'resque_web'
+gem 'resque-scheduler', '4.3.0'
+gem 'resque-pool', '0.6.0'
+gem 'resque-retry', '1.5.0'
+gem 'resque-rollbar', '~> 0.4.0'
+
 # Boostrap
 gem 'bootstrap-sass', '>= 3.3.6'
 gem 'momentjs-rails', '>= 2.9.0'

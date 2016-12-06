@@ -62,3 +62,11 @@ server '147.175.149.171',
      auth_methods: %w(publickey password)
      # password: 'please use keys'
    }
+
+
+# Resque setup by Rasťo
+
+# set :workers, YAML::load(File.open('config/resque-pool.yml'))['staging']
+
+# role :resque_worker, 'localhost'
+# role :resque_scheduler, 'localhost'

@@ -1,0 +1,16 @@
+default:
+  host: localhost
+  port: 6379
+  timeout: 0.7
+
+development:
+  db: 7
+
+test:
+  db: 8
+
+production:
+  db: 9
+
+staging:
+  db: 10
