@@ -1,22 +1,26 @@
-<table class="table table-striped table-hover">
-  <thead>
-    <tr>
-      <th><%=t('scripts.columns.name')%></th>
-      <th><%= t('scripts.columns.extract') %></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-  <% @scripts.each do |s| %>
-    <tr>
-      <td><%=link_to(s.name, project_script_path(@project.id, s.id) )%></td>
-      <td><%= s.extractions.length %></td>
-      <td>
-        <%= link_to project_script_path(@project.id, s.id), method: :delete do %>
-          <span class="glyphicon glyphicon-erase"></span>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+<% if @scripts.length == 0 %>
+    <%= t('scripts.no_script') %>
+<% else %>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th><%=t('scripts.columns.name')%></th>
+        <th><%= t('scripts.columns.extract') %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @scripts.each do |s| %>
+      <tr>
+        <td><%=link_to(s.name, project_script_path(@project.id, s.id) )%></td>
+        <td><%= s.extractions.length %></td>
+        <td>
+          <%= link_to project_script_path(@project.id, s.id), method: :delete do %>
+            <span class="glyphicon glyphicon-erase"></span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>

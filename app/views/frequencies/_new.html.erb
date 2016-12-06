@@ -1,40 +1,24 @@
 <%= form_for([frequency], url: project_script_frequencies_path(project, script)) do |f|  %>
-    <table class="table table-striped table-hover">
-      <thead>
-      <tr>
-        <th>
-          <%= f.label(:interval) %>
-        </th>
-        <th>
-          <%= f.label(:period) %>
-        </th>
-        <th>
-          <%= f.label(:first_exec) %>
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>
-          <%= f.text_field(:interval, class: 'form-control') %>
-        </td>
-        <td>
-          <%= f.select :period, select_periods, {}, class: 'form-control input-sm' %>
-        </td>
-        <td>
-          <div class='input-group date' id='datetimepicker'>
-            <%= f.text_field(:first_exec, class: 'form-control') %>
-            <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-          </div>
-        </td>
-        <td>
-          <%= f.submit(t('frequencies.new_button'), class: 'btn btn-primary') %>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+<tr>
+  <td>
+    <%= f.text_field(:interval, class: 'form-control') %>
+  </td>
+  <td>
+    <%= f.select :period, select_periods, {}, class: 'form-control input-sm' %>
+  </td>
+  <td>
+    <div class='input-group date' id='datetimepicker'>
+      <%= f.text_field(:first_exec, class: 'form-control') %>
+      <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+    </div>
+  </td>
+  <td>
+    <%= f.submit(t('frequencies.new_button'), class: 'btn btn-primary') %>
+  </td>
+  <td> </td>
+</tr>
 <% end %>
 
 <% content_for :javascript do %>

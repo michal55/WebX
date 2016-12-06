@@ -93,6 +93,7 @@ en:
       name: "Project"
       action: "access"
       scripts: "Scripts"
+    no_projects: "You have no projects"
 
   scripts:
     index: "Scripts"
@@ -105,7 +106,7 @@ en:
       action: "Actions"
       frequencies: "Frequencies"
       access: "access"
-
+    no_script: "Your project does not have any scripts"
   data_schemas:
     index: "Data Schema"
     new: "New field"
@@ -115,6 +116,8 @@ en:
       name: "Field"
       type: "Type"
       action: "Actions"
+    no_schemas: "Your project does not have any data schema"
+    placeholder_new: "Add data schema field"
 
   extraction_datum:
     columns:
@@ -152,3 +155,4 @@ en:
       period: "Period"
       first_exec: "First execution"
       edit: "Edit frequency"
+    no_frequency: "Your script has no running frequency"

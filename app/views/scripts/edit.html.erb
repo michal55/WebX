@@ -6,7 +6,7 @@
     <%= link_to(t('buttons.delete'), project_script_path, method: :delete, class: 'btn btn-danger btn-block') %>
     <div class="login-group">
       <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
-      <%= link_to(t('buttons.back'), project_scripts_path(@project.id), class: 'btn') %>
+      <%= link_to(t('buttons.back'), project_script_path(@project.id, @script.id), class: 'btn') %>
     </div>
   <% end %>
 <% end %>
