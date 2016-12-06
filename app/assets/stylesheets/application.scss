@@ -226,3 +226,24 @@ div.form-group {
 .extraction-fail {
   color: red;
 }
+
+.editable {
+	line-height: 0em;
+	font-size: 24px;
+	transition-property: padding-left;
+	&:not(:focus) {
+		background: transparent;
+		border: transparent;
+		box-shadow: none;
+		cursor: pointer;
+		padding-left: 0px;
+		background-position: 100%;
+		color: $primary-color;
+		&:hover {
+			background-image: url(/webx/assets/pencil.png);
+			background-size: 20px;
+			background-repeat: no-repeat;
+			background-position: 100%;
+		}
+	}
+}

@@ -1,0 +1,55 @@
+<%= extends :basic_panel do %>
+  <%= form_for(@project, remote: true) do |f|  %>
+    <%= extends :basic_panel_heading do %>
+      <%= f.text_field(:name, class: 'form-control editable') %>
+    <% end %>
+    <%= extends :basic_panel_body do %>
+    <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
+    <%= link_to(t('scripts.new_button'), new_project_script_path(@project.id), class: "btn btn-primary" )%>
+    <% end %>
+  <% end %>
+  <%= extends :basic_panel_body do %>
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th>
+          <%=t('scripts.columns.name')%>
+        </th>
+        <th>
+          <%= t('scripts.columns.extract') %>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @scripts.each do |s| %>
+        <tr>
+          <td>
+            <%=link_to(s.name, project_script_path(@project.id, s.id) )%>
+          </td>
+          <td>
+            <%= link_to(t('scripts.columns.access'), project_script_extractions_path(@project.id, s.id)) %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <hr>
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th> <%=t('data_schemas.columns.name')%> </th>
+        <th> <%=t('data_schemas.columns.type')%> </th>
+      </tr>
+      </thead>
+      <tbody>
+      <%= render 'data_schemas/new'%>
+      <% @data_schema.each do |d| %>
+        <tr>
+          <td> <%=link_to(d.name, edit_project_data_schema_path(@project.id, d.id) )%> </td>
+          <td style="width:200px" > <%= d.data_type%> </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+<% end %>
