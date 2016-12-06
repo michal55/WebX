@@ -93,8 +93,6 @@ en:
       name: "Project"
       action: "access"
       scripts: "Scripts"
-      data_schema: "Data Schema"
-
 
   scripts:
     index: "Scripts"
