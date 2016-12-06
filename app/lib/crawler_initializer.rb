@@ -24,7 +24,7 @@ class CrawlerInitializer
         next
       end
 
-      f.last_run = time_now
+      f.last_run = Time.at((time_now.to_f/ 300).floor * 300 ) # floor to 5 min 
       f.save!
       script = f.script
       print("[DEBUG] Enqueing script: ", script.name,' | Frequency: ', f.id, "\n")
