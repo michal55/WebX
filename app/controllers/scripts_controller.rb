@@ -17,7 +17,7 @@ class ScriptsController < ApplicationController
     @script_new = Script.new
     @script_new.assign_attributes({name: params[:script][:name], project_id:  params[:project_id] })
     @script_new.save!
-    redirect_to project_scripts_path
+    redirect_to project_path(params[:project_id])
   end
 
   def show
@@ -42,6 +42,6 @@ class ScriptsController < ApplicationController
   def destroy
     @script = Script.find(params[:id])
     @script.destroy!
-    redirect_to project_scripts_path
+    redirect_to project_path(params[:project_id])
   end
 end
