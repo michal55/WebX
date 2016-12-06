@@ -1,16 +1,16 @@
 <tr>
+  <td>
     <%= form_for([@project, @data_schema_new], :url => project_data_schemas_path(@project)) do |f|  %>
-      <td> 
-        <div class="input-group">
-          <%= f.text_field(:name, class: 'form-control') %>
-          <span class="input-group-addon" id="basic-addon1"><%= f.submit(t('buttons.create'), class: 'input-group-addon') %></span> 
-        </div>
-      </td>
-      <td>
-        <div class="form-group"> 
-          <%= f.select(:data_type, DataSchema.data_types, {}, { class: 'form-control input-sm' })%>
-        </div>
-      </td>
+    <div class="input-group">
+      <%= f.text_field(:name, class: 'form-control') %>
+      <span class="input-group-addon" id="basic-addon1"><%= f.submit(t('buttons.create'), class: 'input-group-addon') %></span>
+    </div>
+  </td>
+  <td>
+    <div class="form-group">
+      <%= f.select(:data_type, DataSchema.data_types, {}, { class: 'form-control input-sm' })%>
+    </div>
     <% end %>
+  </td>
 </tr>
 
