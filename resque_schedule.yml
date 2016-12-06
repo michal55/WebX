@@ -3,7 +3,7 @@ queue_sample:
   class: "SampleResqueJob"
   queue: sample_resque_job
   args:
-  description: "Popis"
+  description: "Sample description"
 
 queue_crawler:
   cron: "*/5 * * * *"

@@ -68,5 +68,5 @@ server '147.175.149.171',
 
 # set :workers, YAML::load(File.open('config/resque-pool.yml'))['staging']
 
-# role :resque_worker, '147.175.149.238'
-# role :resque_scheduler, '147.175.149.238'
+# role :resque_worker, 'localhost'
+# role :resque_scheduler, 'localhost'

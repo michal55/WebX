@@ -1,4 +1,3 @@
-# Pool nahradte queue ktoru chcete aby bola spustena a cislo urcuje ich pocet
 sample_resque_job: 1
 crawler_initializer: 1
 crawler_executer: 1

@@ -16,5 +16,4 @@ class CrawlerExecuter
     Crawler.execute(script)
   end
 
-
 end

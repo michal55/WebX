@@ -14,7 +14,7 @@ Resque::Failure.backend = Resque::Failure::Multiple
 
 Resque.schedule = YAML.load_file('resque_schedule.yml')
 
-# Pripojenie na redis.
+# Redis connection
 REDIS_CONFIG = YAML.load(File.open(Rails.root.join("config/redis.yml"))).symbolize_keys
 default_config = REDIS_CONFIG[:default].symbolize_keys
 if REDIS_CONFIG[Rails.env.to_sym]

@@ -1,7 +1,7 @@
 class FrequenciesController < ApplicationController
   def create
     @frequency_new = Frequency.new
-    @frequency_new.assign_attributes({script_id: params[:script_id], interval: params[:frequency][:interval], period: params[:frequency][:period], first_exec: params[:frequency][:first_exec], epoch: compute_epoch(params[:frequency][:interval], params[:frequency][:period])})
+    @frequency_new.assign_attributes({script_id: params[:script_id], interval: params[:frequency][:interval], period: params[:frequency][:period], first_exec: params[:frequency][:first_exec]})
     @frequency_new.save!
     redirect_to :back
   end
@@ -31,7 +31,6 @@ class FrequenciesController < ApplicationController
     @frequency.interval = params[:frequency][:interval]
     @frequency.period = params[:frequency][:period]
     @frequency.first_exec = params[:frequency][:first_exec]
-    @frequency.epoch = compute_epoch(params[:frequency][:interval], params[:frequency][:period])
     @frequency.save!
     redirect_to project_script_path(params[:project_id], params[:script_id])
   end
@@ -40,10 +39,6 @@ class FrequenciesController < ApplicationController
     @frequency = Frequency.find(params[:id])
     @frequency.destroy!
     redirect_to :back
-  end
-
-  def compute_epoch(interval, period)
-    (interval.to_i)*eval('1.' + period).to_i
   end
 
 end
