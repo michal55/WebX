@@ -18,8 +18,8 @@ module ExtractionHelper
     t('extractions.fail')
   end
 
-  def color status
-    return 'limegreen' if status
-    'red'
+  def class status
+    return 'extraction-success' if status
+    'extraction-fail'
   end
 end
