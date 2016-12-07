@@ -57,7 +57,7 @@ server '147.175.149.171',
    roles: %w{web app db},
    ssh_options: {
      user: 'user_name', # overrides user setting above
-     keys: ["config/deploy_id_rsa"] if File.exist?("config/deploy_id_rsa")  #%w(/home/user_name/.ssh/id_rsa),
+     keys: ["config/deploy_id_rsa"],  #%w(/home/user_name/.ssh/id_rsa),
      forward_agent: false,
      auth_methods: %w(publickey password)
      # password: 'please use keys'
