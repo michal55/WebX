@@ -18,7 +18,7 @@ module ExtractionHelper
     t('extractions.fail')
   end
 
-  def class status
+  def find_class status
     return 'extraction-success' if status
     'extraction-fail'
   end
