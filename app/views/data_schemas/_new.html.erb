@@ -8,7 +8,7 @@
           <%= f.select(:data_type, DataSchema.data_types, {}, { class: 'form-control input-sm' })%>
         </div>
       </td>
-      <td><span class="input-group-addon" id="basic-addon1"><%= f.submit(t('buttons.create'), class: 'input-group-addon btn btn-primary') %></span></td>
+      <td><%= f.submit(t('buttons.create'), class: 'btn btn-primary') %></td>
     <% end %>
 </tr>
 
