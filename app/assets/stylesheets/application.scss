@@ -231,7 +231,7 @@ div.form-group {
 }
 
 .editable {
-	line-height: 0em;
+    height: 40px;
 	transition-property: padding-left;
 	padding-left: 24px;
 	background: linear-gradient(to right, rgba(255,255,255,0.93) , rgba(255,255,255,0));
