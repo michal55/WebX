@@ -14,7 +14,7 @@
       <tr>
         <td><%=link_to(s.name, project_script_path(@project.id, s.id) )%></td>
         <td><%= s.extractions.length %></td>
-        <td>
+        <td class="action-icon" >
           <%= link_to project_script_path(@project.id, s.id), method: :delete do %>
             <span class="glyphicon glyphicon-erase"></span>
           <% end %>

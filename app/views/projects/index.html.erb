@@ -12,7 +12,7 @@
         <tr>
           <th> <%=t('projects.columns.name')%> </th>
           <th> <%=t('projects.columns.scripts')%> </th>
-          <th></th>
+          <th class="action-icon"></th>
         </tr>
         </thead>
         <tbody>
@@ -20,7 +20,7 @@
           <tr>
             <td> <%=link_to(p.name, project_path(p.id) )%> </td>
             <td> <%= p.scripts.length %> </td>
-            <td>
+            <td class="action-icon" >
               <%= link_to project_path(p.id), method: :delete do %>
                 <span class="glyphicon glyphicon-erase"></span>
               <% end %>

@@ -17,7 +17,7 @@
       <tr>
         <td> <%=link_to(d.name, edit_project_data_schema_path(@project.id, d.id) )%> </td>
         <td style="width:200px" > <%= d.data_type%> </td>
-        <td>
+        <td class="action-icon" >
           <%= link_to project_data_schema_path(@project.id, d.id), method: :delete do %>
             <span class="glyphicon glyphicon-erase"></span>
           <% end %>
