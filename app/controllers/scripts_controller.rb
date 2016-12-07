@@ -35,17 +35,8 @@ class ScriptsController < ApplicationController
   def update
     @script = Script.find(params[:id])
     @script.name = params[:script][:name]
-
-    hash = Hash.new
-    hash = JSON.parse params[:script][:xpaths].gsub('=>',':')
-    @script.xpaths['url'] = hash['url']
-    (0...hash['data'].size).each do |i|
-      data = {}
-      data = JSON.parse hash['data'][i].to_s.gsub('=>',':')
-      @script.xpaths['data'][i]['name'] = data['name']
-      @script.xpaths['data'][i]['value'] = data['value']
-    end
-
+    puts params[:script][:xpaths]
+    @script.xpaths = params[:script][:xpaths]
     @script.save!
     render nothing: true, status: 200, content_type: "text/html"
   end
