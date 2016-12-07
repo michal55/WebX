@@ -132,6 +132,8 @@ en:
       execution_time: "Execution time"
       status: "Status"
       updated_at: "Updated"
+    fail: "Fail"
+    success: "Success"
 
 
   buttons:

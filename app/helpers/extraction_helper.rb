@@ -14,8 +14,8 @@ module ExtractionHelper
   end
 
   def status status
-    return 'succes' if status
-    'fail'
+    return t('extractions.success') if status
+    t('extractions.fail')
   end
 
   def color status
