@@ -3,9 +3,13 @@ module ExtractionHelper
     if seconds.nil?
       ''
     elsif seconds < 1
-      Time.at(seconds).utc.strftime("%-Lms")
+      Time.at(seconds).utc.strftime("%-Lms").to_s.sub(/^[0]*/,"")
     else
-      Time.at(seconds).utc.strftime("%-Ss %-Lms")
+      result = ""
+      Time.at(seconds).utc.strftime("%-Ss %-Lms").to_s.split(' ').each do |s|
+        result += s.sub(/^[0]*/," ")
+      end
+      result
     end
   end
 
