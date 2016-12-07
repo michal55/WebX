@@ -1,15 +1,15 @@
 FactoryGirl.define do
-  factory :data_schema do
+  factory :data_field do
     name 'name_integer'
-    data_type DataSchema.data_types[:integer]
-    after(:create) do |data_schema|
-      data_schema.project = FactoryGirl.create(:project)
-      data_schema.save!
+    data_type DataField.data_types[:integer]
+    after(:create) do |data_field|
+      data_field.project = FactoryGirl.create(:project)
+      data_field.save!
     end
   end
-  factory :data_schema_general, class: DataSchema do
+  factory :data_field_general, class: DataField do
     name 'name'
-    data_type DataSchema.data_types[:integer]
+    data_type DataField.data_types[:integer]
     project_id 10000
   end
 

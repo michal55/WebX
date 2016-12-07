@@ -12,11 +12,11 @@ def new_script(name, project_id)
   script
 end
 
-def new_data_schema(name, data_type, project_id)
-  data_schema = DataSchema.new
-  data_schema.assign_attributes({name: name, data_type: data_type.to_i, project_id: project_id})
-  data_schema.save!
-  data_schema
+def new_data_field(name, data_type, project_id)
+  data_field = DataField.new
+  data_field.assign_attributes({name: name, data_type: data_type.to_i, project_id: project_id})
+  data_field.save!
+  data_field
 end
 
 namespace :db do
@@ -37,9 +37,9 @@ namespace :db do
     script4 = new_script('script 4', project3.id)
     script5 = new_script('script 5', project3.id)
 
-    data_schema1 = new_data_schema('data field 1', DataSchema.data_types[:integer], project1.id)
-    data_schema2 = new_data_schema('data field 2', DataSchema.data_types[:string], project1.id)
-    data_schema3 = new_data_schema('data field 3', DataSchema.data_types[:integer], project2.id)
-    data_schema4 = new_data_schema('data field 4', DataSchema.data_types[:integer], project3.id)
+    data_field1 = new_data_field('data field 1', DataField.data_types[:integer], project1.id)
+    data_field2 = new_data_field('data field 2', DataField.data_types[:string], project1.id)
+    data_field3 = new_data_field('data field 3', DataField.data_types[:integer], project2.id)
+    data_field4 = new_data_field('data field 4', DataField.data_types[:integer], project3.id)
   end
 end

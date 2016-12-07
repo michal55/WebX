@@ -17,7 +17,7 @@
         <tr>
           <td> <%=link_to(p.name, edit_project_path(p.id) )%> </td>
           <td> <%=link_to(t('projects.columns.action'), project_scripts_path(p.id) )%> </td>
-          <td> <%=link_to(t('projects.columns.action'), project_data_schemas_path(p.id) )%> </td>
+          <td> <%=link_to(t('projects.columns.action'), project_data_fields_path(p.id) )%> </td>
         </tr>
       <% end%>
       </tbody>

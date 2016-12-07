@@ -19,8 +19,8 @@ describe 'API data/', type: :request do
       script = create(:script_api) 
       project_id = script.project_id
       script_id = script.id
-      create(:data_schema_general, name: "Integer", data_type: DataSchema.data_types[:integer], project_id: project_id)
-      create(:data_schema_general, name: "String", data_type: DataSchema.data_types[:string], project_id: project_id)
+      create(:data_field_general, name: "Integer", data_type: DataField.data_types[:integer], project_id: project_id)
+      create(:data_field_general, name: "String", data_type: DataField.data_types[:string], project_id: project_id)
       access_token = create(:doorkeeper_token, resource_owner_id: Project.find_by(id: project_id).user_id)
       get "/api/data/user/project/#{project_id}/scripts/#{script_id}", format: :json, access_token: access_token.token    
       expect(response.body).to eq("{\"url\":\"\",\"data\":[{\"name\":\"Integer\",\"value\":\"\"},{\"name\":\"String\",\"value\":\"\"}]}")
@@ -29,8 +29,8 @@ describe 'API data/', type: :request do
       script = create(:script_api) #Script.find_by(name: "Script_Factory_api")
       script_id = script.id
       project_id = script.project_id
-      create(:data_schema_general, name: "Integer", data_type: DataSchema.data_types[:integer], project_id: project_id)
-      create(:data_schema_general, name: "String", data_type: DataSchema.data_types[:string], project_id: project_id)
+      create(:data_field_general, name: "Integer", data_type: DataField.data_types[:integer], project_id: project_id)
+      create(:data_field_general, name: "String", data_type: DataField.data_types[:string], project_id: project_id)
       access_token = create(:doorkeeper_token, resource_owner_id: Project.find_by(id: project_id).user_id)
       script.xpaths = JSON.parse("{\"url\":\"www.google.com\",\"data\":[{\"name\":\"Integer\",\"value\":\"12345\"},{\"name\":\"String\",\"value\":\"tralala\"}]}")
       script.save!
@@ -41,8 +41,8 @@ describe 'API data/', type: :request do
       script = create(:script_api) #Script.find_by(name: "Script_Factory_api")
       script_id = script.id
       project_id = script.project_id
-      create(:data_schema_general, name: "Integer", data_type: DataSchema.data_types[:integer], project_id: project_id)
-      create(:data_schema_general, name: "String", data_type: DataSchema.data_types[:string], project_id: project_id)
+      create(:data_field_general, name: "Integer", data_type: DataField.data_types[:integer], project_id: project_id)
+      create(:data_field_general, name: "String", data_type: DataField.data_types[:string], project_id: project_id)
       access_token = create(:doorkeeper_token, resource_owner_id: Project.find_by(id: project_id).user_id)
       script.xpaths = JSON.parse("{\"url\":\"www.google.com\",\"data\":[{\"name\":\"Testujeme\",\"value\":\"SSSDSDASDA\"},{\"name\":\"String\",\"value\":\"tralala\"}]}")
       script.save!

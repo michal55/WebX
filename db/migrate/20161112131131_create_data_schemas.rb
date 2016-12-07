@@ -1,6 +1,6 @@
 class CreateDataSchemas < ActiveRecord::Migration
   def change
-    create_table :data_schemas do |t|
+    create_table :data_fields do |t|
 
       t.timestamps null: false
       t.string :name

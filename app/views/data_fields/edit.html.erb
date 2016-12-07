@@ -1,0 +1,15 @@
+<%= extends :basic_form do %>
+  <%= form_for([@project, @data_field], :url => project_data_field_path(@project,@data_field)) do |f|  %>
+    <h1><%= t('data_schemas.edit') %></h1>
+    <%= f.label(:name) %>
+    <%= f.text_field(:name, class: 'form-control') %>
+    <%= f.label(t('data_schemas.type')) %>
+    <%= f.select(:data_type, DataField.data_types)%>
+    <%= link_to(t('buttons.delete'), project_data_field_path, method: :delete, class: 'btn btn-danger btn-block') %>
+    <div class="login-group">
+      <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
+      <%= link_to(t('buttons.back'), project_data_fields_path(@project.id), class: 'btn') %>
+    </div>
+  <% end %>
+<% end %>
+
