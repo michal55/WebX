@@ -233,23 +233,34 @@ div.form-group {
 .editable {
 	line-height: 0em;
 	transition-property: padding-left;
+	padding-left: 24px;
+	background: linear-gradient(to right, rgba(255,255,255,0.93) , rgba(255,255,255,0));
+	border: none;
 	&:not(:focus) {
 		background: transparent;
-		border: transparent;
 		box-shadow: none;
 		cursor: pointer;
 		padding-left: 0px;
-		background-position: 100%;
+		background-position: 10%;
 		color: $primary-color;
 		&:hover {
+			padding-left: 24px;
 			background-image: url(/webx/assets/pencil.png);
 			background-size: 20px;
 			background-repeat: no-repeat;
-			background-position: 100%;
+			background-position: 0%;
 		}
 	}
 }
 
-thead {
-	background-image: url(/webx/assets/main.jpg);
+.action-icon {
+	width: 20px;
+	max-width: 20px;
+}
+
+.active-tr {
+	td {
+		padding-top: 0px;
+		padding-bottom: 0px;
+	}
 }
