@@ -27,8 +27,8 @@ module API
               Script.where(project_id: params[:id])
             end
 
-            get '/:id/data_schemas' do
-              DataSchema.where(project_id: params[:id])
+            get '/:id/data_fields' do
+              DataField.where(project_id: params[:id])
             end
             params do
               requires :url, type: String
@@ -46,10 +46,10 @@ module API
               xpaths = Script.find_by(id: params[:id_script]).xpaths
               if xpaths == nil
                 xpaths = {"url" => "" , "data" => []}
-                DataSchema.where(project_id: params[:id]).each do |d| xpaths["data"].append("name" => d.name, "value" => "") end
+                DataField.where(project_id: params[:id]).each do |d| xpaths["data"].append("name" => d.name, "value" => "") end
                 xpaths
               else
-                names = DataSchema.where(project_id: params[:id]).pluck("name")
+                names = DataField.where(project_id: params[:id]).pluck("name")
                 del_indx = []
                 xpaths["data"].each do |xpath|
                   if names.include?(xpath["name"])
