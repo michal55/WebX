@@ -13,7 +13,7 @@ module ExtractionHelper
     end
   end
 
-  def status status
+  def extraction_status status
     return t('extractions.success') if status
     t('extractions.fail')
   end
