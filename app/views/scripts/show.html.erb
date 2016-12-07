@@ -1,10 +1,23 @@
 <%= extends :basic_panel do %>
+  <%= form_for(@script, remote: true, url: project_script_path(@script.project, @script)) do |f|  %>
     <%= extends :basic_panel_heading do %>
-        <h1><%= @script.name %></h1>
+      <%= f.text_field(:name, class: 'form-control editable heading') %>
+      <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
     <% end %>
     <%= extends :basic_panel_body do %>
-        <h3><%= link_to 'Edit', edit_project_script_path(@project.id, @script.id) %></h3>
-        <%= text_area_tag 'xpaths', @script.xpaths, rows: 10, cols: 70  %>
+      <div class="col-md-6">
+        <h2><%= t('data_schemas.index') %></h2>
+        <%= f.text_area :xpaths, rows: 10, cols: 70, class: 'form-control editable'  %>
+      </div>
+      <div class="col-md-6">
+        <% extractions = Extraction.where(script_id: @script.id, success: true).order('created_at DESC') %>
+        <% if extractions.size > 0 %>
+            <%= render 'last_extraction', extraction: extractions.first  %>
+        <% else %>
+            <%= t('extractions.no_extraction') %>
+        <% end %>
+      </div>
         <%= render 'frequencies/index', script: @script, project: @project, frequencies: @script.frequencies, frequency_new: @new_frequency %>
     <% end %>
+  <% end  %>
 <% end %>

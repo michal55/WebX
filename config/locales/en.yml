@@ -133,6 +133,7 @@ en:
       execution_time: "Execution time"
       status: "Status"
       updated_at: "Updated"
+    no_extraction: "You haven't extracted any data yet"
     fail: "Fail"
     success: "Success"
 
