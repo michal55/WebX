@@ -36,7 +36,7 @@ class ScriptsController < ApplicationController
     @script = Script.find(params[:id])
     @script.name = params[:script][:name]
     puts params[:script][:xpaths]
-    @script.xpaths = params[:script][:xpaths]
+    @script.xpaths = params[:script][:xpaths].gsub("\n","").to_json
     @script.save!
     render nothing: true, status: 200, content_type: "text/html"
   end

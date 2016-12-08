@@ -7,7 +7,7 @@
     <%= extends :basic_panel_body do %>
       <div class="col-md-6">
         <h2><%= t('scripts.index') %></h2>
-        <%= f.text_area :xpaths, value: @script.xpaths.to_json, rows: 10, cols: 70, class: 'form-control editable'  %>
+        <%= f.text_area :xpaths, value: JSON.pretty_generate(@script.xpaths), rows: 25, cols: 70, class: 'form-control editable'  %>
       </div>
       <div class="col-md-6">
         <% extractions = Extraction.where(script_id: @script.id, success: true).order('created_at DESC') %>
