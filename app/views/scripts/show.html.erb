@@ -1,23 +1,22 @@
 <%= extends :basic_panel do %>
-  <%= form_for(@script, remote: true, url: project_script_path(@script.project, @script)) do |f|  %>
-    <%= extends :basic_panel_heading do %>
-      <%= f.text_field(:name, class: 'form-control editable heading') %>
-      <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
+    <%= form_for(@script, remote: true, url: project_script_path(@script.project, @script)) do |f|  %>
+        <%= extends :basic_panel_heading do %>
+            <%= f.text_field(:name, class: 'form-control editable heading') %>
+            <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
+        <% end %>
+        <%= extends :basic_panel_body do %>
+            <div class="col-md-7">
+              <h2><%= t('scripts.index') %></h2>
+              <%= f.text_area :xpaths, value: pretty_json(@script), rows: json_height(@script), cols: 70, class: 'form-control editable'  %>
+            </div>
+            <div class="col-md-5">
+              <% extractions = Extraction.where(script_id: @script.id, success: true).order('created_at DESC') %>
+              <%= render 'last_extraction', extraction: extractions.first if extractions.size > 0 %>
+              <%= t('extractions.no_extraction') unless extractions.size > 0 %>
+            </div>
+        <% end %>
     <% end %>
     <%= extends :basic_panel_body do %>
-      <div class="col-md-6">
-        <h2><%= t('scripts.index') %></h2>
-        <%= f.text_area :xpaths, value: JSON.pretty_generate(@script.xpaths), rows: 25, cols: 70, class: 'form-control editable'  %>
-      </div>
-      <div class="col-md-6">
-        <% extractions = Extraction.where(script_id: @script.id, success: true).order('created_at DESC') %>
-        <% if extractions.size > 0 %>
-            <%= render 'last_extraction', extraction: extractions.first  %>
-        <% else %>
-            <%= t('extractions.no_extraction') %>
-        <% end %>
-      </div>
         <%= render 'frequencies/index', script: @script, project: @project, frequencies: @script.frequencies, frequency_new: @new_frequency %>
     <% end %>
-  <% end  %>
 <% end %>

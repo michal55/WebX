@@ -1,7 +1,7 @@
 <tr class="active-tr">
-    <%= form_for([@project, @data_schema_new], :url => project_data_schemas_path(@project)) do |f|  %>
-      <td> 
-          <%= f.text_field(:name, class: 'form-control', placeholder: t('data_schemas.placeholder_new')) %>
+      <td>
+        <%= form_for([@project, @data_schema_new], :url => project_data_schemas_path(@project)) do |f|  %>
+        <%= f.text_field(:name, class: 'form-control', placeholder: t('data_schemas.placeholder_new')) %>
       </td>
       <td>
         <div class="form-group">

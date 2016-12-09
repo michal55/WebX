@@ -27,7 +27,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: webx_dev1
+  database: webx_dev
   host: localhost
   pool: 5
   username: webx

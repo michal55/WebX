@@ -1,25 +1,26 @@
-<%= form_for([frequency], url: project_script_frequencies_path(project, script)) do |f|  %>
 <tr>
   <td>
-    <%= f.text_field(:interval, class: 'form-control') %>
+    <%= form_for frequency, url: project_script_frequencies_path(project, script) do |f|  %>
+    <%= f.text_field :interval, class: 'form-control' %>
   </td>
   <td>
     <%= f.select :period, select_periods, {}, class: 'form-control input-sm' %>
   </td>
   <td>
     <div class='input-group date' id='datetimepicker'>
-      <%= f.text_field(:first_exec, class: 'form-control') %>
+      <%= f.text_field :first_exec, class: 'form-control' %>
       <span class="input-group-addon">
           <span class="glyphicon glyphicon-calendar"></span>
       </span>
     </div>
   </td>
   <td>
-    <%= f.submit(t('frequencies.new_button'), class: 'btn btn-primary') %>
+    <%= f.submit t('frequencies.new_button'), class: 'btn btn-primary' %>
   </td>
-  <td> </td>
+  <td></td>
+  <% end %>
 </tr>
-<% end %>
+
 
 <% content_for :javascript do %>
     <script type="text/javascript">
