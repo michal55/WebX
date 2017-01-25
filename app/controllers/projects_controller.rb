@@ -24,9 +24,9 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     @scripts = Script.where(project_id: params[:id])
 
-    @data_schema = DataSchema.where(project: @project)
-    @data_schema_new = DataSchema.new
-    @data_schema_new.project = @project
+    @data_field = DataField.where(project: @project)
+    @data_field_new = DataField.new
+    @data_field_new.project = @project
 
     authorize! :read, @project
   end

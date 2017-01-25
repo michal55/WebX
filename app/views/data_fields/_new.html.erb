@@ -1,16 +1,14 @@
-<tr>
-  <td>
-    <%= form_for([@project, @data_field_new], :url => project_data_fields_path(@project)) do |f|  %>
-    <div class="input-group">
-      <%= f.text_field(:name, class: 'form-control') %>
-      <span class="input-group-addon" id="basic-addon1"><%= f.submit(t('buttons.create'), class: 'input-group-addon') %></span>
-    </div>
-  </td>
-  <td>
-    <div class="form-group">
-      <%= f.select(:data_type, DataField.data_types, {}, { class: 'form-control input-sm' })%>
-    </div>
+<tr class="active-tr">
+      <td>
+        <%= form_for([@project, @data_field_new], :url => project_data_fields_path(@project)) do |f|  %>
+        <%= f.text_field(:name, class: 'form-control', placeholder: t('data_fields.placeholder_new')) %>
+      </td>
+      <td>
+        <div class="form-group">
+          <%= f.select(:data_type, DataField.data_types, {}, { class: 'form-control input-sm' })%>
+        </div>
+      </td>
+      <td><%= f.submit(t('buttons.create'), class: 'btn btn-primary') %></td>
     <% end %>
-  </td>
 </tr>
 

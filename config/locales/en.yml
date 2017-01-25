@@ -107,8 +107,8 @@ en:
       frequencies: "Frequencies"
       access: "access"
     no_script: "Your project does not have any scripts"
-  data_schemas:
-    index: "Data Schema"
+  data_fields:
+    index: "Data Field"
     new: "New field"
     edit: "Edit field"
     type: "Type"

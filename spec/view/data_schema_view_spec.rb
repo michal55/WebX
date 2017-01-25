@@ -19,6 +19,6 @@ describe 'DataSchemaView', :type => :feature do
 
 
     visit project_path(project.id)
-    expect(page).to have_link(data_schema.name, href: edit_project_data_schema_path(project.id,data_schema.id))
+    expect(page).to have_link(data_field.name, href: edit_project_data_field_path(project.id,data_field.id))
   end
 end
