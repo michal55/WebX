@@ -13,7 +13,7 @@
     <% @scripts.each do |s| %>
       <tr>
         <td><%=link_to(s.name, project_script_path(@project.id, s.id) )%></td>
-        <td><%= s.extractions.length %></td>
+        <td><%= link_to s.extractions.length, project_script_extractions_path(@project.id, s.id) %></td>
         <td class="action-icon" >
           <%= link_to project_script_path(@project.id, s.id), method: :delete do %>
             <span class="glyphicon glyphicon-erase"></span>
