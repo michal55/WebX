@@ -1,11 +1,22 @@
 <%= extends :basic_panel do %>
-    <%= extends :basic_panel_heading do %>
-        <h1><%= @script.name %></h1>
+    <%= form_for(@script, remote: true, url: project_script_path(@script.project, @script)) do |f|  %>
+        <%= extends :basic_panel_heading do %>
+            <%= f.text_field(:name, class: 'form-control editable heading') %>
+            <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
+        <% end %>
+        <%= extends :basic_panel_body do %>
+            <div class="col-md-7">
+              <h4><%= t('scripts.columns.name') %></h4>
+              <%= f.text_area :xpaths, value: pretty_json(@script), rows: json_height(@script), cols: 70, class: 'form-control editable'  %>
+            </div>
+            <div class="col-md-5">
+              <% extractions = Extraction.where(script_id: @script.id, success: true).order('created_at DESC') %>
+              <%= render 'last_extraction', extraction: extractions.first if extractions.size > 0 %>
+              <h4><%= t('extractions.no_extraction') unless extractions.size > 0 %></h4>
+            </div>
+        <% end %>
     <% end %>
     <%= extends :basic_panel_body do %>
-        <h3><%= link_to 'Edit', edit_project_script_path(@project.id, @script.id) %></h3>
-        <%= text_area_tag 'xpaths', @script.xpaths, rows: 10, cols: 70  %>
-        <%= render 'frequencies/new', script: @script, project: @project, frequency: @new_frequency %>
-        <%= render 'frequencies/index', script: @script, project: @project, frequencies: @script.frequencies %>
+        <%= render 'frequencies/index', script: @script, project: @project, frequencies: @script.frequencies, frequency_new: @new_frequency %>
     <% end %>
 <% end %>
