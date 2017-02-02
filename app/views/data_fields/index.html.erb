@@ -11,10 +11,10 @@
       </tr>
       </thead>
       <tbody>
-      <%= render 'data_schemas/new'%>
-      <% @data_schema.each do |d| %>
+      <%= render 'data_fields/new'%>
+      <% @data_field.each do |d| %>
         <tr>
-          <td> <%=link_to(d.name, edit_project_data_schema_path(@project.id, d.id) )%> </td>
+          <td> <%=link_to(d.name, edit_project_data_field_path(@project.id, d.id) )%> </td>
           <td style="width:200px" > <%= d.data_type%> </td>
         </tr>
       <% end %>

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
         resources :extraction_datum
       end
     end
-    resources :data_schemas
+    resources :data_fields
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

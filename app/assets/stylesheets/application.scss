@@ -28,8 +28,11 @@ $secondary-color: #FFEB3B;
 
 $danger: #d9534f;
 
-h1 {
-	font-size: 2em;
+h1, .heading {
+	font-size: 24px;
+	margin-top: 14px;
+	margin-bottom: 10px;
+	font-weight: bold;
 }
 h2 {
 	font-size: 1.8em;
@@ -217,4 +220,48 @@ div.form-group {
 	padding: 0 0 0 7px;
 	margin: 0;
 	border-radius: 2px;
+}
+
+.extraction-success {
+  color: limegreen;
+}
+
+.extraction-fail {
+  color: red;
+}
+
+.editable {
+    height: 40px;
+	transition-property: padding-left;
+	padding-left: 24px;
+	background: linear-gradient(to right, rgba(255,255,255,0.93) , rgba(255,255,255,0));
+	border: none;
+	&:not(:focus) {
+		background: transparent;
+		box-shadow: none;
+		cursor: pointer;
+		padding-left: 0px;
+		background-position: 10%;
+		color: $primary-color;
+		&:hover {
+			padding-left: 24px;
+			background-image: url(/webx/assets/pencil.png);
+			background-size: 20px;
+			background-repeat: no-repeat;
+			background-position: 0%;
+		}
+	}
+}
+
+.action-icon {
+	width: 70px;
+	max-width: 70px;
+    text-align: center;
+}
+
+.active-tr {
+	td {
+		padding-top: 4px !important;
+		padding-bottom: 0px !important;
+	}
 }

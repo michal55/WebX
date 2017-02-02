@@ -20,11 +20,22 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
+  def show
+    @project = Project.find(params[:id])
+    @scripts = Script.where(project_id: params[:id])
+
+    @data_field = DataField.where(project: @project)
+    @data_field_new = DataField.new
+    @data_field_new.project = @project
+
+    authorize! :read, @project
+  end
+
   def update
     @project = Project.find(params[:id])
     @project.name = params[:project][:name]
     @project.save!
-    redirect_to projects_path
+    render nothing: true, status: 200, content_type: "text/html"
   end
 
   def destroy

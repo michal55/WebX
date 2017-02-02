@@ -74,7 +74,7 @@ namespace :deploy do
   desc "rake precompile"
   task :rake_precompile do
     on roles(:web) do
-      execute "cd #{fetch(:working_dir)}; $HOME/.rbenv/bin/rbenv exec rake assets:precompile"
+      execute "cd #{fetch(:working_dir)}; $HOME/.rbenv/bin/rbenv exec bundle exec rake assets:precompile"
     end
   end
   desc "create the database."

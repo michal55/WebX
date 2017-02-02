@@ -6,9 +6,9 @@ describe 'DataSchemaView', :type => :feature do
 
   it 'should display data schema' do
 
-    data_schema = create(:data_schema)
-    project = data_schema.project
-    user = data_schema.project.user
+    data_field = create(:data_field)
+    project = data_field.project
+    user = data_field.project.user
     user.confirm
     expect(user.confirmed?).to eq true
     visit new_user_session_path
@@ -18,15 +18,7 @@ describe 'DataSchemaView', :type => :feature do
     click_button 'Log in'
 
 
-    visit project_data_schemas_path(project.id)
-    expect(page).to have_link(data_schema.name, href: edit_project_data_schema_path(project.id,data_schema.id))
-
-    visit edit_project_data_schema_path(project.id,data_schema.id)
-    expect(page).to have_selector('input[value="' + data_schema.name + '"]')
-    expect(page).to have_content(data_schema.data_type)
-    expect(page).to have_link(I18n.t('buttons.delete'), href: project_data_schema_path(project.id,data_schema.id))
-    expect(page).to have_button(I18n.t('buttons.submit'))
-    expect(page).to have_link(I18n.t('buttons.back'), href: project_data_schemas_path(project.id))
-
+    visit project_path(project.id)
+    expect(page).to have_link(data_field.name, href: edit_project_data_field_path(project.id,data_field.id))
   end
 end
