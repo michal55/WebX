@@ -253,6 +253,11 @@ GEM
       resque
       sass-rails
       twitter-bootstrap-rails
+    resque_spec (0.17.0)
+      resque (>= 1.19.0)
+      rspec-core (>= 3.0.0)
+      rspec-expectations (>= 3.0.0)
+      rspec-mocks (>= 3.0.0)
     rollbar (2.13.3)
       multi_json
     rspec (3.5.0)
@@ -374,6 +379,7 @@ DEPENDENCIES
   resque-rollbar (~> 0.4.0)
   resque-scheduler (= 4.3.0)
   resque-web
+  resque_spec
   rspec (>= 3.0)
   rspec-rails (>= 3.5)
   sass-rails (>= 5.0)

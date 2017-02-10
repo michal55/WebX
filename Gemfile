@@ -67,11 +67,13 @@ group :development, :test do
 
   gem 'factory_girl_rails', '>= 4.5'
   gem 'database_cleaner','>= 1.5.3'
-end
 
-group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+end
+
+group :test do
+  gem 'resque_spec'
 end
 
 group :development do
