@@ -6,7 +6,7 @@ module API
     class General < Grape::API
       helpers Doorkeeper::Grape::Helpers
       format :json
-      
+
       before do
         doorkeeper_authorize!
       end
@@ -63,11 +63,13 @@ module API
                 xpaths
               end
             end
-          end           
+          end
         end
+      end
 
-        get :projects do
-          Project.all
+      resource :login_check do
+        get '' do
+          {}
         end
       end
     end
