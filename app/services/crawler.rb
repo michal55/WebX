@@ -3,7 +3,7 @@ module Crawler
   def execute(script)
     script_json = script.xpaths
     log = {}
-    log['status'] = ""
+    log['status'] = "success"
     log['url'] = script_json['url']
     begin
       @doc = Nokogiri::HTML(open(script_json['url']))
@@ -23,26 +23,27 @@ module Crawler
     script.save!
 
     script_json['data'].each do |x|
-      subarray = []
       extraction_datum = ExtractionDatum.new
       extraction_datum.extraction_id = extraction.id
       extraction_datum.field_name = x['name']
       extraction_datum.value = @doc.xpath assert_text x['value']
-
-      subarray.push(x['value'])
-      subarray.push(x['name'])
-      subarray.push(extraction_datum.value)
-
+      if script.mode == 1
+        subarray = []
+        subarray.push(x['value'])
+        subarray.push(x['name'])
+        subarray.push(extraction_datum.value)
+        log['xpaths'].push(subarray)
+      end
       extraction_datum.save!
-      log['xpaths'].push(subarray)
     end
 
     extraction.execution_time = script.last_run - extraction.created_at
     extraction.success = true
     extraction.save!
 
+    log['']
     log['exec_time'] = extraction.execution_time
-    log['status'] = extraction.success
+    log['executed_at'] = extraction.created_at
 
     puts log.to_json
 
