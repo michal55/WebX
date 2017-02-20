@@ -265,3 +265,19 @@ div.form-group {
 		padding-bottom: 0px !important;
 	}
 }
+
+.codeblock {
+	font-family: monospace;
+	background-color: $light-max;
+	resize: none;
+	border: none;
+	border-radius: 1px;
+	&:focus {
+		background-color: white;
+		box-shadow: 0px 0px 20px #ddd;
+	}
+}
+
+.submit-area {
+	margin-top: 20px;
+}
