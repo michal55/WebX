@@ -5,6 +5,7 @@ module Crawler
     log = {}
     log['status'] = "success"
     log['url'] = script_json['url']
+    # exit when opening URL fails
     begin
       @doc = Nokogiri::HTML(open(script_json['url']))
     rescue Exception => e
@@ -41,7 +42,6 @@ module Crawler
     extraction.success = true
     extraction.save!
 
-    log['']
     log['exec_time'] = extraction.execution_time
     log['executed_at'] = extraction.created_at
 
@@ -49,9 +49,4 @@ module Crawler
 
   end
 
-#check whether xpath ends with text()
-  def assert_text xpath
-    return xpath if xpath[-6..-1].eql?("text()")
-    "#{xpath}/text()"
-  end
 end
