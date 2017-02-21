@@ -74,6 +74,7 @@ end
 
 group :test do
   gem 'resque_spec'
+  gem 'timecop'
 end
 
 group :development do
