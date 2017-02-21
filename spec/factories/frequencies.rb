@@ -14,7 +14,18 @@ FactoryGirl.define do
     last_run nil
     first_exec DateTime.parse("1.1.2017 13:00")
     after(:create) do |frequency|
-      frequency.script = FactoryGirl.create(:script)
+      frequency.script = FactoryGirl.create(:script_with_xpaths)
+      frequency.save!
+    end
+  end
+
+  factory :frequency_run_in_past, class: Frequency do
+    interval 5
+    period 'minute'
+    last_run nil
+    first_exec DateTime.parse("1.1.2017 13:00")
+    after(:create) do |frequency|
+      frequency.script = FactoryGirl.create(:script_with_xpaths)
       frequency.save!
     end
   end
