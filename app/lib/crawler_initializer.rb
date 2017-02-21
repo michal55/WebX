@@ -17,7 +17,11 @@ class CrawlerInitializer
     frequencies = Frequency.all
 
     frequencies.each do |f|
-      should_run = f.last_run + eval(f.interval.to_s + '.' + f.period)
+      if f.last_run.nil?
+        should_run = f.first_exec
+      else
+        should_run = f.last_run + eval(f.interval.to_s + '.' + f.period)
+      end
 
       if should_run > time_now
         # should run in future, not now
