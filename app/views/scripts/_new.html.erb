@@ -1,0 +1,9 @@
+<tr class="active-tr">
+  <td>
+    <%= form_for([@project, @script_new], :url => project_scripts_path(@project)) do |f|  %>
+    <%= f.text_field(:name, class: 'form-control') %>
+  </td>
+  <td></td>
+  <td><%= f.submit(t('buttons.create'), class: 'btn btn-primary') %></td>
+  <% end %>
+</tr>

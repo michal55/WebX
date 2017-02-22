@@ -1,0 +1,9 @@
+<tr class="active-tr">
+      <td>
+        <%= form_for(@project_new) do |f|  %>
+        <%= f.text_field(:name, class: 'form-control') %>
+      </td>
+      <td></td>
+      <td><%= f.submit(t('buttons.create'), class: 'btn btn-primary') %></td>
+    <% end %>
+</tr>
