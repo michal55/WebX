@@ -17,7 +17,11 @@ class CrawlerInitializer
     frequencies = Frequency.all
 
     frequencies.each do |f|
-      should_run = f.last_run + eval(f.interval.to_s + '.' + f.period)
+      if f.last_run.nil?
+        should_run = f.first_exec
+      else
+        should_run = f.last_run + eval(f.interval.to_s + '.' + f.period)
+      end
 
       if should_run > time_now
         # should run in future, not now
@@ -26,6 +30,7 @@ class CrawlerInitializer
 
       f.last_run = Time.at((time_now.to_f / 300).floor * 300 ) # floor to 5 min
       f.save!
+
       script = f.script
       print("[DEBUG] Enqueing script: ", script.name, " | Frequency: ", f.id, "\n")
       Resque.enqueue(CrawlerExecuter, script.id)

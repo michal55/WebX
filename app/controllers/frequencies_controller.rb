@@ -1,7 +1,7 @@
 class FrequenciesController < ApplicationController
   def create
     @frequency_new = Frequency.new
-    @frequency_new.assign_attributes({script_id: params[:script_id], interval: params[:frequency][:interval], period: params[:frequency][:period], first_exec: params[:frequency][:first_exec], last_run: Time.now})
+    @frequency_new.assign_attributes({script_id: params[:script_id], interval: params[:frequency][:interval], period: params[:frequency][:period], first_exec: params[:frequency][:first_exec], last_run: nil})
     @frequency_new.save!
     redirect_to :back
   end
