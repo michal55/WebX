@@ -13,6 +13,7 @@ FactoryGirl.define do
     name 'Script_Factory_api'
     after(:create) do |script|
       script.project = FactoryGirl.create(:project_api)
+      script.xpaths = {}.to_json
       script.save!
     end
   end
