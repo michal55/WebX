@@ -1,7 +1,7 @@
-<table class="table table-striped table-hover">
+<table class="table table-striped table-hover" ng-cloak>
   <thead>
 	<tr>
-	  <th> <%=t('data_fields.columns.name')%> </th>
+	  <th class="name-input"> <%=t('data_fields.columns.name')%> </th>
 	  <th> <%=t('data_fields.columns.type')%> </th>
       <th class="action-icon"> </th>
     </tr>
@@ -14,14 +14,36 @@
       <td> </td>
   <% else %>
     <% @data_field.each do |d| %>
-      <tr>
-        <td> <%=link_to(d.name, edit_project_data_field_path(@project.id, d.id) )%> </td>
-        <td style="width:200px" > <%= d.data_type%> </td>
-        <td class="action-icon" >
-          <%= link_to project_data_field_path(@project.id, d.id), method: :delete do %>
-            <span class="glyphicon glyphicon-erase"></span>
-          <% end %>
+      <tr class="active-tr">
+        <td class="name-input">
+          <%= form_for([d.project, d], remote: true, :url => project_data_field_path(d.project, d)) do |f|  %>
+          <div class="input-group">
+            <%= f.text_field(
+              :name,
+              class: 'form-control editable',
+              :'ng-init' => "mapper['#{d.id}']='#{d.name}'",
+              :'ng-model' => "mapper['#{d.id}']",
+              :'ng-change' => "dirty('#{d.id}')"
+            )%>
+            <span class="input-group-addon table-button">
+              <%= link_to('', project_data_field_path(d.project, d), method: :delete, class: 'btn btn-default glyphicon glyphicon-remove') %>
+            </span>
+          </div>
         </td>
+        <td>
+          <div class="form-group">
+            <%= f.select(:data_type, DataField.data_types, {}, { class: 'form-control input-sm' })%>
+          </div>
+        </td>
+        <td>
+          <%= button_tag "",
+            type: 'submit',
+            class: 'btn btn-default glyphicon glyphicon-floppy-disk btn-lg table-button',
+            :'ng-show' => "unsaved['#{d.id}']",
+            :'ng-click' => "unsaved['#{d.id}']=false"
+          %>
+        </td>
+        <% end %>
       </tr>
     <% end %>
   <% end %>

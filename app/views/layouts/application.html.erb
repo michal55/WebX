@@ -6,7 +6,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body class="<%= "intro-page" unless user_signed_in? %>" data-turbolinks="false">
+<body class="<%= "intro-page" unless user_signed_in? %>" data-turbolinks="false" ng-app="webx" ng-controller="MainCtrl">
 <%= render 'layouts/header' %>
 	<div class="row main-content">
 		<div class="col-md-12">
@@ -15,5 +15,6 @@
  		</div>
 	</div>
 <%= render 'layouts/footer' %>
+<%= yield :javascript %>
 </body>
 </html>

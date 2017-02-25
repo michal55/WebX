@@ -13,7 +13,24 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+//= require angular
 //= require moment
 //= require bootstrap-datetimepicker
 //= require turbolinks
 //= require_tree .
+
+angular.module('webx', [])
+.controller('MainCtrl', [
+'$scope',
+function($scope){
+  $scope.blom = function(){
+	console.log('fsdfsdf');
+  }
+
+  $scope.mapper = {};
+  $scope.unsaved = {};
+  $scope.dirty = function(id) {
+  	console.log('helloworld');
+  	$scope.unsaved[id] = true;
+  }
+}]);

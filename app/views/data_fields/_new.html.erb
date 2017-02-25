@@ -8,7 +8,12 @@
           <%= f.select(:data_type, DataField.data_types, {}, { class: 'form-control input-sm' })%>
         </div>
       </td>
-      <td><%= f.submit(t('buttons.create'), class: 'btn btn-primary') %></td>
+      <td>
+        <%= button_tag "",
+          type: 'submit',
+          class: 'btn btn-default glyphicon glyphicon-floppy-disk btn-lg table-button'
+        %>
+      </td>
     <% end %>
 </tr>
 

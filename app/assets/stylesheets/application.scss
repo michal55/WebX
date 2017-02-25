@@ -199,11 +199,26 @@ a.btn:hover {
  	}
  }
 
-input.input-group-addon {
-	width: 60px;
-	padding: 0;
-	border: 0;
-	height: 100%;
+ td.name-input, th.name-input {
+ 	width: 800px;
+ }
+
+.input-group {
+	width: 100%;
+	.input-group-addon {
+		padding: 0;
+		height: 100%;
+
+		span {
+			width: 60px;
+		}
+
+		.btn {
+			border: none;
+			border-radius: 0;
+			background-color: none;
+		}
+	}
 }
 
 span#basic-addon1.input-group-addon {
@@ -280,4 +295,12 @@ div.form-group {
 
 .submit-area {
 	margin-top: 20px;
+}
+
+.table-button {
+	background: none;
+	border: none;
+	.btn {
+		background: none;
+	}
 }
