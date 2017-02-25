@@ -19,6 +19,8 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "bootstrap-datetimepicker";
+@import "font-awesome-sprockets";
+@import "font-awesome";
 
 $primary-color: #263238;
 $light-max: #ECEFF1;
@@ -302,5 +304,24 @@ div.form-group {
 	border: none;
 	.btn {
 		background: none;
+	}
+	&.btn {
+		padding: 6px;
+	}
+	&.success {
+		color: green;
+		cursor: default;
+		&:hover {
+			background: none;
+		}
+	}
+	&.failure {
+		color: $danger;
+	}
+	&.loading {
+		margin-top: 10px;
+		font-size: 20px;
+		color: lightblue;
+		padding: 0;
 	}
 }

@@ -23,14 +23,30 @@ angular.module('webx', [])
 .controller('MainCtrl', [
 '$scope',
 function($scope){
-  $scope.blom = function(){
-	console.log('fsdfsdf');
+  $scope.mapper = {
+    'names': {},
+    'types': {}
+  };
+
+  $scope.state = {}
+
+  $scope.save = function(id) {
+    if($scope.mapper[id]) {
+      scope.state[id] = 'saving';
+    } else {
+      $scope.state[id] = 'failed';
+    }
   }
 
-  $scope.mapper = {};
-  $scope.unsaved = {};
   $scope.dirty = function(id) {
-  	console.log('helloworld');
-  	$scope.unsaved[id] = true;
+    $scope.state[id] = 'changed';
   }
+
+  $(document).ready( function($) {
+    $(document).ajaxSuccess( function(_, __, ___ , data) {
+      $scope.state[data.id.toString()] = 'saved';
+      $scope.$digest();
+    });
+  });
 }]);
+

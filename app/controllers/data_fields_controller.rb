@@ -25,7 +25,7 @@ class DataFieldsController < ApplicationController
     @data_field.name = params[:data_field][:name]
     @data_field.data_type = params[:data_field][:data_type].to_i
     @data_field.save!
-    render nothing: true, status: 200, content_type: "text/html"
+    render json: {'id': @data_field.id}, status: 200
   end
 
   def destroy

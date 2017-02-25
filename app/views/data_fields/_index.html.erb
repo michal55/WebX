@@ -21,9 +21,10 @@
             <%= f.text_field(
               :name,
               class: 'form-control editable',
-              :'ng-init' => "mapper['#{d.id}']='#{d.name}'",
-              :'ng-model' => "mapper['#{d.id}']",
-              :'ng-change' => "dirty('#{d.id}')"
+              :'ng-init' => "mapper.names['#{d.id}']='#{d.name}'",
+              :'ng-model' => "mapper.names['#{d.id}']",
+              :'ng-change' => "dirty('#{d.id}')",
+              :required => true
             )%>
             <span class="input-group-addon table-button">
               <%= link_to('', project_data_field_path(d.project, d), method: :delete, class: 'btn btn-default glyphicon glyphicon-remove') %>
@@ -32,15 +33,38 @@
         </td>
         <td>
           <div class="form-group">
-            <%= f.select(:data_type, DataField.data_types, {}, { class: 'form-control input-sm' })%>
+            <%= f.select(
+              :data_type,
+              DataField.data_types,
+              {},
+              { 
+                class: 'form-control input-sm table-button',
+                :'ng-init' => "mapper.types['#{d.id}']='#{DataField.data_types[d.data_type]}'",
+                :'ng-model' => "mapper.types['#{d.id}']",
+                :'ng-change' => "dirty('#{d.id}')"
+              }
+              )
+            %>
           </div>
         </td>
         <td>
           <%= button_tag "",
             type: 'submit',
             class: 'btn btn-default glyphicon glyphicon-floppy-disk btn-lg table-button',
-            :'ng-show' => "unsaved['#{d.id}']",
-            :'ng-click' => "unsaved['#{d.id}']=false"
+            :'ng-show' => "state[#{d.id}] == 'changed'",
+            :'ng-click' => "save(#{d.id})"
+          %>
+          <%= button_tag "",
+            class: 'btn btn-default glyphicon glyphicon-ok btn-lg table-button success',
+            :'ng-show' => "state[#{d.id}] == 'saved'"
+          %>
+          <%= button_tag "",
+            class: 'btn btn-default glyphicon glyphicon-warning-sign btn-lg table-button failure',
+            :'ng-show' => "state[#{d.id}] == 'failed'"
+          %>
+          <%= button_tag "",
+            class: 'fa fa-circle-o-notch fa-fw fa-spin fa-3x table-button loading',
+            :'ng-show' => "state[#{d.id}] == 'saving'"
           %>
         </td>
         <% end %>
