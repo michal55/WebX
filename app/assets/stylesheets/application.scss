@@ -289,6 +289,7 @@ div.form-group {
 	resize: none;
 	border: none;
 	border-radius: 1px;
+	min-height: 200px;
 	&:focus {
 		background-color: white;
 		box-shadow: 0px 0px 20px #ddd;
