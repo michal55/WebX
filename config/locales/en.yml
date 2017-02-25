@@ -94,6 +94,7 @@ en:
       action: "access"
       scripts: "Scripts"
     no_projects: "You have no projects"
+    placeholder_new: "Add new project"
 
   scripts:
     index: "Scripts"
@@ -107,6 +108,7 @@ en:
       frequencies: "Frequencies"
       access: "access"
     no_script: "Your project does not have any scripts"
+    placeholder_new: "Add new script"
   data_fields:
     index: "Data Field"
     new: "New field"

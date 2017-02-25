@@ -18,9 +18,9 @@
           <td> <%=link_to(p.name, project_path(p.id) )%> </td>
           <td> <%= p.scripts.length %> </td>
           <td class="action-icon" >
-            <%= link_to project_path(p.id), method: :delete do %>
-              <span class="glyphicon glyphicon-erase"></span>
-            <% end %>
+            <span class="table-button">
+              <%= link_to('', project_path(p.id), method: :delete , class: 'btn btn-default glyphicon glyphicon-remove table-button')%>
+            </span>
           </td>
         </tr>
       <% end%>

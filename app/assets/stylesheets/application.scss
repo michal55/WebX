@@ -302,6 +302,9 @@ div.form-group {
 .table-button {
 	background: none;
 	border: none;
+	&:not(.input-group-addon) {
+		float: right;
+	}
 	.btn {
 		background: none;
 	}
