@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161206143854) do
+ActiveRecord::Schema.define(version: 20170225110529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,7 +33,10 @@ ActiveRecord::Schema.define(version: 20161206143854) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "extraction_id"
+    t.datetime "deleted_at"
   end
+
+  add_index "extraction_data", ["deleted_at"], name: "index_extraction_data_on_deleted_at", using: :btree
 
   create_table "extractions", force: :cascade do |t|
     t.datetime "created_at",     null: false
@@ -41,7 +44,10 @@ ActiveRecord::Schema.define(version: 20161206143854) do
     t.integer  "script_id"
     t.boolean  "success"
     t.float    "execution_time"
+    t.datetime "deleted_at"
   end
+
+  add_index "extractions", ["deleted_at"], name: "index_extractions_on_deleted_at", using: :btree
 
   create_table "frequencies", force: :cascade do |t|
     t.integer  "interval"
@@ -51,7 +57,10 @@ ActiveRecord::Schema.define(version: 20161206143854) do
     t.datetime "updated_at", null: false
     t.integer  "script_id"
     t.datetime "last_run"
+    t.datetime "deleted_at"
   end
+
+  add_index "frequencies", ["deleted_at"], name: "index_frequencies_on_deleted_at", using: :btree
 
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", null: false
