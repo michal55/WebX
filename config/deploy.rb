@@ -113,8 +113,7 @@ namespace :deploy do
     end
   end
 
-  after 'deploy', 'deploy:set_up_environment'
-  after 'deploy:set_up_environment', 'deploy:db_create'
+  after 'deploy', 'deploy:db_create'
   after 'deploy:db_create', 'deploy:db_migrate'
   after 'deploy:db_migrate', 'deploy:rake_precompile'
 #  after 'deploy:rake_precompile', 'deploy:server_setup'
