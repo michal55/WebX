@@ -46,6 +46,13 @@ end
 
 namespace :deploy do
 
+  desc "Set up environment"
+  task :set_up_environment do
+    puts("EVN:",fetch(:rails_env))
+    puts("STAGE:",fetch(:stage))
+    puts("EVN_rails:",Rails.env)
+  end
+
   desc "Bundler install"
   task :bundler_install do
     on roles(:app) do |host|
