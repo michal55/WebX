@@ -18,7 +18,6 @@ USAGE="Usage: $0 <start|stop|restart|upgrade|rotate|force-stop>"
 USER="[USER]"
 APP_NAME="[APP_NAME]"
 APP_ROOT="[APP_ROOT]"
-ENV="development"
 
 # environment settings
 PATH="/home/$USER/.rbenv/shims:/home/$USER/.rbenv/bin:$PATH"

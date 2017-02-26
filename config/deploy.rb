@@ -7,7 +7,7 @@ set :repo_url, 'https://server-deployer:gZdsjkR8EePxvmQ@github.com/michal55/WebX
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
-set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
+set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH", 'ENV' => fetch(:stage) }
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/var/www/webx'
 set :rbenv_ruby, '2.3.1'
@@ -37,7 +37,6 @@ set :rbenv_ruby, '2.3.1'
 # set :keep_releases, 5
 set :stages, ["staging", "production"]
 set :default_stage, "staging"
-set :rails_env, fetch(:stage)
 
 def remote_file_exists?(full_path)
   'true' ==  capture("if [ -e #{full_path} ]; then echo 'true'; fi").strip
@@ -45,13 +44,6 @@ end
 
 
 namespace :deploy do
-
-  desc "Set up environment"
-  task :set_up_environment do
-    puts("EVN:",fetch(:rails_env))
-    puts("STAGE:",fetch(:stage))
-    puts("EVN_rails:",Rails.env)
-  end
 
   desc "Bundler install"
   task :bundler_install do
