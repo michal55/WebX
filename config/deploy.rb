@@ -37,6 +37,7 @@ set :rbenv_ruby, '2.3.1'
 # set :keep_releases, 5
 set :stages, ["staging", "production"]
 set :default_stage, "staging"
+set :rails_env, fetch(:stage)
 
 def remote_file_exists?(full_path)
   'true' ==  capture("if [ -e #{full_path} ]; then echo 'true'; fi").strip
