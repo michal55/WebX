@@ -31,6 +31,7 @@ en:
     table_email: "E-mail"
     table_role: "Role"
     table_date: "Date of registration"
+    debug: "Debug information"
 
   auth:
     reset:

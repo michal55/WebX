@@ -1,0 +1,34 @@
+
+<div class="container">
+  <div class="col-md-6">
+  <h1>Debug info</h1>
+  <p>
+    Environment: <br/>
+    <code><%= Rails.env %></code>
+  </p>
+  <p>
+    Server time: <br/>
+    <code><%= Time.now %></code>
+  </p>
+  <p>
+    Root: <br/>
+    <code><%= Rails.root%></code>
+  </p>
+  <p>
+    Database connected: <br/>
+    <code><%= ActiveRecord::Base.connection_config[:database] %></code>
+  </p>
+  <p>
+    Rails version: <br/>
+    <code><%= Rails.version %></code>
+  </p>
+  </div>
+
+  <div class="col-md-6">
+    <h1>Stats</h1>
+    <p>
+      Registered users: <br/>
+      <code><%= @user_count %></code>
+    </p>
+  </div>
+</div>
