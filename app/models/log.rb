@@ -1,8 +1,8 @@
 class Log
   include Elasticsearch::Persistence::Model
-  include Elasticsearch::Model::Callbacks
+  include Elasticsearch::Model
 
-  index_name 'webx'
+  index_name ['webx', Rails.env].join('_')
   document_type 'log'
 
   attribute :msg, String, mapping: { index: "not_analyzed" }

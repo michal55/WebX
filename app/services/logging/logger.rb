@@ -36,5 +36,20 @@ module Logging
       # Posts to elastic index
       Log.create(log)
     end
+
+    def search resource_id
+      response = Log.search(
+          {
+              query: {
+                  bool: {
+                      must: {
+                          match: { resource_id: resource_id }
+                      }
+                  }
+              }
+          }
+      )
+      response['hits']['hits']
+    end
   end
 end
