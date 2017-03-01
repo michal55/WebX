@@ -48,8 +48,10 @@ namespace :deploy do
   desc "set up env"
   task :set_up_env do
     on roles(:app) do
-      execute :bundler, "exec ENV=\"#{fetch(:rails_env)}\""
-      execute :bundler, "exec RAILS_ENV=\"#{fetch(:rails_env)}\""
+      within "#{current_path}" do
+        execute :bundler, "exec ENV=\"#{fetch(:rails_env)}\""
+        execute :bundler, "exec RAILS_ENV=\"#{fetch(:rails_env)}\""
+      end
     end
   end
 
