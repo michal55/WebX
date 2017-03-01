@@ -50,7 +50,7 @@ function($scope){
   });
 
   $scope.setDateTime = function () { 
-      $("#datetimepicker").datetimepicker().on("dp.change", function (data) {
+      $('#datetimepicker').datetimepicker().on('dp.change', function (data) {
           $scope.datetime_changed = true;
       });
     }

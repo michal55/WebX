@@ -14,7 +14,7 @@
     <%= f.select :period, select_periods, {}, class: 'form-control input-sm' %>
   </td>
   <td>
-    <div class='input-group date' id='datetimepicker'>
+    <div class="input-group date" id="datetimepicker">
       <%= f.text_field(
         :first_exec,
         class: 'form-control',
@@ -26,7 +26,7 @@
     </div>
   </td>
   <td>
-    <%= button_tag "",
+    <%= button_tag '',
       type: 'submit',
       class: 'btn btn-default glyphicon glyphicon-floppy-disk btn-lg table-button',
       :'ng-show' => "mapper.names['new_interval'] && datetime_changed",
