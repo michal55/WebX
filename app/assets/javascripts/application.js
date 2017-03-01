@@ -21,38 +21,39 @@
 
 angular.module('webx', [])
 .controller('MainCtrl', [
-'$scope',
-function($scope){
-  $scope.mapper = {
-    'names': {},
-    'types': {}
-  };
+    '$scope',
+    function($scope){
 
-  $scope.state = {}
+        // GENERAL MAPPER OBJECT - FREE USE FOR NG-MODEL MAPPING
+        $scope.mapper = {
+            'names': {},
+            'types': {}
+        };
 
-  $scope.save = function(id) {
-    if($scope.mapper[id]) {
-      scope.state[id] = 'saving';
-    } else {
-      $scope.state[id] = 'failed';
+        // GENERAL STATE MAPPER OBJECT - FREE USE FOR ENTITIES STATES
+        $scope.state = {}
+
+
+        $scope.save = function(id) {
+            $scope.state[id] = 'saving';
+        }
+
+        $scope.dirty = function(id) {
+            $scope.state[id] = 'changed';
+        }
+
+        $(document).ready( function($) {
+            $(document).ajaxSuccess( function(_, __, ___ , data) {
+                $scope.state[data.id.toString()] = 'saved';
+                $scope.$digest();
+            });
+        });
+
+        $scope.setDateTime = function () { 
+            $('#datetimepicker').datetimepicker().on('dp.change', function (data) {
+                $scope.datetime_changed = true;
+            });
+        }
     }
-  }
-
-  $scope.dirty = function(id) {
-    $scope.state[id] = 'changed';
-  }
-
-  $(document).ready( function($) {
-    $(document).ajaxSuccess( function(_, __, ___ , data) {
-      $scope.state[data.id.toString()] = 'saved';
-      $scope.$digest();
-    });
-  });
-
-  $scope.setDateTime = function () { 
-      $('#datetimepicker').datetimepicker().on('dp.change', function (data) {
-          $scope.datetime_changed = true;
-      });
-    }
-  }]);
+]);
 
