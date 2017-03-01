@@ -51,8 +51,7 @@
           <%= button_tag '',
             type: 'submit',
             class: 'btn btn-default glyphicon glyphicon-floppy-disk btn-lg table-button',
-            :'ng-show' => "state[#{d.id}] == 'changed'",
-            :'ng-click' => "save(#{d.id})"
+            :'ng-show' => "state[#{d.id}] == 'changed'"
           %>
           <%= button_tag '',
             class: 'btn btn-default glyphicon glyphicon-ok btn-lg table-button success',
