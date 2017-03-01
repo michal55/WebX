@@ -47,8 +47,10 @@ namespace :deploy do
 
   desc "set up env"
   task :set_up_env do
-    execute "ENV=\"#{fetch(:stage)}\""
-    execute "RAILS_ENV=\"#{fetch(:stage)}\""
+    on roles(:app) do
+      execute "export ENV=\"#{fetch(:rails_env)}\""
+      execute "export RAILS_ENV=\"#{fetch(:rails_env)}\""
+    end
   end
 
   desc "Bundler install"
