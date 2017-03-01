@@ -38,7 +38,7 @@
               DataField.data_types,
               {},
               { 
-                class: 'form-control input-sm table-button',
+                class: 'form-control input-sm',
                 :'ng-init' => "mapper.types['#{d.id}']='#{DataField.data_types[d.data_type]}'",
                 :'ng-model' => "mapper.types['#{d.id}']",
                 :'ng-change' => "dirty('#{d.id}')"
