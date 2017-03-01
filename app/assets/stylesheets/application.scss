@@ -283,6 +283,10 @@ div.form-group {
 	}
 }
 
+td {
+	vertical-align: middle !important;
+}
+
 .codeblock {
 	font-family: monospace;
 	background-color: $light-max;
