@@ -1,4 +1,15 @@
 <div class="container">
-  <h1>Hello WebX!</h1>
-  Vitajte vo svete web extrakcie
+  <h1> <%= t('home.welcome') %></h1>
+
+  <p>
+    <a href=<%= "#{t('home.team_link')}" %>> <%= t('home.team')%> <i class="glyphicon glyphicon-new-window"></i></a>
+  </p>
+
+  <p>
+    <a href=<%= "#{t('home.github_server_link')}" %>> <%= t('home.github_server')%> <i class="glyphicon glyphicon-new-window"></i></a>
+  </p>
+
+  <p>
+    <a href=<%= "#{t('home.github_extension_link')}" %>> <%= t('home.github_extension')%> <i class="glyphicon glyphicon-new-window"></i></a>
+  </p>
 </div>
