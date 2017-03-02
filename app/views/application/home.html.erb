@@ -2,14 +2,19 @@
   <h1> <%= t('home.welcome') %></h1>
 
   <p>
-    <a href=<%= "#{t('home.team_link')}" %>> <%= t('home.team')%> <i class="glyphicon glyphicon-new-window"></i></a>
+    <%= link_to t('home.team_link'), target: "_blank" do %>
+        <%= t('home.team')%> <i class="glyphicon glyphicon-new-window"></i>
+    <% end %>
   </p>
 
   <p>
-    <a href=<%= "#{t('home.github_server_link')}" %>> <%= t('home.github_server')%> <i class="glyphicon glyphicon-new-window"></i></a>
-  </p>
+    <%= link_to t('home.github_server_link'), target: "_blank" do %>
+        <%= t('home.github_server')%> <i class="glyphicon glyphicon-new-window"></i>
+    <% end %>  </p>
 
   <p>
-    <a href=<%= "#{t('home.github_extension_link')}" %>> <%= t('home.github_extension')%> <i class="glyphicon glyphicon-new-window"></i></a>
+    <%= link_to t('home.github_extension_link'), target: "_blank" do %>
+        <%= t('home.github_extension')%> <i class="glyphicon glyphicon-new-window"></i>
+    <% end %>
   </p>
 </div>
