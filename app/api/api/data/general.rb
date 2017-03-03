@@ -29,7 +29,7 @@ module API
 
             get '/:id/data_fields' do
               error!('401 Unauthorized', 401) unless Project.find_by(id: params[:id]).user_id == doorkeeper_token[:resource_owner_id]
-              DataField.where(project_id: params[:id]).pluck(:name)
+              DataField.where(project_id: params[:id])
             end
             params do
               requires :url, type: String
@@ -44,10 +44,8 @@ module API
 
             get '/:id/scripts/:id_script' do
               error!('401 Unauthorized', 401) unless Script.find_by(id: params[:id_script]).project_id == params[:id].to_i and Project.find_by(id: params[:id]).user_id == doorkeeper_token[:resource_owner_id]
-              xpaths = Script.find_by(id: params[:id_script]).xpaths
-              xpaths
+              Script.find_by(id: params[:id_script]).xpaths
             end
-
           end
         end
       end
