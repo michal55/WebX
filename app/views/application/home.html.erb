@@ -1,4 +1,21 @@
 <div class="container">
-  <h1>Hello WebX!</h1>
-  Vitajte vo svete web extrakcie
+  <h1> <%= t('home.welcome') %></h1>
+
+  <p>
+    <%= link_to t('home.team_link'), target: "_blank" do %>
+        <%= t('home.team')%> <i class="glyphicon glyphicon-new-window"></i>
+    <% end %>
+  </p>
+
+  <p>
+    <%= link_to t('home.github_server_link'), target: "_blank" do %>
+        <%= t('home.github_server')%> <i class="glyphicon glyphicon-new-window"></i>
+    <% end %>
+  </p>
+
+  <p>
+    <%= link_to t('home.github_extension_link'), target: "_blank" do %>
+        <%= t('home.github_extension')%> <i class="glyphicon glyphicon-new-window"></i>
+    <% end %>
+  </p>
 </div>
