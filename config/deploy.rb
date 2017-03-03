@@ -15,7 +15,8 @@ set :rbenv_ruby, '2.3.1'
 # set :scm, :git
 
 # Default value for :format is :airbrussh.
-# set :format, :airbrussh
+set :format, :airbrussh
+set :format_options, truncate: false
 
 # You can configure the Airbrussh format using :format_options.
 # These are the defaults.
