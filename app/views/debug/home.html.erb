@@ -1,27 +1,27 @@
 
 <div class="container">
   <div class="col-md-6">
-  <h1><%=t('debug.header_debug')%></h1>
-  <p>
-    <%=t('debug.environment')%><br/>
-    <code><%= Rails.env %></code>
-  </p>
-  <p>
-    <%=t('debug.time')%><br/>
-    <code><%= Time.now %></code>
-  </p>
-  <p>
-    <%=t('debug.rails_root')%><br/>
-    <code><%= Rails.root%></code>
-  </p>
-  <p>
-    <%=t('debug.database')%><br/>
-    <code><%= ActiveRecord::Base.connection_config[:database] %></code>
-  </p>
-  <p>
-    <%=t('debug.version')%> <br/>
-    <code><%= Rails.version %></code>
-  </p>
+    <h1><%=t('debug.header_debug')%></h1>
+    <p>
+      <%=t('debug.environment')%><br/>
+      <code><%= Rails.env %></code>
+    </p>
+    <p>
+      <%=t('debug.time')%><br/>
+      <code><%= Time.now %></code>
+    </p>
+    <p>
+      <%=t('debug.rails_root')%><br/>
+      <code><%= Rails.root%></code>
+    </p>
+    <p>
+      <%=t('debug.database')%><br/>
+      <code><%= ActiveRecord::Base.connection_config[:database] %></code>
+    </p>
+    <p>
+      <%=t('debug.version')%> <br/>
+      <code><%= Rails.version %></code>
+    </p>
   </div>
 
   <div class="col-md-6">
