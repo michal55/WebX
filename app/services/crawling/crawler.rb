@@ -3,18 +3,19 @@ module Crawling
     extend self
 
     def execute(script)
+      logger = Logging::Logger.new(severity: script.mode)
       script_json = script.xpaths
       extraction = Extraction.new
       extraction.script = script
       extraction.save!
 
-      Logging::Logger.debug('Extraction created', extraction, script.mode)
+      logger.debug('Extraction created', extraction)
 
       # exit when opening URL fails
       begin
         @doc = Nokogiri::HTML(open(script_json['url']))
       rescue Exception => e
-        Logging::Logger.error("#{e.to_s} url: #{script_json['url']}", extraction, script.mode)
+        logger.error("#{e.to_s} url: #{script_json['url']}", extraction)
         extraction.success = false
         extraction.save!
         exit
@@ -31,14 +32,14 @@ module Crawling
         extraction_datum.save!
         extraction_datum
 
-        Logging::Logger.debug("field: #{x['name']}, xpath: #{x['value']}, value: #{extraction_datum.value}", extraction, script.mode)
+        logger.debug("field: #{x['name']}, xpath: #{x['value']}, value: #{extraction_datum.value}", extraction)
       end
 
       extraction.execution_time = script.last_run - extraction.created_at
       extraction.success = true
       extraction.save!
 
-      Logging::Logger.debug("Execution time: #{extraction.execution_time}", extraction, script.mode)
+      logger.debug("Execution time: #{extraction.execution_time}", extraction)
     end
 
   end

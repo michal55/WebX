@@ -39,3 +39,4 @@ notifications:
   slack: teamwebx:VHTdNTZxyP8rHumLGGBdv3PU
 services:
 - redis-server
+- elasticsearch
