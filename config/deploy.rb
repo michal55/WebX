@@ -129,5 +129,7 @@ namespace :deploy do
   after 'deploy:db_migrate', 'deploy:rake_precompile'
 #  after 'deploy:rake_precompile', 'deploy:server_setup'
 
+  after 'deploy:rake_precompile', 'resque:restart'
+  after 'deploy:rake_precompile', 'resque:scheduler:restart'
 
 end
