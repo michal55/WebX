@@ -57,3 +57,8 @@ angular.module('webx', [])
     }
 ]);
 
+function flash() {
+    // render div with id here
+    console.log('TODO: flash message for success update');
+    alert('TODO: flash message for success update');
+}

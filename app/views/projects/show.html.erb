@@ -6,6 +6,7 @@
     <% end %>
   <% end %>
   <%= extends :basic_panel_body do %>
+    <%= render 'application/flash' %>
     <%= render 'scripts/index.html', scripts: @scripts %>
   <% end %>
   <hr>

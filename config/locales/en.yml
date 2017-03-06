@@ -95,6 +95,8 @@ en:
       scripts: "Scripts"
     no_projects: "You have no projects"
     placeholder_new: "Add new project"
+    flash_create: "You successfully created project %{project_name}"
+    flash_delete: "You deleted project %{project_name}"
 
   scripts:
     index: "Scripts"
