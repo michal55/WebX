@@ -1,12 +1,13 @@
 <tr>
   <td>
     <%= form_for frequency, url: project_script_frequencies_path(project, script) do |f|  %>
-    <%= f.text_field(
+    <%= f.number_field(
       :interval,
       class: 'form-control',
       placeholder: t('frequencies.placeholder_new'),
       :'ng-model' => "mapper.names['new_interval']",
-      :required => true
+      :required => true,
+      min: 1
       )
     %>
   </td>

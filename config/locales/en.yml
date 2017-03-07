@@ -97,6 +97,7 @@ en:
     placeholder_new: "Add new project"
     flash_create: "You successfully created project %{project_name}"
     flash_delete: "You deleted project %{project_name}"
+    flash_update: "You updated project %{project_name}"
 
   scripts:
     index: "Scripts"
@@ -111,6 +112,11 @@ en:
       access: "access"
     no_script: "Your project does not have any scripts"
     placeholder_new: "Add new script"
+    flash_create: "You successfully created script %{script_name}"
+    flash_delete: "You deleted script %{script_name}"
+    flash_update: "You updated script %{script_name}"
+
+
   data_fields:
     index: "Data Field"
     new: "New field"
@@ -122,6 +128,9 @@ en:
       action: "Actions"
     no_schemas: "Your project does not have any data schema"
     placeholder_new: "Add data schema field"
+    flash_create: "You successfully created field %{field_name}"
+    flash_delete: "You deleted field %{field_name}"
+    flash_update: "You updated field %{field_name}"
 
   extraction_datum:
     columns:
@@ -162,3 +171,6 @@ en:
       edit: "Edit frequency"
     no_frequency: "Your script has no running frequency"
     placeholder_new: "Add new execution interval"
+    flash_create: "You successfully created frequency"
+    flash_delete: "You deleted frequency"
+    flash_update: "You updated frequency"

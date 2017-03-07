@@ -18,6 +18,7 @@ class ScriptsController < ApplicationController
     @script_new.assign_attributes({name: params[:script][:name], project_id:  params[:project_id] })
     @script_new.xpaths = {}.to_json
     @script_new.save!
+    flash[:notice] = I18n.t('scripts.flash_create', script_name: @script_new.name)
     redirect_to project_path(params[:project_id])
   end
 
@@ -39,12 +40,14 @@ class ScriptsController < ApplicationController
     puts params[:script][:xpaths]
     @script.xpaths = params[:script][:xpaths].gsub("\n","").to_json
     @script.save!
+    flash[:notice] = I18n.t('scripts.flash_update', script_name: @script.name)
     render nothing: true, status: 200, content_type: "text/html"
   end
 
   def destroy
     @script = Script.find(params[:id])
     @script.destroy!
+    flash[:notice] = I18n.t('scripts.flash_delete', script_name: @script.name)
     redirect_to project_path(params[:project_id])
   end
 end

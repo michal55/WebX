@@ -4,7 +4,8 @@
             <%= f.text_field(:name, class: 'form-control editable heading') %>
         <% end %>
         <%= extends :basic_panel_body do %>
-          <div class="row">
+            <%= render 'application/flash' %>
+            <div class="row">
             <div class="col-md-7">
               <h4><%= t('scripts.columns.name') %></h4>
               <%= f.text_area :xpaths, value: pretty_json(@script), rows: json_height(@script), cols: 70, class: 'form-control codeblock'  %>

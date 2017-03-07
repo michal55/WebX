@@ -40,7 +40,7 @@ class ProjectsController < ApplicationController
   def update
     @project = Project.find(params[:id])
     @project.name = params[:project][:name]
-    flash[:notice] = "Project updated"
+    flash[:notice] =  I18n.t('projects.flash_update', project_name: @project.name)
     @project.save!
     respond_to do |format|
       format.text { render(nothing: true, status: 200, content_type: "text/html") }
