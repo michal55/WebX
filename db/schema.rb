@@ -63,9 +63,9 @@ ActiveRecord::Schema.define(version: 20170304184807) do
   add_index "frequencies", ["deleted_at"], name: "index_frequencies_on_deleted_at", using: :btree
 
   create_table "instances", force: :cascade do |t|
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.integer  "extractions_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "extraction_id"
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|

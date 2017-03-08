@@ -4,6 +4,6 @@ class CreateInstances < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_reference :instances, :extractions
+    add_reference :instances, :extraction
   end
 end
