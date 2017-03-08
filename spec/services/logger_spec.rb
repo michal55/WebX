@@ -6,14 +6,14 @@ describe 'Logging into elastic' do
     user = create(:user)
     logger = Logging::Logger.new(severity: 1)
     logger.debug(user.name, user)
-    sleep(5)
+    # sleep(5)
+    Log.refresh_index!
     response = Log.search(
           query: {
                 match: {
                     resource_type: "user" }
               }
     )
-
     expect(response[0]['msg']).to eq(user.name)
   end
 
@@ -21,9 +21,8 @@ describe 'Logging into elastic' do
     user = create(:user)
     logger = Logging::Logger.new(severity: 3)
     logger.debug("debug", user)
-    sleep(1)
     logger.error("error", user)
-    sleep(5)
+    Log.refresh_index!
     debug_response = Log.search(
         query: {
             match: {

@@ -1,6 +1,7 @@
 class Log
   include Elasticsearch::Persistence::Model
   include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   index_name ['webx', Rails.env].join('_')
   document_type 'log'
