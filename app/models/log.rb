@@ -7,7 +7,7 @@ class Log
 
   attribute :msg, String, mapping: { index: "not_analyzed" }
   attribute :severity, Integer, mapping: { index: "not_analyzed" }
-  attribute :resource_type, Integer, mapping: { index: "not_analyzed" }
+  attribute :resource_type, String, mapping: { index: "not_analyzed" }
   attribute :resource_id, Integer, mapping: { index: "not_analyzed" }
 
 end
