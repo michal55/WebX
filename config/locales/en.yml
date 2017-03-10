@@ -107,6 +107,7 @@ en:
       action: "Actions"
       frequencies: "Frequencies"
       access: "access"
+      log_level: "Log level"
     no_script: "Your project does not have any scripts"
   data_fields:
     index: "Data Field"

@@ -5,7 +5,7 @@ FactoryGirl.define do
     after(:create) do |script|
       script.project = FactoryGirl.create(:project)
       script.xpaths = {}.to_json
-      script.mode = 1
+      script.log_level = 1
       script.save!
     end
   end
@@ -15,7 +15,7 @@ FactoryGirl.define do
     after(:create) do |script|
       script.project = FactoryGirl.create(:project_api)
       script.xpaths = {}.to_json
-      script.mode = 1
+      script.log_level = 1
       script.save!
     end
   end
@@ -36,7 +36,7 @@ FactoryGirl.define do
     after(:create) do |script|
       script.project = FactoryGirl.create(:project)
       script.xpaths = json.to_json
-      script.mode = 1
+      script.log_level = 1
       script.save!
     end
   end

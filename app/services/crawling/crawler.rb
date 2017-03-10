@@ -3,7 +3,7 @@ module Crawling
     extend self
 
     def execute(script)
-      logger = Logging::Logger.new(severity: script.mode)
+      logger = Logging::Logger.new(severity: script.log_level)
       script_json = script.xpaths
       extraction = Extraction.new
       extraction.script = script
@@ -24,9 +24,13 @@ module Crawling
       script.last_run = Time.now
       script.save!
 
+      instance                       = Instance.new
+      instance.extraction_id         = extraction.id
+      instance.save
+
       script_json['data'].each do |x|
         extraction_datum               = ExtractionDatum.new
-        extraction_datum.extraction_id = extraction.id
+        extraction_datum.instance_id   = instance.id
         extraction_datum.field_name    = x['name']
         extraction_datum.value         = @doc.xpath x['value']
         extraction_datum.save!
