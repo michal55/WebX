@@ -127,6 +127,46 @@ a.btn:hover {
 	min-height: 80vh;
 }
 
+.flash-msg {
+	min-height: 20px;
+	.msg {
+		display: none;
+		color: white;
+		padding-left: 10px;
+	}
+	.msg-container {
+		width: 0;
+		background-color: #4CAF50;
+		min-height: 20px;
+		background-image: -webkit-linear-gradient(150deg, #66BB6A 35%, #4CAF50 35%);
+	}
+	.bounce {
+		width: 10px;
+		min-height: 10px;
+		border-radius: 10px;
+		@-webkit-keyframes bounce {
+		  0%  { margin-top: 0px; margin-bottom:0px; }
+		  5% { margin-top: 2px; margin-bottom: -2px; }
+		  10% { margin-top: 4px; margin-bottom: -4px;}
+		  15% { margin-top: 7px; margin-bottom: -7px;}
+		  20% { margin-top: 10px; margin-bottom: -10px;}
+		  25% { margin-top: 8px; margin-bottom: -8px;}
+		  30% { margin-top: 5px; margin-bottom: -5px;}
+		  35% { margin-top: 3px; margin-bottom: -3px;}
+		  40% { margin-top: 2px; margin-bottom: -2px;}
+		  45% { margin-top: 3px; margin-bottom: -3px;}
+		  50% { margin-top: 5px; margin-bottom: -5px;}
+		  55% { margin-top: 8px; margin-bottom: -8px;}
+		  60% { margin-top: 10px; margin-bottom: -10px;}
+		  70% { margin-top: 9px; margin-bottom: -9px;}
+		  75% { margin-top: 7px; margin-bottom: -7px;}
+		  80% { margin-top: 8px; margin-bottom: -8px;}
+		  85% { margin-top: 10px; margin-bottom: -10px;}
+		}
+		-webkit-animation:bounce 1s infinite;
+	}
+}
+
 .navbar {
 	background-color: $primary-color;
 	border-radius: 0 0 0 0;
@@ -134,6 +174,7 @@ a.btn:hover {
 	border-bottom: 3px solid $secondary-color;
 	border-image: linear-gradient(to right, $primary-color, $secondary-color);
 	border-image-slice: 1;
+	margin-bottom: 0px;
 
 	a {
 		color: $primary-color;
@@ -187,6 +228,10 @@ a.btn:hover {
   		border-right: 0;
   		background-image: url(/webx/assets/main.jpg);
 	}
+}
+
+.panel {
+	border: 0;
 }
 
 .table-striped>tbody>tr:nth-child(odd)>td, 

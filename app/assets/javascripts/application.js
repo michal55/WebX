@@ -57,6 +57,50 @@ angular.module('webx', [])
     }
 ]);
 
+// info message animation
+$(function(){
+    setTimeout(function() {
+        for (var i=0; i <= 100; i += 1){
+          increase(i);
+          decrease(i);
+        }
+
+        function increase(width) {
+            setTimeout(function() {
+                $('.msg-container').width(width + "%");
+                if (width == 60) {
+                    $('.msg').fadeIn(100);
+                    setTimeout(function() {
+                        $('.msg').fadeOut(200);
+                    }, 2000);
+                }
+            }, width*width*width*width/300000);
+        }
+
+        function decrease(width) {
+            setTimeout(function() {
+                if (width == 100) {
+                    $('.msg-container').addClass('bounce');
+                    for (var i = 850; i < 1000; i++) {
+                        swimOut(i/10);
+                    }
+                    $('.msg-container').fadeOut(1000);
+                } else {
+                    $('.msg-container').width((100-width) + "%");
+                    re_width = width - 0.15*width;
+                    $('.msg-container').css({'margin-left': re_width + "%"});
+                }
+            }, 2500 + Math.sqrt(Math.sqrt(width*1000000000)));
+        }
+
+        function swimOut(width) {
+            setTimeout(function() {
+                $('.msg-container').css({'margin-left': width + "%"});
+            }, (width-85)*(width-85)*10); 
+        }
+    }, 100);
+});
+
 function flash() {
     // render div with id here
     console.log('TODO: flash message for success update');
