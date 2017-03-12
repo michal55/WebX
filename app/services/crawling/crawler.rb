@@ -3,55 +3,37 @@ module Crawling
     extend self
 
     def execute(script)
-      logger = Logging::Logger.new(severity: script.log_level)
+      @logger = Logging::Logger.new(severity: script.log_level)
+      @agent = Mechanize.new
       script_json = script.xpaths
-      extraction = Extraction.new
-      extraction.script = script
-      extraction.save!
+      extraction = Extraction.create(script: script)
+      @logger.debug('Extraction created', extraction)
 
-      logger.debug('Extraction created', extraction)
-
-      agent = Mechanize.new
       # exit when opening URL fails
-      begin
-        @doc = agent.get(script_json['url'])
-      rescue Exception => e
-        logger.error("#{e.to_s} url: #{script_json['url']}", extraction)
-        extraction.success = false
-        extraction.save!
-        exit
-      end
+      @doc = try_get_url(extraction, script_json['url'])
+      exit if @doc.nil?
 
       script.last_run = Time.now
       script.save!
+
       instance = Instance.create(extraction_id: extraction.id)
-
       script_json['data'].each do |row|
+        extraction_datum = ExtractionDatum.create(
+            instance_id: instance.id, extraction_id: extraction.id,
+            field_name: row['name'], value: extract_value(@doc, row)
+        )
+        @logger.debug(log_msg(extraction_datum, row), extraction)
 
-        extraction_datum               = ExtractionDatum.new
-        extraction_datum.extraction_id = extraction.id
-        extraction_datum.instance_id   = instance.id
-        extraction_datum.field_name    = row['name']
-        extraction_datum.value         = postprocessing(row) ? extract_url(@doc, row['xpath']) : extract_text(@doc, row['xpath'])
-        extraction_datum.save
-        logger.debug("field: #{row['name']}, xpath: #{row['xpath']}, value: #{extraction_datum.value}", extraction)
+        if is_nested(row['postprocessing'])
+          nested_page = try_get_url(extraction, extract_href(@doc, row['xpath']))
+          exit if nested_page.nil?
 
-        if postprocessing(row)
-          begin
-            nested_page = agent.get(extract_url @doc, row['xpath'])
-          rescue Exception => e
-            logger.error("#{e.to_s} url: #{extraction_datum.value}", extraction)
-            extraction.success = false
-            extraction.save!
-            exit
-          end
-
-          row['postprocessing'][0]['data'].each do |nested_row|
-            extraction_datum            = ExtractionDatum.create(instance_id: instance.id, extraction_id: extraction.id)
-            extraction_datum.field_name = nested_row['name']
-            extraction_datum.value      = extract_text nested_page, nested_row['xpath']
-            extraction_datum.save
-            logger.debug("field: #{nested_row['name']}, xpath: #{nested_row['xpath']}, value: #{extraction_datum.value}", extraction)
+          row['postprocessing'][0]['data'].each do |nested_row|  #TODO [0] upravit/doplnit
+            extraction_datum = ExtractionDatum.create(
+                instance_id: instance.id, extraction_id: extraction.id,
+                field_name: nested_row['name'], value: extract_value(nested_page, nested_row)
+            )
+            @logger.debug(log_msg(extraction_datum, nested_row), extraction)
           end
         end
       end
@@ -59,13 +41,32 @@ module Crawling
       extraction.execution_time = script.last_run - extraction.created_at
       extraction.success = true
       extraction.save!
-
-      logger.debug("Execution time: #{extraction.execution_time}", extraction)
+      @logger.debug("Execution time: #{extraction.execution_time}", extraction)
     end
 
-    def postprocessing(row)
+    def log_msg(extraction_datum, nested_row)
+      "field: #{nested_row['name']}, xpath: #{nested_row['xpath']}, value: #{extraction_datum.value}"
+    end
+
+    def try_get_url(extraction, url)
+      begin
+        nested_page = @agent.get(url)
+      rescue Exception => e
+        @logger.error("#{e.to_s} url: #{url}", extraction)
+        extraction.success = false
+        extraction.save!
+        nested_page = nil
+      end
+      nested_page
+    end
+
+    def extract_value(doc, row)
+      is_nested(row['postprocessing']) ? extract_href(doc, row['xpath']) : extract_text(doc, row['xpath'])
+    end
+
+    def is_nested(row)
       #TODO: kontrola na array nemusi byt idealna, uvidime co do toho jsonu este pribudne
-      row['postprocessing'].is_a?(Array) and row['postprocessing'][0]['type'] == "nested"
+      row.is_a?(Array) and row.size > 0 and row[0]['type'] == "nested"
     end
 
     def extract_text doc, xpath
@@ -76,7 +77,7 @@ module Crawling
       end
     end
 
-    def extract_url doc, xpath
+    def extract_href doc, xpath
       doc.parser.xpath(xpath)[0].attributes['href']
     end
 
