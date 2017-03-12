@@ -14,7 +14,12 @@ branches:
   - master
   - development
   - staging
+services:
+- redis-server
+- elasticsearch
 before_script:
+- sleep 10
+- curl http://localhost:9200/
 - sudo cp /etc/postgresql/9.4/main/pg_hba.conf /etc/postgresql/9.5/main/pg_hba.conf
 - sudo /etc/init.d/postgresql restart
 - psql --version
@@ -26,7 +31,9 @@ addons:
   apt:
     sources:
     - precise-pgdg-9.5
+    - elasticsearch-1.7
     packages:
+    - elasticsearch
     - postgresql-9.5
     - postgresql-contrib-9.5
   postgresql: 9.5
@@ -37,5 +44,3 @@ after_success:
 - "[[ $TRAVIS_BRANCH = 'master' ]] && bundle exec cap master deploy"
 notifications:
   slack: teamwebx:VHTdNTZxyP8rHumLGGBdv3PU
-services:
-- redis-server

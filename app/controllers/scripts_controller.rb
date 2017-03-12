@@ -16,6 +16,7 @@ class ScriptsController < ApplicationController
   def create
     @script_new = Script.new
     @script_new.assign_attributes({name: params[:script][:name], project_id:  params[:project_id] })
+    @script_new.mode = 3
     @script_new.xpaths = {}.to_json
     @script_new.save!
     flash[:notice] = I18n.t('scripts.flash_create', script_name: @script_new.name)
@@ -39,6 +40,7 @@ class ScriptsController < ApplicationController
     @script.name = params[:script][:name]
     puts params[:script][:xpaths]
     @script.xpaths = params[:script][:xpaths].gsub("\n","").to_json
+    @script.mode = params[:script][:mode]
     @script.save!
     respond_to do |format|
       format.text { render(nothing: true, status: 200, content_type: "text/html") }

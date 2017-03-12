@@ -31,6 +31,7 @@ en:
     table_email: "E-mail"
     table_role: "Role"
     table_date: "Date of registration"
+    debug: "Debug information"
 
   auth:
     reset:
@@ -170,7 +171,27 @@ en:
       first_exec: "First execution"
       edit: "Edit frequency"
     no_frequency: "Your script has no running frequency"
-    placeholder_new: "Add new execution interval"
+	placeholder_new: "Add new execution interval"
     flash_create: "You successfully created frequency"
     flash_delete: "You deleted frequency"
     flash_update: "You updated frequency"
+
+  debug:
+    header_debug: "Debug info"
+    environment: "Environment:"
+    time: "Server time:"
+    rails_root: "Root:"
+    database: "Database connected:"
+    version: "Rails version:"
+    header_stats: "Stats"
+    registered: "Registered users:"
+
+
+  home:
+    welcome: "Welcome in WebX project"
+    team: "Team Project site"
+    team_link: "http://team16-16.studenti.fiit.stuba.sk/index.html"
+    github_server: "Server part Github"
+    github_server_link: "https://github.com/michal55/WebX"
+    github_extension: "Chrome extension part Github"
+    github_extension_link: "https://github.com/michal55/WebX-Extension"

@@ -59,6 +59,11 @@ gem 'devise', '>= 3.4.1'
 # Paranoia
 gem 'paranoia', '>= 2.0'
 
+# Elastic
+gem 'elasticsearch-rails', '>= 0.1.9'
+gem 'elasticsearch-model', '>= 0.1.9'
+gem 'elasticsearch-persistence', require: 'elasticsearch/persistence/model'
+
 gem 'nestive'
 
 # Test suite related gems

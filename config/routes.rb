@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'debug' => 'debug#home'
+
   use_doorkeeper
 
   mount API::Root => '/'

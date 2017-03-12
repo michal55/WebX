@@ -99,4 +99,12 @@ RSpec.configure do |config|
   config.before(:all) do
     FactoryGirl.reload
   end
+
+  config.before(:suite) do
+    Log.__elasticsearch__.create_index!(force: true)
+  end
+
+  config.after(:suite) do
+    Log.__elasticsearch__.client.indices.delete index: Log.index_name
+  end
 end
