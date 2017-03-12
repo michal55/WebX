@@ -10,10 +10,10 @@ describe 'Extracting data from rubygems.org' do
     json['data'] = []
     json['data'][0] = {}
     json['data'][0]['name'] = "navbar"
-    json['data'][0]['value'] = "/html/body/header/div/div/nav/a[1]/text()"
+    json['data'][0]['xpath'] = "/html/body/header/div/div/nav/a[1]/text()"
     json['data'][1] = {}
     json['data'][1]['name'] = "title"
-    json['data'][1]['value'] = "/html/body/main/h1/text()"
+    json['data'][1]['xpath'] = "/html/body/main/h1/text()"
     script.xpaths = json.to_json
     script.log_level = 1
     script.save
@@ -29,30 +29,33 @@ describe 'Extracting data from rubygems.org' do
   it 'should extract gem name and its version + nested hash value' do
     script = create(:script)
     json = {}
-    json['url'] = "https://rubygems.org/gems"
+    json['url'] = "https://github.com/michal55/WebX-Team16"
     json['data'] = []
     json['data'][0] = {}
-    json['data'][0]['name'] = "gem_name"
-    json['data'][0]['xpath'] = "/html/body/main/div/a[1]/span/h2"
+    json['data'][0]['name'] = "title"
+    json['data'][0]['xpath'] = '//*[@id="js-repo-pjax-container"]/div[2]/div[1]/div[1]/div/div/span'
     json['data'][1] = {}
-    json['data'][1]['name'] = "version"
-    json['data'][1]['value'] = "/html/body/main/div/a[1]/span/h2/span/text()"
+    json['data'][1]['name'] = "number_of_branches"
+    json['data'][1]['xpath'] = '//*[@id="js-repo-pjax-container"]/div[2]/div[1]/div[2]/div/div/ul/li[2]/a/span'
     json['data'][1]['postprocessing'] = []
     json['data'][1]['postprocessing'][0] = {}
     json['data'][1]['postprocessing'][0]['type'] = "nested"
     json['data'][1]['postprocessing'][0]['data'] = []
     json['data'][1]['postprocessing'][0]['data'][0] = {}
-    json['data'][1]['postprocessing'][0]['data'][0]['name'] = "hash"
-    json['data'][1]['postprocessing'][0]['data'][0]['xpath'] = "/html/body/main/div/div/div[1]/div[3]/div[2]/text()"
+    json['data'][1]['postprocessing'][0]['data'][0]['name'] = "name_of_branch"
+    json['data'][1]['postprocessing'][0]['data'][0]['xpath'] = '//*[@id="branch-autoload-container"]/div/div[2]/div/span[1]/a'
     script.xpaths = json.to_json
     script.log_level = 1
     script.save
     Crawling::Crawler.execute(script)
     extraction = Extraction.find_by(script_id: script.id)
     expect(extraction.success).to eq true
-    #expect(extraction.instances.first.extraction_data[0].value).to eq "a"
-    expect(extraction.instances.first.extraction_data[1].value).to eq "0.1.1"
-    #expect(extraction.instances.first.extraction_data[2].value).to eq "233dca77fe5df2ef831943993ae7448963f89027929468622c30767a4e8f2357"
+    datum = ExtractionDatum.find_by(field_name: "title")
+    expect(datum.value).to eq "\n            Web page of team 16\n          "
+    datum = ExtractionDatum.find_by(field_name: "numbers_of_branches")
+    expect(datum.value).to eq "1"
+    datum = ExtractionDatum.find_by(field_name: "name_of_branch")
+    expect(datum.value).to eq "master"
     script = Script.find(script.id)
     expect(script.last_run).to be > script.created_at
   end
