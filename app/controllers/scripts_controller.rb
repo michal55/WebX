@@ -40,8 +40,10 @@ class ScriptsController < ApplicationController
     puts params[:script][:xpaths]
     @script.xpaths = params[:script][:xpaths].gsub("\n","").to_json
     @script.save!
-    flash[:notice] = I18n.t('scripts.flash_update', script_name: @script.name)
-    render nothing: true, status: 200, content_type: "text/html"
+    respond_to do |format|
+      format.text { render(nothing: true, status: 200, content_type: "text/html") }
+      format.js { render :js => "flash(\"#{ I18n.t('scripts.flash_update', script_name: @script.name)}\");"  }
+    end
   end
 
   def destroy

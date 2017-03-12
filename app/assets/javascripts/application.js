@@ -44,7 +44,9 @@ angular.module('webx', [])
 
         $(document).ready( function($) {
             $(document).ajaxSuccess( function(_, __, ___ , data) {
-                $scope.state[data.id.toString()] = 'saved';
+                if( data && data.id ) {
+                    $scope.state[data.id.toString()] = 'saved';
+                }
                 $scope.$digest();
             });
         });
@@ -54,11 +56,18 @@ angular.module('webx', [])
                 $scope.datetime_changed = true;
             });
         }
+
+        $scope.deleteInterval = function(id) {
+            $('#remove_trigger_' + id).css({'display': 'none'});
+            $('#remove_' + id).css({'display': 'block'});
+        }
+
     }
 ]);
 
 // info message animation
-$(function(){
+function messageAnimation() {
+    var container = $('.msg-container');
     setTimeout(function() {
         for (var i=0; i <= 100; i += 1){
           increase(i);
@@ -67,7 +76,7 @@ $(function(){
 
         function increase(width) {
             setTimeout(function() {
-                $('.msg-container').width(width + "%");
+                container.width(width + "%");
                 if (width == 60) {
                     $('.msg').fadeIn(100);
                     setTimeout(function() {
@@ -80,29 +89,36 @@ $(function(){
         function decrease(width) {
             setTimeout(function() {
                 if (width == 100) {
-                    $('.msg-container').addClass('bounce');
+                    container.addClass('bounce');
                     for (var i = 850; i < 1000; i++) {
                         swimOut(i/10);
                     }
-                    $('.msg-container').fadeOut(1000);
+                    container.fadeOut(1000);
                 } else {
-                    $('.msg-container').width((100-width) + "%");
+                    container.width((100-width) + "%");
                     re_width = width - 0.15*width;
-                    $('.msg-container').css({'margin-left': re_width + "%"});
+                    container.css({'margin-left': re_width + "%"});
                 }
             }, 2500 + Math.sqrt(Math.sqrt(width*1000000000)));
         }
 
         function swimOut(width) {
             setTimeout(function() {
-                $('.msg-container').css({'margin-left': width + "%"});
+                container.css({'margin-left': width + "%"});
             }, (width-85)*(width-85)*10); 
         }
     }, 100);
+}
+$(function(){
+    messageAnimation();
 });
 
-function flash() {
-    // render div with id here
-    console.log('TODO: flash message for success update');
-    alert('TODO: flash message for success update');
+function flash(msg) {
+    $('.flash-msg').html(
+        '<div class="msg-container">' +
+        '<div class="notice msg" id="flash_notice">' +
+        msg +
+        '</div></div>'
+    );
+    messageAnimation();
 }

@@ -30,7 +30,18 @@
             </td>
             <td><%= d.first_exec %></td>
             <td class="action-icon">
-              <%= link_to('', project_script_frequency_path(project.id, script.id, d.id), method: :delete, class: 'btn btn-default glyphicon glyphicon-remove table-button') %>
+              <span 
+                ng-click=<%="deleteInterval(#{d.id})"%>
+                id=<%="remove_trigger_#{d.id}"%>
+                class="btn btn-default glyphicon glyphicon-remove table-button trigger">
+              </span>
+              <%= link_to(
+                '',
+                project_script_frequency_path(project.id, script.id, d.id),
+                method: :delete,
+                class: 'btn btn-default glyphicon glyphicon-remove table-button confirm',
+                :'id' => "remove_#{d.id}"
+              ) %>
             </td>
             <% end %>
           </tr>

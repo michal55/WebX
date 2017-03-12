@@ -479,6 +479,11 @@ td {
 		color: lightblue;
 		padding: 0;
 	}
+	&.confirm {
+		background-color: $danger;
+		display: none;
+		color: white;
+	}
 }
 
 .ng-invalid-number {

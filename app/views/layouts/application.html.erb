@@ -8,13 +8,6 @@
 </head>
 <body class="<%= "intro-page" unless user_signed_in? %>" data-turbolinks="false" ng-app="webx" ng-controller="MainCtrl" ng-cloak>
 <%= render 'layouts/header' %>
-<div class="row">
-	<div class="col-md-12">
-		<div class="container">
-		<%= render 'application/flash' %>
-		</div>
-	</div>
-</div>
 <div class="row main-content">
 	<div class="col-md-12">
 		    <%= yield %>

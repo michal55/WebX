@@ -27,7 +27,18 @@
               :required => true
             )%>
             <span class="input-group-addon table-button">
-              <%= link_to('', project_data_field_path(d.project, d), method: :delete, class: 'btn btn-default glyphicon glyphicon-remove') %>
+              <a 
+                ng-click=<%="deleteInterval('data_field_#{d.id}')"%>
+                id=<%="remove_trigger_data_field_#{d.id}"%>
+                class="btn btn-default glyphicon glyphicon-remove table-button trigger">
+              </a>
+              <%= link_to(
+                '',
+                project_data_field_path(d.project, d),
+                method: :delete,
+                class: 'btn btn-default glyphicon glyphicon-remove table-button confirm',
+                :'id' => "remove_data_field_#{d.id}"
+              ) %>
             </span>
           </div>
         </td>
