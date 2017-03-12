@@ -2,7 +2,7 @@ module Logging
   class Logger
 
     def initialize(attributes = {})
-      @severity = attributes[:severity]
+      @severity = Script.log_levels[attributes[:severity]]
     end
 
     def write severity, msg, id, type
@@ -15,15 +15,15 @@ module Logging
     end
 
     def debug msg, resource
-      write 1, msg, resource.id, resource.class.name.downcase if @severity == 1
+      write 1, msg, resource.id, resource.class.name.downcase if @severity == 0
     end
 
     def warning msg, resource
-      write 2, msg, resource.id, resource.class.name.downcase if @severity <= 2
+      write 2, msg, resource.id, resource.class.name.downcase if @severity <= 1
     end
 
     def error msg, resource
-      write 3, msg, resource.id, resource.class.name.downcase
+      write 3, msg, resource.id, resource.class.name.downcase if @severity <= 2
     end
 
     def store log

@@ -23,10 +23,7 @@ module Crawling
 
       script.last_run = Time.now
       script.save!
-
-      instance                       = Instance.new
-      instance.extraction_id         = extraction.id
-      instance.save
+      instance = Instance.create(extraction_id: extraction.id)
 
       script_json['data'].each do |x|
         extraction_datum               = ExtractionDatum.new
