@@ -139,6 +139,108 @@ a.btn:hover {
 		background-color: #4CAF50;
 		min-height: 20px;
 		background-image: -webkit-linear-gradient(150deg, #66BB6A 35%, #4CAF50 35%);
+		-webkit-animation:slider 3s;
+	}
+	.slider {
+		@-webkit-keyframes slider {
+			0% {background-image: -webkit-linear-gradient(150deg, #66BB6A 23.0%, #4CAF50 23.0%);}
+			1% {background-image: -webkit-linear-gradient(150deg, #66BB6A 23.125%, #4CAF50 23.125%);}
+			2% {background-image: -webkit-linear-gradient(150deg, #66BB6A 23.25%, #4CAF50 23.25%);}
+			3% {background-image: -webkit-linear-gradient(150deg, #66BB6A 23.375%, #4CAF50 23.375%);}
+			4% {background-image: -webkit-linear-gradient(150deg, #66BB6A 23.5%, #4CAF50 23.5%);}
+			5% {background-image: -webkit-linear-gradient(150deg, #66BB6A 23.625%, #4CAF50 23.625%);}
+			6% {background-image: -webkit-linear-gradient(150deg, #66BB6A 23.75%, #4CAF50 23.75%);}
+			7% {background-image: -webkit-linear-gradient(150deg, #66BB6A 23.875%, #4CAF50 23.875%);}
+			8% {background-image: -webkit-linear-gradient(150deg, #66BB6A 24.0%, #4CAF50 24.0%);}
+			9% {background-image: -webkit-linear-gradient(150deg, #66BB6A 24.125%, #4CAF50 24.125%);}
+			10% {background-image: -webkit-linear-gradient(150deg, #66BB6A 24.25%, #4CAF50 24.25%);}
+			11% {background-image: -webkit-linear-gradient(150deg, #66BB6A 24.375%, #4CAF50 24.375%);}
+			12% {background-image: -webkit-linear-gradient(150deg, #66BB6A 24.5%, #4CAF50 24.5%);}
+			13% {background-image: -webkit-linear-gradient(150deg, #66BB6A 24.625%, #4CAF50 24.625%);}
+			14% {background-image: -webkit-linear-gradient(150deg, #66BB6A 24.75%, #4CAF50 24.75%);}
+			15% {background-image: -webkit-linear-gradient(150deg, #66BB6A 24.875%, #4CAF50 24.875%);}
+			16% {background-image: -webkit-linear-gradient(150deg, #66BB6A 25.0%, #4CAF50 25.0%);}
+			17% {background-image: -webkit-linear-gradient(150deg, #66BB6A 25.125%, #4CAF50 25.125%);}
+			18% {background-image: -webkit-linear-gradient(150deg, #66BB6A 25.25%, #4CAF50 25.25%);}
+			19% {background-image: -webkit-linear-gradient(150deg, #66BB6A 25.375%, #4CAF50 25.375%);}
+			20% {background-image: -webkit-linear-gradient(150deg, #66BB6A 25.5%, #4CAF50 25.5%);}
+			21% {background-image: -webkit-linear-gradient(150deg, #66BB6A 25.625%, #4CAF50 25.625%);}
+			22% {background-image: -webkit-linear-gradient(150deg, #66BB6A 25.75%, #4CAF50 25.75%);}
+			23% {background-image: -webkit-linear-gradient(150deg, #66BB6A 25.875%, #4CAF50 25.875%);}
+			24% {background-image: -webkit-linear-gradient(150deg, #66BB6A 26.0%, #4CAF50 26.0%);}
+			25% {background-image: -webkit-linear-gradient(150deg, #66BB6A 26.125%, #4CAF50 26.125%);}
+			26% {background-image: -webkit-linear-gradient(150deg, #66BB6A 26.25%, #4CAF50 26.25%);}
+			27% {background-image: -webkit-linear-gradient(150deg, #66BB6A 26.375%, #4CAF50 26.375%);}
+			28% {background-image: -webkit-linear-gradient(150deg, #66BB6A 26.5%, #4CAF50 26.5%);}
+			29% {background-image: -webkit-linear-gradient(150deg, #66BB6A 26.625%, #4CAF50 26.625%);}
+			30% {background-image: -webkit-linear-gradient(150deg, #66BB6A 26.75%, #4CAF50 26.75%);}
+			31% {background-image: -webkit-linear-gradient(150deg, #66BB6A 26.875%, #4CAF50 26.875%);}
+			32% {background-image: -webkit-linear-gradient(150deg, #66BB6A 27.0%, #4CAF50 27.0%);}
+			33% {background-image: -webkit-linear-gradient(150deg, #66BB6A 27.125%, #4CAF50 27.125%);}
+			34% {background-image: -webkit-linear-gradient(150deg, #66BB6A 27.25%, #4CAF50 27.25%);}
+			35% {background-image: -webkit-linear-gradient(150deg, #66BB6A 27.375%, #4CAF50 27.375%);}
+			36% {background-image: -webkit-linear-gradient(150deg, #66BB6A 27.5%, #4CAF50 27.5%);}
+			37% {background-image: -webkit-linear-gradient(150deg, #66BB6A 27.625%, #4CAF50 27.625%);}
+			38% {background-image: -webkit-linear-gradient(150deg, #66BB6A 27.75%, #4CAF50 27.75%);}
+			39% {background-image: -webkit-linear-gradient(150deg, #66BB6A 27.875%, #4CAF50 27.875%);}
+			40% {background-image: -webkit-linear-gradient(150deg, #66BB6A 28.0%, #4CAF50 28.0%);}
+			41% {background-image: -webkit-linear-gradient(150deg, #66BB6A 28.125%, #4CAF50 28.125%);}
+			42% {background-image: -webkit-linear-gradient(150deg, #66BB6A 28.25%, #4CAF50 28.25%);}
+			43% {background-image: -webkit-linear-gradient(150deg, #66BB6A 28.375%, #4CAF50 28.375%);}
+			44% {background-image: -webkit-linear-gradient(150deg, #66BB6A 28.5%, #4CAF50 28.5%);}
+			45% {background-image: -webkit-linear-gradient(150deg, #66BB6A 28.625%, #4CAF50 28.625%);}
+			46% {background-image: -webkit-linear-gradient(150deg, #66BB6A 28.75%, #4CAF50 28.75%);}
+			47% {background-image: -webkit-linear-gradient(150deg, #66BB6A 28.875%, #4CAF50 28.875%);}
+			48% {background-image: -webkit-linear-gradient(150deg, #66BB6A 29.0%, #4CAF50 29.0%);}
+			49% {background-image: -webkit-linear-gradient(150deg, #66BB6A 29.125%, #4CAF50 29.125%);}
+			50% {background-image: -webkit-linear-gradient(150deg, #66BB6A 29.25%, #4CAF50 29.25%);}
+			51% {background-image: -webkit-linear-gradient(150deg, #66BB6A 29.375%, #4CAF50 29.375%);}
+			52% {background-image: -webkit-linear-gradient(150deg, #66BB6A 29.5%, #4CAF50 29.5%);}
+			53% {background-image: -webkit-linear-gradient(150deg, #66BB6A 29.625%, #4CAF50 29.625%);}
+			54% {background-image: -webkit-linear-gradient(150deg, #66BB6A 29.75%, #4CAF50 29.75%);}
+			55% {background-image: -webkit-linear-gradient(150deg, #66BB6A 29.875%, #4CAF50 29.875%);}
+			56% {background-image: -webkit-linear-gradient(150deg, #66BB6A 30.0%, #4CAF50 30.0%);}
+			57% {background-image: -webkit-linear-gradient(150deg, #66BB6A 30.125%, #4CAF50 30.125%);}
+			58% {background-image: -webkit-linear-gradient(150deg, #66BB6A 30.25%, #4CAF50 30.25%);}
+			59% {background-image: -webkit-linear-gradient(150deg, #66BB6A 30.375%, #4CAF50 30.375%);}
+			60% {background-image: -webkit-linear-gradient(150deg, #66BB6A 30.5%, #4CAF50 30.5%);}
+			61% {background-image: -webkit-linear-gradient(150deg, #66BB6A 30.625%, #4CAF50 30.625%);}
+			62% {background-image: -webkit-linear-gradient(150deg, #66BB6A 30.75%, #4CAF50 30.75%);}
+			63% {background-image: -webkit-linear-gradient(150deg, #66BB6A 30.875%, #4CAF50 30.875%);}
+			64% {background-image: -webkit-linear-gradient(150deg, #66BB6A 31.0%, #4CAF50 31.0%);}
+			65% {background-image: -webkit-linear-gradient(150deg, #66BB6A 31.125%, #4CAF50 31.125%);}
+			66% {background-image: -webkit-linear-gradient(150deg, #66BB6A 31.25%, #4CAF50 31.25%);}
+			67% {background-image: -webkit-linear-gradient(150deg, #66BB6A 31.375%, #4CAF50 31.375%);}
+			68% {background-image: -webkit-linear-gradient(150deg, #66BB6A 31.5%, #4CAF50 31.5%);}
+			69% {background-image: -webkit-linear-gradient(150deg, #66BB6A 31.625%, #4CAF50 31.625%);}
+			70% {background-image: -webkit-linear-gradient(150deg, #66BB6A 31.75%, #4CAF50 31.75%);}
+			71% {background-image: -webkit-linear-gradient(150deg, #66BB6A 31.875%, #4CAF50 31.875%);}
+			72% {background-image: -webkit-linear-gradient(150deg, #66BB6A 32.0%, #4CAF50 32.0%);}
+			73% {background-image: -webkit-linear-gradient(150deg, #66BB6A 32.125%, #4CAF50 32.125%);}
+			74% {background-image: -webkit-linear-gradient(150deg, #66BB6A 32.25%, #4CAF50 32.25%);}
+			75% {background-image: -webkit-linear-gradient(150deg, #66BB6A 32.375%, #4CAF50 32.375%);}
+			76% {background-image: -webkit-linear-gradient(150deg, #66BB6A 32.5%, #4CAF50 32.5%);}
+			77% {background-image: -webkit-linear-gradient(150deg, #66BB6A 32.625%, #4CAF50 32.625%);}
+			78% {background-image: -webkit-linear-gradient(150deg, #66BB6A 32.75%, #4CAF50 32.75%);}
+			79% {background-image: -webkit-linear-gradient(150deg, #66BB6A 32.875%, #4CAF50 32.875%);}
+			80% {background-image: -webkit-linear-gradient(150deg, #66BB6A 33.0%, #4CAF50 33.0%);}
+			81% {background-image: -webkit-linear-gradient(150deg, #66BB6A 33.125%, #4CAF50 33.125%);}
+			82% {background-image: -webkit-linear-gradient(150deg, #66BB6A 33.25%, #4CAF50 33.25%);}
+			83% {background-image: -webkit-linear-gradient(150deg, #66BB6A 33.375%, #4CAF50 33.375%);}
+			84% {background-image: -webkit-linear-gradient(150deg, #66BB6A 33.5%, #4CAF50 33.5%);}
+			85% {background-image: -webkit-linear-gradient(150deg, #66BB6A 33.625%, #4CAF50 33.625%);}
+			86% {background-image: -webkit-linear-gradient(150deg, #66BB6A 33.75%, #4CAF50 33.75%);}
+			87% {background-image: -webkit-linear-gradient(150deg, #66BB6A 33.875%, #4CAF50 33.875%);}
+			88% {background-image: -webkit-linear-gradient(150deg, #66BB6A 34.0%, #4CAF50 34.0%);}
+			89% {background-image: -webkit-linear-gradient(150deg, #66BB6A 34.125%, #4CAF50 34.125%);}
+			90% {background-image: -webkit-linear-gradient(150deg, #66BB6A 34.25%, #4CAF50 34.25%);}
+			91% {background-image: -webkit-linear-gradient(150deg, #66BB6A 34.375%, #4CAF50 34.375%);}
+			92% {background-image: -webkit-linear-gradient(150deg, #66BB6A 34.5%, #4CAF50 34.5%);}
+			93% {background-image: -webkit-linear-gradient(150deg, #66BB6A 34.625%, #4CAF50 34.625%);}
+			94% {background-image: -webkit-linear-gradient(150deg, #66BB6A 34.75%, #4CAF50 34.75%);}
+			95% {background-image: -webkit-linear-gradient(150deg, #66BB6A 34.875%, #4CAF50 34.875%);}
+			96% {background-image: -webkit-linear-gradient(150deg, #66BB6A 35.0%, #4CAF50 35.0%);}
+		}
 	}
 	.bounce {
 		width: 10px;
@@ -377,4 +479,8 @@ td {
 		color: lightblue;
 		padding: 0;
 	}
+}
+
+.ng-invalid-number {
+	background-color: $danger;
 }
