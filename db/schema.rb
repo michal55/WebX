@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170308180605) do
+ActiveRecord::Schema.define(version: 20170312173515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,10 +30,11 @@ ActiveRecord::Schema.define(version: 20170308180605) do
   create_table "extraction_data", force: :cascade do |t|
     t.string   "field_name"
     t.string   "value"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.datetime "deleted_at"
     t.integer  "instance_id"
+    t.integer  "extraction_id"
   end
 
   add_index "extraction_data", ["deleted_at"], name: "index_extraction_data_on_deleted_at", using: :btree

@@ -4,9 +4,9 @@ describe 'Logging into elastic' do
 
   it 'Logs factory user', :elasticsearch do
     user = create(:user)
-    logger = Logging::Logger.new(severity: 1)
+    logger = Logging::Logger.new(severity: 0)
     logger.debug(user.name, user)
-    # sleep(5)
+    sleep(5)
     Log.refresh_index!
     response = Log.search(
           query: {
@@ -19,7 +19,7 @@ describe 'Logging into elastic' do
 
   it 'Logs error but not debug' do
     user = create(:user)
-    logger = Logging::Logger.new(severity: 3)
+    logger = Logging::Logger.new(severity: 2)
     logger.debug("debug", user)
     logger.error("error", user)
     Log.refresh_index!
