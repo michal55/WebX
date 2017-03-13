@@ -171,7 +171,7 @@ en:
       first_exec: "First execution"
       edit: "Edit frequency"
     no_frequency: "Your script has no running frequency"
-	placeholder_new: "Add new execution interval"
+    placeholder_new: "Add new execution interval"
     flash_create: "You successfully created frequency"
     flash_delete: "You deleted frequency"
     flash_update: "You updated frequency"
