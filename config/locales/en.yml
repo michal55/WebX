@@ -195,3 +195,8 @@ en:
     github_server_link: "https://github.com/michal55/WebX"
     github_extension: "Chrome extension part Github"
     github_extension_link: "https://github.com/michal55/WebX-Extension"
+
+  time:
+    format: "%Y-%m-%d %H:%M"
+    format_extended: "%Y-%m-%d %H:%M:%S %Z"
+    format_js: "YYYY-MM-DD HH:mm"

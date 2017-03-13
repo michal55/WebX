@@ -28,7 +28,7 @@
                 <%= d.period %>
               </div>
             </td>
-            <td><%= d.first_exec %></td>
+            <td><%= d.first_exec.strftime(t('time.format')) if d.first_exec %></td>
             <td class="action-icon">
               <span 
                 ng-click=<%="deleteInterval(#{d.id})"%>
