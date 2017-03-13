@@ -2,11 +2,10 @@ require 'rspec'
 require 'rails_helper'
 describe 'Logging into elastic' do
 
-  it 'Logs factory user', :elasticsearch do
+  it 'Logs factory user'   do
     user = create(:user)
-    logger = Logging::Logger.new(severity: 0)
+    logger = Logging::Logger.new(severity: 'debug')
     logger.debug(user.name, user)
-    sleep(5)
     Log.refresh_index!
     response = Log.search(
           query: {
@@ -19,7 +18,7 @@ describe 'Logging into elastic' do
 
   it 'Logs error but not debug' do
     user = create(:user)
-    logger = Logging::Logger.new(severity: 2)
+    logger = Logging::Logger.new(severity: 'error')
     logger.debug("debug", user)
     logger.error("error", user)
     Log.refresh_index!

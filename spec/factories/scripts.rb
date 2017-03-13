@@ -22,16 +22,17 @@ FactoryGirl.define do
 
   factory :script_with_xpaths, class: Script do
     name 'Script_Factory'
-
     json = {}
     json['url'] = "https://rubygems.org/"
     json['data'] = []
     json['data'][0] = {}
     json['data'][0]['name'] = "navbar"
-    json['data'][0]['value'] = "/html/body/header/div/div/nav/a[1]"
+    json['data'][0]['xpath'] = "/html/body/header/div/div/nav/a[1]"
+    json['data'][0]['postprocessing'] = nil
     json['data'][1] = {}
     json['data'][1]['name'] = "title"
-    json['data'][1]['value'] = "/html/body/main/h1"
+    json['data'][1]['xpath'] = "/html/body/main/h1"
+    json['data'][1]['postprocessing'] = nil
 
     after(:create) do |script|
       script.project = FactoryGirl.create(:project)
