@@ -13,7 +13,7 @@ class CrawlerExecuter
   def self.perform(script_id)
     print('[DEBUG] Crawler Executer: ', script_id, "\n")
     script = Script.find(script_id)
-    Crawler.execute(script)
+    Crawling::Crawler.execute(script)
   end
 
 end
