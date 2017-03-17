@@ -20,7 +20,9 @@ module Crawling
       parent_stack = []
 
       instance = Instance.create(extraction_id: extraction.id)
-      instance.parent_id = instance.id.save
+      instance.parent_id = instance.id
+      instance.save
+
       parent_stack.push(instance.id)
       script_json['data'].each do |row|
         extraction_datum = ExtractionDatum.create(
