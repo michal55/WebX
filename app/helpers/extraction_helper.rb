@@ -22,4 +22,12 @@ module ExtractionHelper
     return 'extraction-success' if status
     'extraction-fail'
   end
+
+  def count_of_instances extraction
+    Instance.where(:extraction_id => extraction.id).count
+  end
+
+  def count_of_empty_fields extraction
+    ExtractionDatum.where(:extraction_id => extraction.id).where(:value => '').count
+  end
 end
