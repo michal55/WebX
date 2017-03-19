@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170310173650) do
+ActiveRecord::Schema.define(version: 20170319111844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,8 +32,9 @@ ActiveRecord::Schema.define(version: 20170310173650) do
     t.string   "value"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.integer  "extraction_id"
     t.datetime "deleted_at"
+    t.integer  "instance_id"
+    t.integer  "extraction_id"
   end
 
   add_index "extraction_data", ["deleted_at"], name: "index_extraction_data_on_deleted_at", using: :btree
@@ -61,6 +62,16 @@ ActiveRecord::Schema.define(version: 20170310173650) do
   end
 
   add_index "frequencies", ["deleted_at"], name: "index_frequencies_on_deleted_at", using: :btree
+
+  create_table "instances", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "extraction_id"
+    t.integer  "parent_id"
+    t.datetime "deleted_at"
+  end
+
+  add_index "instances", ["deleted_at"], name: "index_instances_on_deleted_at", using: :btree
 
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", null: false
@@ -121,7 +132,7 @@ ActiveRecord::Schema.define(version: 20170310173650) do
     t.datetime "deleted_at"
     t.json     "xpaths"
     t.datetime "last_run"
-    t.integer  "mode"
+    t.integer  "log_level"
   end
 
   add_index "scripts", ["deleted_at"], name: "index_scripts_on_deleted_at", using: :btree

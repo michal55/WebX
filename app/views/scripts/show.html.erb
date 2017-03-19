@@ -8,8 +8,8 @@
             <div class="col-md-7">
               <h4><%= t('scripts.columns.name') %></h4>
               <%= f.text_area :xpaths, value: pretty_json(@script), rows: json_height(@script), cols: 70, class: 'form-control editable'  %>
-              <h4><%= t('Mode') %></h4>
-              <%= f.select(:mode, select_mode, class: 'form-control') %>
+              <h4><%= t('scripts.columns.log_level') %></h4>
+              <%= f.select(:log_level, Script.log_levels, class: 'form-control') %>
             </div>
             <div class="col-md-5">
               <% extractions = Extraction.where(script_id: @script.id, success: true).order('created_at DESC') %>

@@ -3,43 +3,81 @@ module Crawling
     extend self
 
     def execute(script)
-      logger = Logging::Logger.new(severity: script.mode)
+      @logger = Logging::Logger.new(severity: script.log_level)
+      @agent = Mechanize.new
+      @post = Postprocessing.new
       script_json = script.xpaths
-      extraction = Extraction.new
-      extraction.script = script
-      extraction.save!
-
-      logger.debug('Extraction created', extraction)
+      extraction = Extraction.create(script: script)
+      @logger.debug('Extraction created', extraction)
 
       # exit when opening URL fails
-      begin
-        @doc = Nokogiri::HTML(open(script_json['url']))
-      rescue Exception => e
-        logger.error("#{e.to_s} url: #{script_json['url']}", extraction)
-        extraction.success = false
-        extraction.save!
-        exit
-      end
+      @doc = try_get_url(extraction, script_json['url'])
+      return if @doc.nil?
 
       script.last_run = Time.now
       script.save!
 
-      script_json['data'].each do |x|
-        extraction_datum               = ExtractionDatum.new
-        extraction_datum.extraction_id = extraction.id
-        extraction_datum.field_name    = x['name']
-        extraction_datum.value         = @doc.xpath x['value']
-        extraction_datum.save!
-        extraction_datum
+      parent_stack = []
 
-        logger.debug("field: #{x['name']}, xpath: #{x['value']}, value: #{extraction_datum.value}", extraction)
+      instance = Instance.create(extraction_id: extraction.id)
+      instance.parent_id = instance.id
+      instance.save
+
+      parent_stack.push(instance.id)
+      script_json['data'].each do |row|
+        extraction_datum = ExtractionDatum.create(
+            instance_id: instance.id, extraction_id: extraction.id,
+            field_name: row['name'], value: extract_value(@doc, row)
+        )
+        @logger.debug(log_msg(extraction_datum, row), extraction)
+
+        if @post.is_nested(row['postprocessing'])
+          product_urls = @post.extract_href(@doc, row['xpath'])
+          product_urls.each do |url|
+            nested_page = try_get_url(extraction, url)
+            next if nested_page.nil?
+
+            new_instance = Instance.create(extraction_id: extraction.id, parent_id: parent_stack[-1])
+            row['postprocessing'][0]['data'].each do |nested_row|  #TODO [0] upravit/doplnit
+              extraction_datum = ExtractionDatum.create(
+                  instance_id: new_instance.id, extraction_id: extraction.id,
+                  field_name: nested_row['name'], value: extract_value(nested_page, nested_row)
+              )
+              @logger.debug(log_msg(extraction_datum, nested_row), extraction)
+            end
+          end
+        end
       end
+      parent_stack.pop
 
       extraction.execution_time = script.last_run - extraction.created_at
       extraction.success = true
       extraction.save!
+      @logger.debug("Execution time: #{extraction.execution_time}", extraction)
+    end
 
-      logger.debug("Execution time: #{extraction.execution_time}", extraction)
+    def log_msg(extraction_datum, nested_row)
+      "field: #{nested_row['name']}, xpath: #{nested_row['xpath']}, value: #{extraction_datum.value}"
+    end
+
+    def try_get_url(extraction, url)
+      begin
+        nested_page = @agent.get(url)
+      rescue Exception => e
+        @logger.error("#{e.to_s} url: #{url}", extraction)
+        extraction.success = false
+        extraction.save!
+        nested_page = nil
+      end
+      nested_page
+    end
+
+    def extract_value(doc, row)
+      #TODO: refactor postprocessing
+      return @post.extract_href(doc, row['xpath']) if @post.is_nested(row['postprocessing'])
+      value = @post.extract_text(doc, row['xpath'])
+      return value.to_s.strip if @post.is_whitespace(row['postprocessing'])
+      value
     end
 
   end
