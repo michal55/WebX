@@ -76,7 +76,7 @@ module Crawling
       #TODO: refactor postprocessing
       return @post.extract_href(doc, row['xpath']) if @post.is_nested(row['postprocessing'])
       value = @post.extract_text(doc, row['xpath'])
-      return value.to_s.strip if @post.strip_whitespace(row['postprocessing'])
+      return value.to_s.strip if @post.is_whitespace(row['postprocessing'])
       value
     end
 
