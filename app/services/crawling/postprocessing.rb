@@ -1,7 +1,7 @@
 module Crawling
   class Postprocessing
 
-    def strip_whitespace(row)
+    def is_whitespace(row)
       row.is_a?(Array) and row.size > 0 and row[0]['type'] == "whitespace"
     end
 

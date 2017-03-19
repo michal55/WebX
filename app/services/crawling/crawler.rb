@@ -80,15 +80,5 @@ module Crawling
       value
     end
 
-    def test_url
-      agent = Mechanize.new
-      # doc = agent.get("https://www.alza.sk/lenovo-ideapad-700-15isk-gaming?dq=4162924&catid=18848814")
-      doc = agent.get("https://www.alza.sk/notebooky/podla-vyuzitia/hracie/18848814.htm")
-
-      # '//*[@id="prices"]/tbody/tr[3]/td/div/div/div[1]/div[2]/span[2]'
-      # xpath = '//*[contains(@class, "categoryPageTitle")]'
-      xpath = '//*[@id="boxes"]/div/div[2]/div[1]/a'
-      puts doc.parser.xpath(xpath)
-    end
   end
 end
