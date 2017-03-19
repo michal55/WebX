@@ -44,12 +44,9 @@ module Crawling
           @parent_stack.push(instance.id)
 
           @logger.debug("Nested links: #{product_urls.size}", @extraction)
-          puts product_urls.size
-          puts product_urls
 
           product_urls.each do |url|
             nested_page = try_get_url(@extraction, url)
-            puts "page nil\n" if nested_page.nil?
             next if nested_page.nil?
 
             new_instance = Instance.create(extraction_id: @extraction.id, parent_id: @parent_stack[-1])
