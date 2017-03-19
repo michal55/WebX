@@ -7,53 +7,60 @@ module Crawling
       @agent = Mechanize.new
       @post = Postprocessing.new
       script_json = script.xpaths
-      extraction = Extraction.create(script: script)
-      @logger.debug('Extraction created', extraction)
+      @extraction = Extraction.create(script: script)
+      @parent_stack = []
+      @logger.debug('Extraction created', @extraction)
 
       # exit when opening URL fails
-      @doc = try_get_url(extraction, script_json['url'])
-      return if @doc.nil?
+      doc = try_get_url(@extraction, script_json['url'])
+      return if doc.nil?
 
       script.last_run = Time.now
       script.save!
 
-      parent_stack = []
-
-      instance = Instance.create(extraction_id: extraction.id)
+      instance = Instance.create(extraction_id: @extraction.id)
       instance.parent_id = instance.id
       instance.save
+      data_row = script_json['data']
 
-      parent_stack.push(instance.id)
-      script_json['data'].each do |row|
+      iterate_json(data_row, doc, instance)
+
+      @extraction.execution_time = script.last_run - @extraction.created_at
+      @extraction.success = true
+      @extraction.save!
+      @logger.debug("Execution time: #{@extraction.execution_time}", @extraction)
+    end
+
+    def iterate_json(data_row, page, instance)
+      data_row.each do |row|
         extraction_datum = ExtractionDatum.create(
-            instance_id: instance.id, extraction_id: extraction.id,
-            field_name: row['name'], value: extract_value(@doc, row)
+            instance_id: instance.id, extraction_id: @extraction.id,
+            field_name:  row['name'], value: extract_value(page, row)
         )
-        @logger.debug(log_msg(extraction_datum, row), extraction)
+        @logger.debug(log_msg(extraction_datum, row), @extraction)
 
         if @post.is_nested(row['postprocessing'])
-          product_urls = @post.extract_href(@doc, row['xpath'])
+          product_urls = @post.extract_href(page, row['xpath'])
+          @parent_stack.push(instance.id)
+
+          @logger.debug("Nested links: #{product_urls.size}", @extraction)
+          puts product_urls.size
+          puts product_urls
+
           product_urls.each do |url|
-            nested_page = try_get_url(extraction, url)
+            nested_page = try_get_url(@extraction, url)
+            puts "page nil\n" if nested_page.nil?
             next if nested_page.nil?
 
-            new_instance = Instance.create(extraction_id: extraction.id, parent_id: parent_stack[-1])
-            row['postprocessing'][0]['data'].each do |nested_row|  #TODO [0] upravit/doplnit
-              extraction_datum = ExtractionDatum.create(
-                  instance_id: new_instance.id, extraction_id: extraction.id,
-                  field_name: nested_row['name'], value: extract_value(nested_page, nested_row)
-              )
-              @logger.debug(log_msg(extraction_datum, nested_row), extraction)
-            end
+            new_instance = Instance.create(extraction_id: @extraction.id, parent_id: @parent_stack[-1])
+            nested_row = row['postprocessing'][0]['data']
+
+            iterate_json(nested_row, nested_page, new_instance)
           end
+
+          @parent_stack.pop
         end
       end
-      parent_stack.pop
-
-      extraction.execution_time = script.last_run - extraction.created_at
-      extraction.success = true
-      extraction.save!
-      @logger.debug("Execution time: #{extraction.execution_time}", extraction)
     end
 
     def log_msg(extraction_datum, nested_row)
