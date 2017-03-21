@@ -4,4 +4,5 @@ class Script < ActiveRecord::Base
   has_many :extractions
   acts_as_paranoid
   validates :name, :presence => true
+  enum log_level: {debug: 0, warning: 1, error: 2}
 end
