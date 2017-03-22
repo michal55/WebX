@@ -31,7 +31,7 @@ gem 'cancancan'
 
 # Crawling
 gem 'nokogiri'
-
+gem 'mechanize'
 # OAuth2 provider functionality
 gem 'doorkeeper'
 gem 'oauth2'

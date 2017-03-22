@@ -8,7 +8,7 @@
       </tr>
       </thead>
       <tbody>
-      <% extraction.extraction_data.each do |d| %>
+      <% extraction.instances[-1].extraction_data.each do |d| %>
           <tr>
             <td> <%= d.field_name %> </td>
             <td> <%= d.value %> </td>

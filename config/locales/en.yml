@@ -111,6 +111,7 @@ en:
       action: "Actions"
       frequencies: "Frequencies"
       access: "access"
+      log_level: "Log level"
     no_script: "Your project does not have any scripts"
     placeholder_new: "Add new script"
     flash_create: "You successfully created script %{script_name}"
