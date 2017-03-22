@@ -40,6 +40,7 @@ GEM
       public_suffix (~> 2.0, >= 2.0.2)
     airbrussh (1.1.1)
       sshkit (>= 1.6.1, != 1.7.0)
+    angularjs-rails (1.6.1)
     arel (6.0.3)
     autoprefixer-rails (6.5.3)
       execjs
@@ -143,6 +144,8 @@ GEM
       railties (>= 3.0.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
+    font-awesome-sass (4.4.0)
+      sass (>= 3.2)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     grape (0.18.0)
@@ -392,6 +395,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  angularjs-rails
   better_errors
   bootstrap-sass (>= 3.3.6)
   bootstrap3-datetimepicker-rails (~> 4.17.43)
@@ -411,6 +415,7 @@ DEPENDENCIES
   elasticsearch-persistence
   elasticsearch-rails (>= 0.1.9)
   factory_girl_rails (>= 4.5)
+  font-awesome-sass (~> 4.4.0)
   grape
   jbuilder (>= 2.0)
   jquery-rails
@@ -442,4 +447,4 @@ DEPENDENCIES
   web-console (>= 2.0)
 
 BUNDLED WITH
-   1.13.6
+   1.14.4
