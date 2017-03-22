@@ -13,8 +13,6 @@
             </div>
             <div class="col-md-5">
               <% extractions = Extraction.where(script_id: @script.id, success: true).order('created_at DESC') %>
-              <% first_extraction = extractions.first if extractions.size > 0 %>
-              <%= render 'last_extraction', extraction: first_extraction if first_extraction and first_extraction.instances.size > 0 and first_extraction.extraction_data.size > 0 %>
               <h4><%= t('extractions.no_extraction') unless extractions.size > 0 %></h4>
             </div>
             <div class="col-md-12 submit-area">
