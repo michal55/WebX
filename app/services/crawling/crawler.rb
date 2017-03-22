@@ -7,7 +7,7 @@ module Crawling
       begin
         try_execute(script)
       rescue Exception => e
-        @logger.error("#{e.to_s} url: #{url}", extraction)
+        @logger.error(e.to_s, script)
       end
     end
 
