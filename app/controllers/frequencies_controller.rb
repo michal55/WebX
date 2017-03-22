@@ -3,6 +3,7 @@ class FrequenciesController < ApplicationController
     @frequency_new = Frequency.new
     @frequency_new.assign_attributes({script_id: params[:script_id], interval: params[:frequency][:interval], period: params[:frequency][:period], first_exec: params[:frequency][:first_exec], last_run: nil})
     @frequency_new.save!
+    flash[:notice] = I18n.t('frequencies.flash_create')
     redirect_to :back
   end
 
@@ -32,12 +33,14 @@ class FrequenciesController < ApplicationController
     @frequency.period = params[:frequency][:period]
     @frequency.first_exec = params[:frequency][:first_exec]
     @frequency.save!
+    flash[:notice] = I18n.t('frequencies.flash_update')
     redirect_to project_script_path(params[:project_id], params[:script_id])
   end
 
   def destroy
     @frequency = Frequency.find(params[:id])
     @frequency.destroy!
+    flash[:notice] = I18n.t('frequencies.flash_delete')
     redirect_to :back
   end
 

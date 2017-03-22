@@ -1,6 +1,6 @@
 <%= extends :basic_panel do %>
   <%= extends :basic_panel_heading do %>
-    <h1> Extraction <%= @extraction.created_at %> </h1>
+    <h1> Extraction <%= @extraction.created_at.strftime(t('time.format_extended')) %> </h1>
     <div class="row">
       <div class="col-md-6">
         <ol class="breadcrumb">

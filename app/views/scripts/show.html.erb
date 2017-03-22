@@ -2,12 +2,12 @@
     <%= form_for(@script, remote: true, url: project_script_path(@script.project, @script)) do |f|  %>
         <%= extends :basic_panel_heading do %>
             <%= f.text_field(:name, class: 'form-control editable heading') %>
-            <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
         <% end %>
         <%= extends :basic_panel_body do %>
+            <div class="row">
             <div class="col-md-7">
               <h4><%= t('scripts.columns.name') %></h4>
-              <%= f.text_area :xpaths, value: pretty_json(@script), rows: json_height(@script), cols: 70, class: 'form-control editable'  %>
+              <%= f.text_area :xpaths, value: pretty_json(@script), rows: json_height(@script), cols: 70, class: 'form-control codeblock'  %>
               <h4><%= t('scripts.columns.log_level') %></h4>
               <%= f.select(:log_level, Script.log_levels, class: 'form-control') %>
             </div>
@@ -16,8 +16,13 @@
               <%= render 'last_extraction', extraction: extractions.first if extractions.size > 0 %>
               <h4><%= t('extractions.no_extraction') unless extractions.size > 0 %></h4>
             </div>
+            <div class="col-md-12 submit-area">
+              <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
+            </div>
+          </div>
         <% end %>
     <% end %>
+    <hr>
     <%= extends :basic_panel_body do %>
         <%= render 'frequencies/index', script: @script, project: @project, frequencies: @script.frequencies, frequency_new: @new_frequency %>
     <% end %>

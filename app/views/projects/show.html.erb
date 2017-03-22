@@ -3,12 +3,13 @@
     <%= extends :basic_panel_heading do %>
       <%= f.text_field(:name, class: 'form-control editable heading') %>
       <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
-      <%= link_to(t('scripts.new_button'), new_project_script_path(@project.id), class: "btn btn-primary" )%>
     <% end %>
   <% end %>
   <%= extends :basic_panel_body do %>
     <%= render 'scripts/index.html', scripts: @scripts %>
-    <hr>
+  <% end %>
+  <hr>
+  <%= extends :basic_panel_body do %>
     <%= render 'data_fields/index.html', data_field: @data_field %>
   <% end %>
 <% end %>

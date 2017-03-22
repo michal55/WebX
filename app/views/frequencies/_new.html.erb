@@ -1,23 +1,38 @@
 <tr>
   <td>
     <%= form_for frequency, url: project_script_frequencies_path(project, script) do |f|  %>
-    <%= f.text_field :interval, class: 'form-control' %>
+    <%= f.number_field(
+      :interval,
+      class: 'form-control',
+      placeholder: t('frequencies.placeholder_new'),
+      :'ng-model' => "mapper.names['new_interval']",
+      :required => true,
+      min: 1
+      )
+    %>
   </td>
   <td>
     <%= f.select :period, select_periods, {}, class: 'form-control input-sm' %>
   </td>
   <td>
-    <div class='input-group date' id='datetimepicker'>
-      <%= f.text_field :first_exec, class: 'form-control' %>
-      <span class="input-group-addon">
+    <div class="input-group date" id="datetimepicker">
+      <%= f.text_field(
+        :first_exec,
+        class: 'form-control',
+        :required => true,
+      )%>
+      <span class="input-group-addon" ng-click="setDateTime()">
           <span class="glyphicon glyphicon-calendar"></span>
       </span>
     </div>
   </td>
   <td>
-    <%= f.submit t('frequencies.new_button'), class: 'btn btn-primary' %>
+    <%= button_tag '',
+      type: 'submit',
+      class: 'btn btn-default glyphicon glyphicon-floppy-disk btn-lg table-button',
+      :'ng-show' => "mapper.names['new_interval'] && datetime_changed"
+    %>
   </td>
-  <td></td>
   <% end %>
 </tr>
 
@@ -26,7 +41,7 @@
     <script type="text/javascript">
       $(function () {
         $('#datetimepicker').datetimepicker({
-          format : 'DD/MM/YYYY HH:mm:ss'
+          format : '<%= t('time.format_js')%>'
         });
       });
     </script>

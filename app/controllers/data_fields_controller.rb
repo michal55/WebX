@@ -12,7 +12,8 @@ class DataFieldsController < ApplicationController
     @data_field = DataField.new
     @data_field.assign_attributes({name: params[:data_field][:name], data_type: params[:data_field][:data_type].to_i , project_id:  params[:project_id] })
     @data_field.save!
-    redirect_to project_data_fields_path
+    flash[:notice] = I18n.t('data_fields.flash_create', field_name: @data_field.name)
+    redirect_to project_path(params[:project_id])
   end
 
   def edit
@@ -25,12 +26,17 @@ class DataFieldsController < ApplicationController
     @data_field.name = params[:data_field][:name]
     @data_field.data_type = params[:data_field][:data_type].to_i
     @data_field.save!
-    redirect_to project_data_fields_path
+    flash[:notice] = I18n.t('data_fields.flash_update', field_name: @data_field.name)
+    respond_to do |format|
+      format.json {render(json: {'id': @data_field.id}, status: 200)}
+    end
+
   end
 
   def destroy
     @data_field = DataField.find(params[:id])
     @data_field.destroy!
-    redirect_to project_data_fields_path
+    flash[:notice] = I18n.t('data_fields.flash_delete', field_name: @data_field.name)
+    redirect_to project_path(@data_field.project.id)
   end
 end
