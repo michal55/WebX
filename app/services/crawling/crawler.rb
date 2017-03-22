@@ -10,7 +10,7 @@ module Crawling
         @logger.error("#{e.to_s} url: #{url}", extraction)
       end
     end
-    
+
     def try_execute(script)
       @agent = Mechanize.new
       @post = Postprocessing.new
@@ -23,8 +23,6 @@ module Crawling
       doc = try_get_url(@extraction, script_json['url'])
       return if doc.nil?
 
-      script.last_run = Time.now
-      script.save!
 
       instance = Instance.create(extraction_id: @extraction.id)
       instance.parent_id = instance.id
@@ -33,6 +31,8 @@ module Crawling
 
       iterate_json(data_row, doc, instance)
 
+      script.last_run = Time.now
+      script.save!
       @extraction.execution_time = script.last_run - @extraction.created_at
       @extraction.success = true
       @extraction.save!
