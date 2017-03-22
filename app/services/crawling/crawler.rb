@@ -4,6 +4,14 @@ module Crawling
 
     def execute(script)
       @logger = Logging::Logger.new(severity: script.log_level)
+      begin
+        try_execute(script)
+      rescue Exception => e
+        @logger.error("#{e.to_s} url: #{url}", extraction)
+      end
+    end
+    
+    def try_execute(script)
       @agent = Mechanize.new
       @post = Postprocessing.new
       script_json = script.xpaths
