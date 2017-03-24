@@ -28,7 +28,7 @@ module ExtractionHelper
   end
 
   def empty_fields_count extraction
-    ExtractionDatum.where(extraction_id: extraction.id).where(:value => '').count
+    ExtractionDatum.where(extraction_id: extraction.id).where(value: '').count
   end
 
   def empty_fields_per_field_count data_field, extraction
