@@ -19,8 +19,8 @@
           <tr>
             <td> <%=link_to(e.created_at, project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id) )%> </td>
             <td> <%= format_time e.execution_time %></td>
-            <td> <%= count_of_instances e %></td>
-            <td> <%= count_of_empty_fields e %></td>
+            <td> <%= instance_count e %></td>
+            <td> <%= empty_fields_count e %></td>
             <td class="<%= find_class e.success %>"> <%= extraction_status e.success %></td>
             <td> <%= link_to t('extraction_datum.index'), project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id) %></td>
           </tr>

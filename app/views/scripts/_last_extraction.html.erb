@@ -8,11 +8,11 @@
         </tr>
         <tr>
           <td> <%= t('extractions.columns.instances') %> </td>
-          <td> <%= count_of_instances extraction %></td>
+          <td> <%= instance_count extraction %></td>
         </tr>
         <tr>
           <td> <%= t('extractions.columns.empty_fields') %> </td>
-          <td> <%= count_of_empty_fields extraction %></td>
+          <td> <%= empty_fields_count extraction %></td>
         </tr>
         <tr>
           <td> <%= t('extractions.columns.status') %> </td>
@@ -33,7 +33,7 @@
       <% data_field.each do |d| %>
       <tr>
         <td> <%= d.name %> </td>
-        <td> <%= count_of_empty_fields_per_field d, extraction  %></td>
+        <td> <%= empty_fields_per_field_count d, extraction  %></td>
       </tr>
       <% end %>
       </tbody>

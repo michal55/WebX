@@ -23,15 +23,15 @@ module ExtractionHelper
     'extraction-fail'
   end
 
-  def count_of_instances extraction
-    Instance.where(:extraction_id => extraction.id).count
+  def instance_count extraction
+    Instance.where(extraction_id: extraction.id).count
   end
 
-  def count_of_empty_fields extraction
-    ExtractionDatum.where(:extraction_id => extraction.id).where(:value => '').count
+  def empty_fields_count extraction
+    ExtractionDatum.where(extraction_id: extraction.id).where(:value => '').count
   end
 
-  def count_of_empty_fields_per_field data_field, extraction
+  def empty_fields_per_field_count data_field, extraction
     ExtractionDatum.where(extraction_id: extraction.id).where(value: '').where(field_name: data_field.name).count
   end
 end
