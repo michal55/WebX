@@ -8,6 +8,8 @@
       <tr>
         <th> <%= t('extractions.columns.executed') %> </th>
         <th> <%= t('extractions.columns.execution_time') %></th>
+        <th> <%= t('extractions.columns.instances') %></th>
+        <th> <%= t('extractions.columns.empty_fields') %></th>
         <th> <%= t('extractions.columns.status') %></th>
         <th> <%= t('data_fields.columns.action') %></th>
       </tr>
@@ -17,6 +19,8 @@
           <tr>
             <td> <%=link_to(e.created_at.strftime(t('time.format_extended')), project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id) )%> </td>
             <td> <%= format_time e.execution_time %></td>
+            <td> <%= instance_count e %></td>
+            <td> <%= empty_fields_count e %></td>
             <td class="<%= find_class e.success %>"> <%= extraction_status e.success %></td>
             <td> <%= link_to t('extraction_datum.index'), project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id) %></td>
           </tr>
