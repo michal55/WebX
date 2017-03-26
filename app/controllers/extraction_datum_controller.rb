@@ -1,15 +1,16 @@
 class ExtractionDatumController < ApplicationController
   require 'set'
 
-
   def index
   	@extraction = Extraction.find(params[:extraction_id])
-    @instances = Instance.where(extraction_id: @extraction.id)
+    @instances = Instance.where(extraction_id: @extraction.id).page params[:page]
   	@extraction_datum_arr = []
+
     @instances.each do |inst|
       @extraction_datum_arr << inst.extraction_data
     end
-  	@script = Script.find(params[:script_id])
+
+    @script = Script.find(params[:script_id])
   	@project = Project.find(params[:project_id])
 
     fields_set = Set.new
