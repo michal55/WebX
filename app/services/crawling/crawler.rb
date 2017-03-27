@@ -10,6 +10,7 @@ module Crawling
         try_execute(script)
       rescue Exception => e
         @logger.error(e.to_s, @extraction)
+        puts e.to_s
       end
     end
 
@@ -53,7 +54,7 @@ module Crawling
         @logger.debug(log_msg(extraction_datum, row), @extraction)
 
         if @post.is_nested(row['postprocessing'])
-          product_urls = @post.extract_href(page, row['xpath'])
+          product_urls = @post.extract_attribute(page, row['xpath'], 'href')
           @parent_stack.push(instance.id)
 
           @logger.debug("Nested links: #{product_urls.size}", @extraction)
@@ -70,6 +71,7 @@ module Crawling
 
           @parent_stack.pop
         end
+
       end
     end
 
@@ -91,7 +93,8 @@ module Crawling
 
     def extract_value(doc, row)
       #TODO: refactor postprocessing
-      return @post.extract_href(doc, row['xpath']) if @post.is_nested(row['postprocessing'])
+      return @post.extract_attribute(doc, row['xpath'], 'href') if @post.is_nested(row['postprocessing'])
+      return @post.extract_attribute(doc, row['xpath'], row['postprocessing'][0]['attribute']) if @post.attributes?(row['postprocessing'])
       value = @post.extract_text(doc, row['xpath'])
       return value.to_s.strip if @post.is_whitespace(row['postprocessing'])
       value

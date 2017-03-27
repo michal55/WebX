@@ -18,13 +18,17 @@ module Crawling
       end
     end
 
-    def extract_href doc, xpath
+    def extract_attribute doc, xpath, attribute
       result = []
       doc.parser.xpath(xpath).each do |link|
-        result.push(link.attributes['href'].to_s)
+        result.push(link.attributes[attribute].to_s)
       end
       puts result
       result
+    end
+
+    def attributes? row
+      row.is_a?(Array) and row.size > 0 and row[0]['type'] == 'attribute'
     end
 
   end
