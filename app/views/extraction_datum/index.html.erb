@@ -28,7 +28,22 @@
           <td> <%= inst.parent_id %> </td>
           <% @array = make_array(inst, @fields_array)%>
           <% @array.each do |a|%>
-            <td> <%= a %> </td>
+            <td>
+              <% if a.length > 100 %>
+                <span class="truncated-text">
+                  <%= a.truncate(100) %>
+                  <br/>
+                  <%= link_to(t('link.show_more'), '#', onclick: 'showMore(this);return false') %>
+                </span>
+                <span class="full-text">
+                  <%= a %>
+                  <br/>
+                  <%= link_to(t('link.show_less'), '#', onclick: 'showLess(this);return false') %>
+                </span>
+            <% else %>
+                <%= a %>
+            <% end %>
+            </td>
           <% end %>
         </tr>
       <% end%>
