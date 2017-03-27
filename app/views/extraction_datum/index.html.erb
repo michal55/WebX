@@ -15,17 +15,15 @@
       <thead>
       <tr>
         <th> <%= 'instance_id' %> </th>
-        <th> <%= 'parent_id' %> </th>
         <% @fields_array.each do |d| %>
             <th> <%= d.to_s %> </th>
         <% end %>
       </tr>
       </thead>
       <tbody>
-        <% @instances.each do |inst| %>
+        <% @childs.each do |inst| %>
         <tr>
           <td> <%= inst.id %> </td>
-          <td> <%= inst.parent_id %> </td>
           <% @array = make_array(inst, @fields_array)%>
           <% @array.each do |a|%>
             <td>
