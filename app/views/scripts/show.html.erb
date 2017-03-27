@@ -14,6 +14,7 @@
             <div class="col-md-5">
               <% extractions = Extraction.where(script_id: @script.id, success: true).order('created_at DESC') %>
               <h4><%= t('extractions.no_extraction') unless extractions.size > 0 %></h4>
+              <%= render('last_extraction', extraction: extractions.first) if extractions.size > 0%>
             </div>
             <div class="col-md-12 submit-area">
               <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
