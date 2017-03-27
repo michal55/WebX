@@ -4,11 +4,12 @@ module Crawling
 
     def execute(script)
       @logger = Logging::Logger.new(severity: script.log_level)
+      @extraction = Extraction.create(script: script)
+      @logger.debug('Extraction created', @extraction)
       begin
         try_execute(script)
       rescue Exception => e
         @logger.error(e.to_s, @extraction)
-        puts e.to_s
       end
     end
 
@@ -16,9 +17,7 @@ module Crawling
       @agent = Mechanize.new
       @post = Postprocessing.new
       script_json = script.xpaths
-      @extraction = Extraction.create(script: script)
       @parent_stack = []
-      @logger.debug('Extraction created', @extraction)
 
       # exit when opening URL fails
       doc = try_get_url(@extraction, script_json['url'])
@@ -29,7 +28,7 @@ module Crawling
       instance.save
       data_row = script_json['data']
 
-      iterate_json(data_row, doc, instance, script_json['url'])
+      iterate_json(data_row, doc, instance, script_json['url'], 'url')
 
       script.last_run = Time.now
       script.save!
@@ -39,12 +38,12 @@ module Crawling
       @logger.debug("Execution time: #{@extraction.execution_time}", @extraction)
     end
 
-    def iterate_json(data_row, page, instance, parent_url)
+    def iterate_json(data_row, page, instance, parent_url, field_name)
       sleep(rand(1..5))
 
       ExtractionDatum.create(
           instance_id: instance.id, extraction_id: @extraction.id,
-          field_name: 'parent_url', value: parent_url
+          field_name: field_name, value: parent_url
       )
       data_row.each do |row|
         extraction_datum = ExtractionDatum.create(
@@ -66,7 +65,7 @@ module Crawling
             new_instance = Instance.create(extraction_id: @extraction.id, parent_id: @parent_stack[-1])
             nested_row = row['postprocessing'][0]['data']
 
-            iterate_json(nested_row, nested_page, new_instance, url)
+            iterate_json(nested_row, nested_page, new_instance, url, row['name'])
           end
 
           @parent_stack.pop
