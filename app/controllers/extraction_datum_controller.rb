@@ -5,7 +5,7 @@ class ExtractionDatumController < ApplicationController
   	@extraction = Extraction.find(params[:extraction_id])
     @instances = Instance.where(extraction_id: @extraction.id).page params[:page]
   	@extraction_datum_arr = []
-    @childs = []
+    @children = []
 
     parents_array = get_parents(@instances)
     @parents = Instance.where(id: parents_array)
@@ -17,7 +17,7 @@ class ExtractionDatumController < ApplicationController
     @instances.each do |inst|
       @extraction_datum_arr << inst.extraction_data
       unless parents_array.include?(inst.id)
-        @childs << inst
+        @children << inst
       end
     end
 
