@@ -56,6 +56,9 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.17.43'
 
 gem 'devise', '>= 3.4.1'
 
+# Pagination
+gem 'kaminari'
+
 # Paranoia
 gem 'paranoia', '>= 2.0'
 

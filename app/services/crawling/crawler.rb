@@ -4,10 +4,13 @@ module Crawling
 
     def execute(script)
       @logger = Logging::Logger.new(severity: script.log_level)
+      @extraction = Extraction.create(script: script)
+      @logger.debug('Extraction created', @extraction)
       begin
         try_execute(script)
       rescue Exception => e
-        @logger.error(e.to_s, script)
+        @logger.error(e.to_s, @extraction)
+        puts e.to_s
       end
     end
 
@@ -15,21 +18,18 @@ module Crawling
       @agent = Mechanize.new
       @post = Postprocessing.new
       script_json = script.xpaths
-      @extraction = Extraction.create(script: script)
       @parent_stack = []
-      @logger.debug('Extraction created', @extraction)
 
       # exit when opening URL fails
       doc = try_get_url(@extraction, script_json['url'])
       return if doc.nil?
-
 
       instance = Instance.create(extraction_id: @extraction.id)
       instance.parent_id = instance.id
       instance.save
       data_row = script_json['data']
 
-      iterate_json(data_row, doc, instance)
+      iterate_json(data_row, doc, instance, script_json['url'], 'url')
 
       script.last_run = Time.now
       script.save!
@@ -39,7 +39,13 @@ module Crawling
       @logger.debug("Execution time: #{@extraction.execution_time}", @extraction)
     end
 
-    def iterate_json(data_row, page, instance)
+    def iterate_json(data_row, page, instance, parent_url, field_name)
+      sleep(rand(1..5))
+
+      ExtractionDatum.create(
+          instance_id: instance.id, extraction_id: @extraction.id,
+          field_name: field_name, value: parent_url
+      )
       data_row.each do |row|
         extraction_datum = ExtractionDatum.create(
             instance_id: instance.id, extraction_id: @extraction.id,
@@ -48,7 +54,7 @@ module Crawling
         @logger.debug(log_msg(extraction_datum, row), @extraction)
 
         if @post.is_nested(row['postprocessing'])
-          product_urls = @post.extract_href(page, row['xpath'])
+          product_urls = @post.extract_attribute(page, row['xpath'], 'href')
           @parent_stack.push(instance.id)
 
           @logger.debug("Nested links: #{product_urls.size}", @extraction)
@@ -60,11 +66,12 @@ module Crawling
             new_instance = Instance.create(extraction_id: @extraction.id, parent_id: @parent_stack[-1])
             nested_row = row['postprocessing'][0]['data']
 
-            iterate_json(nested_row, nested_page, new_instance)
+            iterate_json(nested_row, nested_page, new_instance, url, row['name'])
           end
 
           @parent_stack.pop
         end
+
       end
     end
 
@@ -86,7 +93,8 @@ module Crawling
 
     def extract_value(doc, row)
       #TODO: refactor postprocessing
-      return @post.extract_href(doc, row['xpath']) if @post.is_nested(row['postprocessing'])
+      return @post.extract_attribute(doc, row['xpath'], 'href') if @post.is_nested(row['postprocessing'])
+      return @post.extract_attribute(doc, row['xpath'], row['postprocessing'][0]['attribute']) if @post.attributes?(row['postprocessing'])
       value = @post.extract_text(doc, row['xpath'])
       return value.to_s.strip if @post.is_whitespace(row['postprocessing'])
       value
