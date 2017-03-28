@@ -22,4 +22,16 @@ module ExtractionHelper
     return 'extraction-success' if status
     'extraction-fail'
   end
+
+  def instance_count extraction
+    Instance.where(extraction_id: extraction.id).count
+  end
+
+  def empty_fields_count extraction
+    ExtractionDatum.where(extraction_id: extraction.id).where(value: '').count
+  end
+
+  def empty_fields_per_field_count data_field, extraction
+    ExtractionDatum.where(extraction_id: extraction.id).where(value: '').where(field_name: data_field.name).count
+  end
 end

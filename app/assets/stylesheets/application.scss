@@ -342,6 +342,11 @@ a.btn:hover {
 	border: 0;
 }
 
+.table-scrollable {
+  display: block;
+  overflow-x: auto;
+}
+
 .table-striped>tbody>tr:nth-child(odd)>td, 
 .table-striped>tbody>tr:nth-child(odd)>th {
    background-color: $light-max;

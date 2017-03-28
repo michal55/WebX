@@ -148,6 +148,8 @@ en:
       execution_time: "Execution time"
       status: "Status"
       updated_at: "Updated"
+      instances: "Instances"
+      empty_fields: "Empty fields"
     no_extraction: "You haven't extracted any data yet"
     fail: "Fail"
     success: "Success"
@@ -201,3 +203,7 @@ en:
     format: "%Y-%m-%d %H:%M"
     format_extended: "%Y-%m-%d %H:%M:%S %Z"
     format_js: "YYYY-MM-DD HH:mm"
+
+  link:
+    show_more: "Show More"
+    show_less: "Show Less"

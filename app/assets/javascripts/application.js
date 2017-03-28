@@ -122,3 +122,24 @@ function flash(msg) {
     );
     messageAnimation();
 }
+
+
+function showMore(link) {
+
+    var truncatedContent = $(link).parent();
+    var fullContent = truncatedContent.next();
+
+    truncatedContent.hide();
+    fullContent.show();
+
+}
+
+function showLess(link) {
+
+    var fullContent = $(link).parent();
+    var truncatedContent = fullContent.prev();
+
+    truncatedContent.show();
+    fullContent.hide();
+
+}
