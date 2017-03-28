@@ -2,9 +2,9 @@ class ExtractionDatumController < ApplicationController
   require 'set'
 
   def index
-  	@extraction = Extraction.find(params[:extraction_id])
+    @extraction = Extraction.find(params[:extraction_id])
     @instances = Instance.where(extraction_id: @extraction.id).page params[:page]
-  	@extraction_datum_arr = []
+    @extraction_datum_arr = []
     @children = []
 
     parents_array = get_parents(@instances)
