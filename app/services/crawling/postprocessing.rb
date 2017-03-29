@@ -5,6 +5,10 @@ module Crawling
       row.is_a?(Array) and row.size > 0 and row[0]['type'] == "whitespace"
     end
 
+    def is_trim(row)
+      row.is_a?(Array) and row.size > 0 and row[0]['type'] == "trim"
+    end
+
     def is_nested(row)
       #TODO: kontrola na array nemusi byt idealna, uvidime co do toho jsonu este pribudne
       row.is_a?(Array) and row.size > 0 and row[0]['type'] == "nested"
