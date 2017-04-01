@@ -7,8 +7,7 @@
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 set :branch, 'master'
-
-
+server '147.175.149.171', user: 'root', roles: %w{app db web}, my_property: :my_value
 # role-based syntax
 # ==================
 
@@ -25,6 +24,10 @@ set :branch, 'master'
 
 # Configuration
 # =============
+set :working_dir , '/var/www/webx-master/current/'
+set :user, 'root'
+set :deploy_to, '/var/www/webx-master'
+set :stage, 'production'
 # You can set any configuration variable like in config/deploy.rb
 # These variables are then only loaded and set in this stage.
 # For available Capistrano configuration variables see the documentation page.
@@ -49,6 +52,18 @@ set :branch, 'master'
 #
 # The server-based syntax can be used to override options:
 # ------------------------------------
+
+server '147.175.149.171',
+   user: 'root',
+   roles: %w{web app db},
+   ssh_options: {
+     user: 'user_name', # overrides user setting above
+     keys: ["config/deploy_id_rsa"],  #%w(/home/user_name/.ssh/id_rsa),
+     forward_agent: false,
+     auth_methods: %w(publickey password)
+     # password: 'please use keys'
+   }
+
 # server 'example.com',
 #   user: 'user_name',
 #   roles: %w{web app},

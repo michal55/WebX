@@ -58,7 +58,7 @@ namespace :deploy do
   task :db_migrate do
     on roles(:db) do
       within "#{current_path}" do
-        execute :rake, "db:migrate"
+        execute :rake, "db:migrate RAILS_ENV='#{stage}'"
       end
     end
   end
@@ -67,14 +67,14 @@ namespace :deploy do
   task :db_create do
     on roles(:db) do
       within "#{current_path}" do
-          execute :rake, "db:create"
+          execute :rake, "db:create RAILS_ENV='#{stage}'"
       end
     end
   end
   desc "rake precompile"
   task :rake_precompile do
     on roles(:web) do
-      execute "cd #{fetch(:working_dir)}; $HOME/.rbenv/bin/rbenv exec bundle exec rake assets:precompile"
+      execute "cd #{fetch(:working_dir)}; $HOME/.rbenv/bin/rbenv exec bundle exec rake assets:precompile RAILS_ENV='#{stage}'"
     end
   end
   desc "create the database."
@@ -87,12 +87,19 @@ namespace :deploy do
       end
     end
   end
+
+  desc "restart unicorn"
+  task :restart_unicorn do
+    on roles(:web) do
+      execute "/etc/init.d/unicorn-Webx* stop; sleep 5; /etc/init.d/unicorn-Webx* start"
+    end
+  end
   
   desc "Bundler install"
   task :bundler_install1 do
     on roles(:app) do |host|
       within "#{current_path}" do
-        execute "cd #{fetch(:working_dir)}; $HOME/.rbenv/bin/rbenv exec bundle install"
+        execute "cd #{fetch(:working_dir)}; $HOME/.rbenv/bin/rbenv exec bundle install RAILS_ENV='#{stage}'"
       end
     end
   end
@@ -116,6 +123,7 @@ namespace :deploy do
   after 'deploy', 'deploy:db_create' 
   after 'deploy:db_create', 'deploy:db_migrate'
   after 'deploy:db_migrate', 'deploy:rake_precompile'
+  after 'deploy:rake_precompile', 'deploy:restart_unicorn'
 #  after 'deploy:rake_precompile', 'deploy:server_setup'
 
 
