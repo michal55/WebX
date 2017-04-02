@@ -97,11 +97,7 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
   config.before(:all) do
-    if ENV["TRAVIS_BRANCH"] == "staging" 
-        Rails.configuration.relative_url_root = "/webx-staging"
-    else
-        Rails.configuration.relative_url_root = "/webx"
-    end 
+    Rails.configuration.relative_url_root = ""
     FactoryGirl.reload
   end
 
