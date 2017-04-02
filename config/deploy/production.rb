@@ -28,7 +28,7 @@ set :working_dir , '/var/www/webx-master/current/'
 set :user, 'root'
 set :deploy_to, '/var/www/webx-master'
 set :stage, 'production'
-sef :config_file, 'unicorn-Webx-master'
+set :config_file, 'unicorn-Webx-master'
 # You can set any configuration variable like in config/deploy.rb
 # These variables are then only loaded and set in this stage.
 # For available Capistrano configuration variables see the documentation page.
