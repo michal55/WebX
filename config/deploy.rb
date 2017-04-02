@@ -58,7 +58,7 @@ namespace :deploy do
   task :db_migrate do
     on roles(:db) do
       within "#{current_path}" do
-        execute :rake, "db:migrate RAILS_ENV='#{stage}'"
+        execute :rake, "db:migrate RAILS_ENV='#{fetch(:stage)}'"
       end
     end
   end
@@ -67,14 +67,14 @@ namespace :deploy do
   task :db_create do
     on roles(:db) do
       within "#{current_path}" do
-          execute :rake, "db:create RAILS_ENV='#{stage}'"
+          execute :rake, "db:create RAILS_ENV='#{fetch(:stage)}'"
       end
     end
   end
   desc "rake precompile"
   task :rake_precompile do
     on roles(:web) do
-      execute "cd #{fetch(:working_dir)}; $HOME/.rbenv/bin/rbenv exec bundle exec rake assets:precompile RAILS_ENV='#{stage}'"
+      execute "cd #{fetch(:working_dir)}; $HOME/.rbenv/bin/rbenv exec bundle exec rake assets:precompile RAILS_ENV='#{fetch(:stage)}'"
     end
   end
   desc "create the database."
@@ -99,7 +99,7 @@ namespace :deploy do
   task :bundler_install1 do
     on roles(:app) do |host|
       within "#{current_path}" do
-        execute "cd #{fetch(:working_dir)}; $HOME/.rbenv/bin/rbenv exec bundle install RAILS_ENV='#{stage}'"
+        execute "cd #{fetch(:working_dir)}; $HOME/.rbenv/bin/rbenv exec bundle install RAILS_ENV='#{fetch(:stage)}'"
       end
     end
   end
