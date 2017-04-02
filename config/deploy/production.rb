@@ -77,7 +77,7 @@ server '147.175.149.171',
 #   }
 
 # Resque setup by Rasťo
-# set :workers, YAML::load(File.open('config/resque-pool.yml'))['production']
+set :workers, YAML::load(File.open('config/resque-pool.yml'))['production']
 
-# role :resque_worker, 'localhost'
-# role :resque_scheduler, 'localhost'
+role :resque_worker, '147.175.149.171'
+role :resque_scheduler, '147.175.149.171'
