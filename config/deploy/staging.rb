@@ -3,6 +3,7 @@
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
 set :branch, 'staging'
+set :rails_env, "staging"
 server '147.175.149.171', user: 'root', roles: %w{app db web}, my_property: :my_value
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
@@ -66,7 +67,7 @@ server '147.175.149.171',
 
 # Resque setup by Rasťo
 
-# set :workers, YAML::load(File.open('config/resque-pool.yml'))['staging']
+set :workers, YAML::load(File.open('config/resque-pool.yml'))['staging']
 
-# role :resque_worker, 'localhost'
-# role :resque_scheduler, 'localhost'
+role :resque_worker, '147.175.149.171'
+role :resque_scheduler, '147.175.149.171'

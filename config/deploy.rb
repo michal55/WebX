@@ -15,7 +15,8 @@ set :rbenv_ruby, '2.3.1'
 # set :scm, :git
 
 # Default value for :format is :airbrussh.
-# set :format, :airbrussh
+set :format, :airbrussh
+set :format_options, truncate: false
 
 # You can configure the Airbrussh format using :format_options.
 # These are the defaults.
@@ -44,6 +45,15 @@ end
 
 
 namespace :deploy do
+
+  desc "set up env"
+  task :set_up_env do
+    on roles(:app) do
+      within "#{current_path}" do
+        execute "export RAILS_ENV=\"#{fetch(:rails_env)}\""
+      end
+    end
+  end
 
   desc "Bundler install"
   task :bundler_install do
@@ -120,11 +130,14 @@ namespace :deploy do
     end
   end
 
-  after 'deploy', 'deploy:db_create' 
+  after 'deploy', 'deploy:set_up_env'
+  after 'deploy:set_up_env', 'deploy:db_create'
   after 'deploy:db_create', 'deploy:db_migrate'
   after 'deploy:db_migrate', 'deploy:rake_precompile'
   after 'deploy:rake_precompile', 'deploy:restart_unicorn'
 #  after 'deploy:rake_precompile', 'deploy:server_setup'
 
+  after 'deploy:rake_precompile', 'resque:restart'
+  after 'deploy:rake_precompile', 'resque:scheduler:restart'
 
 end
