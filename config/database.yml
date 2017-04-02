@@ -28,6 +28,7 @@ development:
   adapter: postgresql
   encoding: unicode
   database: webx_dev
+  host: localhost
   pool: 5
   username: webx
   password: webx
@@ -36,6 +37,7 @@ test:
   adapter: postgresql
   encoding: unicode
   database: webx_test
+  host: localhost
   pool: 5
   username: webx
   password: webx
@@ -44,6 +46,16 @@ staging:
   adapter: postgresql
   encoding: unicode
   database: webx_staging
+  host: localhost
+  pool: 5
+  username: webx
+  password: webx
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: webx_production
+  host: localhost
   pool: 5
   username: webx
   password: webx

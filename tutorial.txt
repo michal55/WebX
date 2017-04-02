@@ -1,8 +1,15 @@
-Skript pre instalaciu DB:
-<doplnit>
+Instalacia rbenv:
+https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-14-04
 
-Otvorenie DB v konzole
+gem install rails -v 4.2.6
+
+Skript pre instalaciu DB:
+https://www.postgresql.org/download/linux/ubuntu/
+
+Otvorenie DB v konzole (nasledne si vytvorte usera 'webx' ktory bude db obsluhovat):
 sudo -u postgres psql
+
+postgres=# CREATE USER webx SUPERUSER PASSWORD 'webx';
 
 Vytvorenie DB (dev a test):
 rake db:create
@@ -18,3 +25,21 @@ rails console
 
 Web pre tutorial:
 https://www.railstutorial.org/
+
+BG joby:
+- treba mat nainstalovany a spusteny REDIS
+- pouzivame DB 7-10 (ine mam zabrate ja [Rasťo], ak by niekto pouzival niektore z týchto tak mozme dat vyssie cisla. Max je 32)
+
+Skript pre spustenie Resque na BG joby:
+https://github.com/resque/resque
+ resque-pool --environment development
+
+Skript pre spustenie Resque-Schedulera pre casovo planovane joby:
+https://github.com/resque/resque-scheduler
+ rake resque:scheduler
+
+Cron syntax
+ https://en.wikipedia.org/wiki/Cron
+
+Zobrazenie resque prehladu:
+ http://0.0.0.0:3000/webx/resque_web/overview

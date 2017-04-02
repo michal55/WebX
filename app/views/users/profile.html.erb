@@ -1,0 +1,9 @@
+<%= extends :basic_panel do %>
+  <%= extends :basic_panel_heading do %>
+    <h1><%= @user.name %> <%= @user.surname %></h1>
+  <% end %>
+  <%= extends :basic_panel_body do %>
+    <h3><%= @user.email %></h3>
+    <p>Joined: <%= @user.created_at.strftime("%d/%m/%Y") %></p>
+  <% end %>
+<% end %>

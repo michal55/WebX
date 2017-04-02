@@ -1,0 +1,12 @@
+<div class="container col-md-offset-4 col-md-4 login-form">
+  <h2><%=t('auth.reset.header')%></h2>
+  <div class="form-group">
+    <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+      <%= devise_error_messages! %>
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+        <%= f.submit t('auth.reset.header'), class: "btn btn-primary" %>
+    <% end %>
+    <%= render "devise/shared/links" %>
+  </div>
+</div>

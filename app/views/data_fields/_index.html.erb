@@ -1,0 +1,86 @@
+<table class="table table-striped table-hover" ng-cloak>
+  <thead>
+	<tr>
+	  <th class="name-input"> <%=t('data_fields.columns.name')%> </th>
+	  <th> <%=t('data_fields.columns.type')%> </th>
+      <th class="action-icon"> </th>
+    </tr>
+  </thead>
+  <tbody>
+  <%= render 'data_fields/new'%>
+  <% if @data_field.length == 0 %>
+      <td><%= t('data_fields.no_schemas') %></td>
+      <td> </td>
+      <td> </td>
+  <% else %>
+    <% @data_field.each do |d| %>
+      <tr class="active-tr">
+        <td class="name-input">
+          <%= form_for([d.project, d], remote: true, :url => project_data_field_path(d.project, d)) do |f|  %>
+          <div class="input-group">
+            <%= f.text_field(
+              :name,
+              class: 'form-control editable',
+              :'ng-init' => "mapper.names['#{d.id}']='#{d.name}'",
+              :'ng-model' => "mapper.names['#{d.id}']",
+              :'ng-change' => "dirty('#{d.id}')",
+              :required => true
+            )%>
+            <span class="input-group-addon table-button">
+              <a 
+                ng-click=<%="deleteInterval('data_field_#{d.id}')"%>
+                id=<%="remove_trigger_data_field_#{d.id}"%>
+                class="btn btn-default glyphicon glyphicon-remove table-button trigger">
+              </a>
+              <%= link_to(
+                '',
+                project_data_field_path(d.project, d),
+                method: :delete,
+                class: 'btn btn-default glyphicon glyphicon-remove table-button confirm',
+                :'id' => "remove_data_field_#{d.id}"
+              ) %>
+            </span>
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+            <%= f.select(
+              :data_type,
+              DataField.data_types,
+              {},
+              { 
+                class: 'form-control input-sm',
+                :'ng-init' => "mapper.types['#{d.id}']='#{DataField.data_types[d.data_type]}'",
+                :'ng-model' => "mapper.types['#{d.id}']",
+                :'ng-change' => "dirty('#{d.id}')"
+              }
+              )
+            %>
+          </div>
+        </td>
+        <td>
+          <%= button_tag '',
+            type: 'submit',
+            class: 'btn btn-default glyphicon glyphicon-floppy-disk btn-lg table-button',
+            :'ng-show' => "state[#{d.id}] == 'changed'"
+          %>
+          <%= button_tag '',
+            class: 'btn btn-default glyphicon glyphicon-ok btn-lg table-button success',
+            :'ng-show' => "state[#{d.id}] == 'saved'"
+          %>
+          <%= button_tag '',
+            class: 'btn btn-default glyphicon glyphicon-warning-sign btn-lg table-button failure',
+            :'ng-show' => "state[#{d.id}] == 'failed'"
+          %>
+          <%= button_tag '',
+            class: 'fa fa-circle-o-notch fa-fw fa-spin fa-3x table-button loading',
+            :'ng-show' => "state[#{d.id}] == 'saving'"
+          %>
+        </td>
+        <% end %>
+      </tr>
+    <% end %>
+  <% end %>
+  </tbody>
+</table>
+

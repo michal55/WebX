@@ -1,0 +1,51 @@
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th class="frequency-column"> <%= t('frequencies.columns.interval') %> </th>
+      <th class="period-column"> <%= t('frequencies.columns.period') %> </th>
+      <th> <%= t('frequencies.columns.first_exec') %> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render 'frequencies/new', script: script, project: project, frequency: frequency_new %>
+    <% if frequencies.length == 0 %>
+      <td><%= t('frequencies.no_frequency')%> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    <% else %>
+      <% frequencies.each do |d| %>
+          <tr class="active-tr">
+            <td class="name-input">
+              <%= form_for d, url: project_script_frequencies_path(project, script) do |f|  %>
+              <div>
+                <%= d.interval %>
+              </div>
+            </td>
+            <td>
+              <div>
+                <%= d.period %>
+              </div>
+            </td>
+            <td><%= d.first_exec.strftime(t('time.format')) if d.first_exec %></td>
+            <td class="action-icon">
+              <span 
+                ng-click=<%="deleteInterval(#{d.id})"%>
+                id=<%="remove_trigger_#{d.id}"%>
+                class="btn btn-default glyphicon glyphicon-remove table-button trigger">
+              </span>
+              <%= link_to(
+                '',
+                project_script_frequency_path(project.id, script.id, d.id),
+                method: :delete,
+                class: 'btn btn-default glyphicon glyphicon-remove table-button confirm',
+                :'id' => "remove_#{d.id}"
+              ) %>
+            </td>
+            <% end %>
+          </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

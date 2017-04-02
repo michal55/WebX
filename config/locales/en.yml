@@ -20,4 +20,190 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  layout:
+    administration: "Administration"
+    logout: "Logout"
+    account: "Account"
+
+  users:
+    header: "All users"
+    settings: "Settings"
+    table_email: "E-mail"
+    table_role: "Role"
+    table_date: "Date of registration"
+    debug: "Debug information"
+
+  auth:
+    reset:
+      header: "Resend confirmation instructions"
+    change:
+      header:  "Change your password"
+      new:     "New password"
+      confirm: "Confirm new password"
+      submit:  "Change my password"
+    forgot:
+      header:  "Forgot your password?"
+      submit:  "Send me reset password instructions"
+    register:
+      confirm: "enter password to confirm changes"
+      info1: "able to discover?"
+      info2: "yes we are"
+      header: "Sign up"
+      email_placeholder: "email"
+      name: "name"
+      surname: "surname"
+      password_placeholder: "password"
+      retype_placeholder: "retype password"
+      minimum: " characters minimum"
+      submit: "Sign up"
+    login:
+      email_placeholder: "email"
+      header: "Log in"
+      info1: "got passion for crawling?"
+      info2: "welcome back"
+      logout: "Logout"
+      password_placeholder: "password"
+      submit: "Log in"
+    unlock:
+      did_not: "Didn't receive unlock instructions?"
+      header: "Resend unlock instructions"
+      submit: "Resend unlock instructions"
+    confirm:
+      did_not:  "Didn't receive confirmation instructions?"
+
+  email:
+    normal:
+      header: "Welcome"
+      body:   "You can confirm your account email through the link below:"
+    reset:
+      header: "Hello"
+      body1: "Someone has requested a link to change your password. You can do this through the link below."
+      body2: "If you didn't request this, please ignore this email."
+      body3: "Your password won't change until you access the link above and create a new one."
+    locked:
+      header: "Hello"
+      body1: "Your account has been locked due to an excessive number of unsuccessful sign in attempts."
+      body2: "Click the link below to unlock your account:"
+
+  projects:
+    index: "My Projects"
+    new_button: "+ project"
+    new: "New project"
+    edit: "Edit project"
+    columns:
+      name: "Project"
+      action: "access"
+      scripts: "Scripts"
+    no_projects: "You have no projects"
+    placeholder_new: "Add new project"
+    flash_create: "You successfully created project %{project_name}"
+    flash_delete: "You deleted project %{project_name}"
+    flash_update: "You updated project %{project_name}"
+
+  scripts:
+    index: "Scripts"
+    new_button: "+ script"
+    new: "New script"
+    edit: "Edit script"
+    columns:
+      name: "Script"
+      extract: "Extractions"
+      action: "Actions"
+      frequencies: "Frequencies"
+      access: "access"
+      log_level: "Log level"
+    no_script: "Your project does not have any scripts"
+    placeholder_new: "Add new script"
+    flash_create: "You successfully created script %{script_name}"
+    flash_delete: "You deleted script %{script_name}"
+    flash_update: "You updated script %{script_name}"
+
+
+  data_fields:
+    index: "Data Field"
+    new: "New field"
+    edit: "Edit field"
+    type: "Type"
+    columns:
+      name: "Field"
+      type: "Type"
+      action: "Actions"
+    no_schemas: "Your project does not have any data schema"
+    placeholder_new: "Add data schema field"
+    flash_create: "You successfully created field %{field_name}"
+    flash_delete: "You deleted field %{field_name}"
+    flash_update: "You updated field %{field_name}"
+
+  extraction_datum:
+    columns:
+      field: "Field"
+      value: "Value"
+    index: "Data"
+
+  extractions:
+    index: "Extractions"
+    columns:
+      created_at: "Created"
+      executed: "Executed"
+      execution_time: "Execution time"
+      status: "Status"
+      updated_at: "Updated"
+      instances: "Instances"
+      empty_fields: "Empty fields"
+    no_extraction: "You haven't extracted any data yet"
+    fail: "Fail"
+    success: "Success"
+
+
+  buttons:
+    delete: "Delete"
+    edit: "Edit"
+    create: "Create"
+    submit: "Save"
+    back: "Back"
+
+  frequencies:
+    index: "Frequencies"
+    new: "New frequency"
+    new_button: "+ frequency"
+    edit: "Edit"
+    action: "Edit"
+    columns:
+      interval: "Interval"
+      period: "Period"
+      first_exec: "First execution"
+      edit: "Edit frequency"
+    no_frequency: "Your script has no running frequency"
+    placeholder_new: "Add new execution interval"
+    flash_create: "You successfully created frequency"
+    flash_delete: "You deleted frequency"
+    flash_update: "You updated frequency"
+
+  debug:
+    header_debug: "Debug info"
+    environment: "Environment:"
+    time: "Server time:"
+    rails_root: "Root:"
+    database: "Database connected:"
+    version: "Rails version:"
+    header_stats: "Stats"
+    registered: "Registered users:"
+
+
+  home:
+    welcome: "Welcome in WebX project"
+    team: "Team Project site"
+    team_link: "http://team16-16.studenti.fiit.stuba.sk/index.html"
+    github_server: "Server part Github"
+    github_server_link: "https://github.com/michal55/WebX"
+    github_extension: "Chrome extension part Github"
+    github_extension_link: "https://github.com/michal55/WebX-Extension"
+
+  time:
+    format: "%Y-%m-%d %H:%M"
+    format_extended: "%Y-%m-%d %H:%M:%S %Z"
+    format_js: "YYYY-MM-DD HH:mm"
+
+  link:
+    show_more: "Show More"
+    show_less: "Show Less"

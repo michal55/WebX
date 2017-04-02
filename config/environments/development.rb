@@ -1,4 +1,6 @@
 Rails.application.configure do
+  config.relative_url_root = "/webx"
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -38,4 +40,18 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      user_name:    'tim.16.fiit.1617@gmail.com',
+      password:     'tiMak2016',
+      domain:       'localhost:3000',
+      address:      'smtp.gmail.com',
+      port:         '587',
+      authentication: :plain,
+      enable_starttls_auto: true
+  }
 end

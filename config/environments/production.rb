@@ -1,4 +1,6 @@
 Rails.application.configure do
+  config.relative_url_root = "/webx"
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.

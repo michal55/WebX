@@ -1,0 +1,32 @@
+<%= extends :basic_form do %>
+  <% if can? :manage, User %>
+    <%= form_for(@user, method: :patch) do |f| %>
+
+      <%= f.label(:id) %>
+      <%= f.text_field(:id, class: 'form-control', disabled: true) %>
+
+      <%= f.label(:email) %>
+      <%= f.text_field(:email, class: 'form-control',disabled: true) %>
+
+      <%= f.label(:sign_in_count) %>
+      <%= f.text_field(:sign_in_count, class: 'form-control', disabled: true) %>
+
+      <%= f.label('Registered') %>
+      <%= f.date_field(:created_at, class: 'form-control', disabled: true) %>
+
+      <%= f.label(:last_sign_in_at) %>
+      <%= f.datetime_local_field(:last_sign_in_at, class: 'form-control', disabled: true) %>
+
+      <%= f.label(:confirmed_at) %>
+      <%= f.date_field(:confirmed_at, class: 'form-control', disabled: true) %>
+
+      <%= f.label(:role) %>
+      <%= f.select :role, ['user', 'admin'], {}, class: 'form-control' %>
+
+      <div class="login-group">
+        <%= f.submit('Save', class: 'btn btn-primary') %>
+        <%= link_to('Back',  users_path , class: 'btn btn-default') %>
+      </div>
+    <% end %>
+  <% end%>
+<% end%>

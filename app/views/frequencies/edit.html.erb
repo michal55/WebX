@@ -1,0 +1,15 @@
+<%= extends :basic_form do %>
+    <%= form_for([@project, @script, @frequency], url: project_script_frequency_path(@project, @script, @frequency)) do |f|  %>
+        <h1><%= t('frequencies.edit') %></h1>
+        <%= f.label(:interval) %>
+        <%= f.text_field(:interval, class: 'form-control') %>
+        <%= f.label(:period) %>
+        <%= f.select(:period, select_periods, class: 'form-control') %>
+        <%= f.label(:first_exec) %>
+        <%= f.text_field(:first_exec, class: 'form-control') %>
+        <div class="login-group">
+          <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
+          <%= link_to(t('buttons.back'), :back, class: 'btn') %>
+        </div>
+    <% end %>
+<% end %>

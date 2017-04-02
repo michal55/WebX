@@ -1,4 +1,25 @@
 Rails.application.routes.draw do
+  get 'debug' => 'debug#home'
+
+  use_doorkeeper
+
+  mount API::Root => '/'
+
+  devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }, path: '', path_names: { sign_up: :join, sign_in: :login, sign_out: :logout }, module: :devise
+
+  resources :users, only: [:index, :show, :update, :profile]
+  get 'users/:id/profile' => 'users#profile', as: :profile
+
+  resources :projects do
+    resources :scripts do
+      resources :frequencies
+      resources :extractions do
+        resources :extraction_datum
+      end
+    end
+    resources :data_fields
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -53,4 +74,6 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  root 'application#home'
 end

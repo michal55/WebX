@@ -6,9 +6,15 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-
-<%= yield %>
-
+<body class="<%= "intro-page" unless user_signed_in? %>" data-turbolinks="false" ng-app="webx" ng-controller="MainCtrl" ng-cloak>
+<%= render 'layouts/header' %>
+<div class="row main-content">
+	<div class="col-md-12">
+		    <%= yield %>
+        <%= yield :javascript %>
+		</div>
+</div>
+<%= render 'layouts/footer' %>
+<%= yield :javascript %>
 </body>
 </html>

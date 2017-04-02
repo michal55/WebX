@@ -1,0 +1,46 @@
+sudo: required
+dist: trusty
+language: ruby
+rvm:
+- 2.3.1
+env:
+  global:
+  - RAILS_VERSION='4.2.6'
+  - PGPORT=5432
+  - PGHOST=localhost
+  - secure: HYGxapVQAih1/cfPcsLbf4S4xAJplr4GX9KVZv9H95whEcGtbmf8uWxjgR8g7eVy7Nuc53OFgGnG/GVYJwsCz7e4mmioeuwNmVS1+GRaXMRjMPGS45INv4V0SpNY/fKRFeDXCkFdqcb3Q8DdwQTMFeg7qIFalHEzz1DiOvBUyXWCL1W/Rbqk6fqzTZgUr8VSnG3dlLNaaFJs/Y1fG3jWJGs9e3vHkQJHv0Qa38On8SkD0Ni4BHGrBf0Q9ui3P8aUkGyRqNhs+KkEpH+HvoJDKyKhs1QlarwlRAPTe8aablf8dwwBTKoy7uKekky5VD0HOWqKfWrOCarBWaOcE18dB8lyKY+RP70Bgou3F5D4X8lNKlRSvizjyFdIGa/VcGp1LYlTc5O00fMiSyj7zal8d9IxgSp0DNLAKAmjOyvTvlzmZiXp/z5s6M7jyQgcOR/OUxjvPSgpg3VPbz7bRl1x1KK//ABAE+JL/Hx8cB3qOtvtP3zJ8IxUi/HC3SjnDIEGUSt1WUh2LUbH3QcuCXmsfE4MzyRTefIAdq8nwdVt0pPfRb0NJrZDsrB2EqwrUq2BVSMJEdyhnuYRWI4nExVCaiFVg1YAi5IIbANKIe3ngRmbt1KWiTIM8jqszPMpmDy8NVjqiTjmu4SAAfZpcBINPrYaBXy8EOYoZ2cBoU1S6Ow=
+branches:
+  only:
+  - master
+  - development
+  - staging
+services:
+- redis-server
+- elasticsearch
+before_script:
+- sleep 10
+- curl http://localhost:9200/
+- sudo cp /etc/postgresql/9.4/main/pg_hba.conf /etc/postgresql/9.5/main/pg_hba.conf
+- sudo /etc/init.d/postgresql restart
+- psql --version
+- sudo -u postgres psql -c "CREATE USER webx SUPERUSER PASSWORD 'webx';"
+- bundle exec rake db:create
+- bundle exec rake db:migrate
+- bundle exec rails --version
+addons:
+  apt:
+    sources:
+    - precise-pgdg-9.5
+    - elasticsearch-1.7
+    packages:
+    - elasticsearch
+    - postgresql-9.5
+    - postgresql-contrib-9.5
+  postgresql: 9.5
+after_success:
+- openssl aes-256-cbc -k $DEPLOY_KEY -in config/deploy_id_rsa_enc_travis -d -a -out
+  config/deploy_id_rsa
+- "[[ $TRAVIS_BRANCH = 'staging' ]] && bundle exec cap staging deploy"
+- "[[ $TRAVIS_BRANCH = 'master' ]] && bundle exec cap production deploy"
+notifications:
+  slack: teamwebx:VHTdNTZxyP8rHumLGGBdv3PU
