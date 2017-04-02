@@ -96,7 +96,8 @@ module Crawling
       return @post.extract_attribute(doc, row['xpath'], 'href') if @post.is_nested(row['postprocessing'])
       return @post.extract_attribute(doc, row['xpath'], row['postprocessing'][0]['attribute']) if @post.attributes?(row['postprocessing'])
       value = @post.extract_text(doc, row['xpath'])
-      return value.to_s.strip if @post.is_whitespace(row['postprocessing'])
+      return value.to_s.strip if @post.is_trim(row['postprocessing'])
+      return value.to_s.gsub(/\s+/, '') if @post.is_whitespace(row['postprocessing'])
       value
     end
 

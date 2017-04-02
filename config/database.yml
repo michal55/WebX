@@ -50,3 +50,12 @@ staging:
   pool: 5
   username: webx
   password: webx
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: webx_production
+  host: localhost
+  pool: 5
+  username: webx
+  password: webx

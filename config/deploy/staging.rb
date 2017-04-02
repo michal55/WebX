@@ -27,7 +27,7 @@ server '147.175.149.171', user: 'root', roles: %w{app db web}, my_property: :my_
 # =============
 set :working_dir , '/var/www/webx/current/'
 set :user, 'root'
-
+set :stage, 'staging'
 # You can set any configuration variable like in config/deploy.rb
 # These variables are then only loaded and set in this stage.
 # For available Capistrano configuration variables see the documentation page.

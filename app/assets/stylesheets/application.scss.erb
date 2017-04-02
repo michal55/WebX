@@ -51,7 +51,7 @@ h5 {
 
 .intro-page {
 	background-color: #eee;
-	background-image: url(/webx/assets/index.jpg);
+	background-image: url(<%= Rails.configuration.relative_url_root + '/assets/index.jpg' %>);
 	color: white;
 
 	a {
@@ -334,7 +334,7 @@ a.btn:hover {
   		border-image-slice: 1;
   		border-left: 0;
   		border-right: 0;
-  		background-image: url(/webx/assets/main.jpg);
+  		background-image: url(<%= Rails.configuration.relative_url_root + '/assets/main.jpg' %>);
 	}
 }
 
@@ -420,7 +420,7 @@ div.form-group {
 		color: $primary-color;
 		&:hover {
 			padding-left: 24px;
-			background-image: url(/webx/assets/pencil.png);
+			background-image: url(<%= Rails.configuration.relative_url_root + '/assets/pencil.png' %>);
 			background-size: 20px;
 			background-repeat: no-repeat;
 			background-position: 0%;

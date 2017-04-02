@@ -97,6 +97,7 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
   config.before(:all) do
+    Rails.configuration.relative_url_root = ""
     FactoryGirl.reload
   end
 

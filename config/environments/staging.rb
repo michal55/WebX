@@ -1,5 +1,5 @@
 Rails.application.configure do
-  config.relative_url_root = "/webx"
+  config.relative_url_root = "/webx-staging"
 
   # Settings specified here will take precedence over those in config/application.rb.
 
