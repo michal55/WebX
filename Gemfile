@@ -69,6 +69,7 @@ gem 'elasticsearch-persistence', require: 'elasticsearch/persistence/model'
 
 gem 'nestive'
 
+gem 'http'
 # Test suite related gems
 group :development, :test do
   gem 'rspec', '>= 3.0'

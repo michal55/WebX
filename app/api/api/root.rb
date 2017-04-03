@@ -1,6 +1,6 @@
 module API
   class Root < Grape::API
     prefix 'api'
-    mount API::Data::Root
+    mount API::Export::Export
   end
 end
