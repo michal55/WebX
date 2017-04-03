@@ -24,6 +24,7 @@
             <td> <%= empty_fields_count e %></td>
             <td class="<%= find_class e.success %>"> <%= extraction_status e.success %></td>
             <td> <%= link_to t('extraction_datum.index'), project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id) %></td>
+            <td> <%= link_to t('extraction_datum.index'), project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id, format: :csv) %></td>
           </tr>
         <% end %>
       </tbody>

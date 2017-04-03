@@ -1,6 +1,7 @@
 class ExtractionDatumController < ApplicationController
   require 'set'
   include ExtractionDatumMapper
+  require 'csv'
 
   def index
     @extraction = Extraction.find(params[:extraction_id])
@@ -10,6 +11,14 @@ class ExtractionDatumController < ApplicationController
   	@project = Project.find(params[:project_id])
 
     @fields_array = ExtractionDatumMapper.get_field_array(@children)
+
+    respond_to do |format|
+        format.html
+        format.csv do
+          headers['Content-Dsiposition'] = "attachment; filename=\"extraction_data\""
+          headers['Content-Type'] ||= 'text/csv'
+        end
+      end
 
   end
 
