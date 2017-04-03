@@ -25,4 +25,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def refresh_api_key
+    @user = User.find(params[:id])
+    @user.api_key = rand(36**20).to_s(36)
+    @user.save!
+    redirect_to profile_path(@user)
+  end
+
 end

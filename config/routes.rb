@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :show, :update, :profile]
   get 'users/:id/profile' => 'users#profile', as: :profile
+  post 'user/:id/profile/refresh_api_key' => 'users#refresh_api_key'
 
   resources :projects do
     resources :scripts do

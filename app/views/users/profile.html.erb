@@ -5,5 +5,10 @@
   <%= extends :basic_panel_body do %>
     <h3><%= @user.email %></h3>
     <p>Joined: <%= @user.created_at.strftime("%d/%m/%Y") %></p>
+    <p>
+      API key:
+      <code><%= @user.api_key%></code>
+    </p>
+    <%= button_to "Refresh API Key", action: :refresh_api_key %>
   <% end %>
 <% end %>
