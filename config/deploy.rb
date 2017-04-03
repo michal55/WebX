@@ -101,7 +101,7 @@ namespace :deploy do
   desc "restart unicorn"
   task :restart_unicorn do
     on roles(:web) do
-      execute "/etc/init.d/#{fetch(:config_file)} stop; sleep 5; /etc/init.d/#{fetch(:config_file)} start"
+      execute "/etc/init.d/#{fetch(:config_file)} stop; sleep 10; /etc/init.d/#{fetch(:config_file)} start"
     end
   end
   
