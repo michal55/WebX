@@ -14,6 +14,10 @@ module Crawling
       row.is_a?(Array) and row.size > 0 and row[0]['type'] == "nested"
     end
 
+    def is_restrict(row)
+      row.is_a?(Array) and row.size > 0 and row[0]['type'] == "restrict"
+    end
+
     def extract_text doc, xpath
       if xpath[-7..-1].eql?("/text()")
         doc.parser.xpath(xpath)

@@ -46,8 +46,6 @@ module Crawling
           instance_id: instance.id, extraction_id: @extraction.id,
           field_name: field_name, value: parent_url
       )
-
-      instance.is_leaf = true
       data_row.each do |row|
         extraction_datum = ExtractionDatum.create(
             instance_id: instance.id, extraction_id: @extraction.id,
@@ -73,7 +71,23 @@ module Crawling
           end
 
           @parent_stack.pop
+        elsif @post.is_restrict(row['postprocessing'])
+          puts row['name'].to_s
+          partial_htmls = page.xpath(row['xpath'])
+          puts row['name'].to_s
+          @parent_stack.push(instance.id)
+
+          @logger.debug("Restrict htmls: #{partial_htmls.size}", @extraction)
+
+          partial_htmls.each do |html|
+            new_instance = Instance.create(extraction_id: @extraction.id, parent_id: @parent_stack[-1])
+            nested_row = row['postprocessing'][0]['data']
+            iterate_json(nested_row, html, new_instance, parent_url, row['name'])
+          end
+
+          @parent_stack.pop
         end
+        
       end
       instance.save!
     end
