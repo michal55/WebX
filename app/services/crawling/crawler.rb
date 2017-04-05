@@ -72,17 +72,16 @@ module Crawling
 
           @parent_stack.pop
         elsif @post.is_restrict(row['postprocessing'])
-          puts row['name'].to_s
-          partial_htmls = page.xpath(row['xpath'])
-          puts row['name'].to_s
+          partial_htmls = page.parser.xpath(row['xpath'])
           @parent_stack.push(instance.id)
 
           @logger.debug("Restrict htmls: #{partial_htmls.size}", @extraction)
 
           partial_htmls.each do |html|
+            restricted_page = Mechanize::Page.new(nil,{'content-type'=>'text/html'},html.to_s, nil,@agent)
             new_instance = Instance.create(extraction_id: @extraction.id, parent_id: @parent_stack[-1])
             nested_row = row['postprocessing'][0]['data']
-            iterate_json(nested_row, html, new_instance, parent_url, row['name'])
+            iterate_json(nested_row, restricted_page, new_instance, parent_url, row['name'])
           end
 
           @parent_stack.pop
@@ -116,6 +115,29 @@ module Crawling
       return value.to_s.strip if @post.is_trim(row['postprocessing'])
       return value.to_s.gsub(/\s+/, '') if @post.is_whitespace(row['postprocessing'])
       value.to_s.strip
+      value.to_s.strip
+    end
+
+    def try_html
+      agent = Mechanize.new
+      url = "https://www.alza.sk/notebooky/podla-vyuzitia/hracie/18848814.htm"
+      # url = "https://www.alza.sk/pocitace/18852653.htm"
+      page = agent.get(url)
+      restrict = '//*[@id="boxes"]/div'
+      xpath = '//*[@id="litp18852653"]/div[2]/ul[position() > 3]/li/span/a'
+      # boxes = page.parser.xpath(restrict)
+      # puts page.parser.xpath('//*[@id="litp18852653"]/div[2]/ul/li[position() < 4]/span/a')
+      puts page.parser.xpath('//*[contains(@class, "categoryPageTitle")]/h1')
+      puts page.parser.xpath('//*[@itemprop="name"]\h1')
+
+
+      '//*[@id="boxes"]/div/div[1]/div/a'
+      # restricted_page = Mechanize::Page.new(nil,{'content-type'=>'text/html'},boxes[1].to_s, nil,agent)
+      # puts restricted_page.body
+      # puts restricted_page.parser.xpath('//div[1]/div/div/text()')
+      # '//*[@id="litp18852653"]/div[2]/ul[position() > 3]/li/span/a'
+      # '//*[@id="boxes"]/div[5]/div[1]/div/div/text()
+      # //*[@id="boxes"]/div[9]/div[1]/div/a
     end
 
   end
