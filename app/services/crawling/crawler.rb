@@ -33,7 +33,9 @@ module Crawling
 
       script.last_run = Time.now
       script.save!
-      @extraction.execution_time = script.last_run - @extraction.created_at
+      @extraction.execution_time = Time.now - @extraction.created_at
+      puts Time.now
+      puts @extraction.created_at
       @extraction.success = true
       @extraction.save!
       @logger.debug("Execution time: #{@extraction.execution_time}", @extraction)
@@ -42,16 +44,19 @@ module Crawling
     def iterate_json(data_row, page, instance, parent_url, field_name)
       sleep(rand(1..5))
 
+
       ExtractionDatum.create(
           instance_id: instance.id, extraction_id: @extraction.id,
           field_name: field_name, value: parent_url
-      )
+      ) unless parent_url.nil?
+
       data_row.each do |row|
         extraction_datum = ExtractionDatum.create(
             instance_id: instance.id, extraction_id: @extraction.id,
             field_name:  row['name'], value: extract_value(page, row)
         )
         @logger.debug(log_msg(extraction_datum, row), @extraction)
+        create_extraction_data(instance, page, row)
 
         if @post.is_nested(row['postprocessing'])
           instance.is_leaf = false
@@ -71,6 +76,7 @@ module Crawling
           end
 
           @parent_stack.pop
+
         elsif @post.is_restrict(row['postprocessing'])
           partial_htmls = page.parser.xpath(row['xpath'])
           @parent_stack.push(instance.id)
@@ -78,10 +84,10 @@ module Crawling
           @logger.debug("Restrict htmls: #{partial_htmls.size}", @extraction)
 
           partial_htmls.each do |html|
-            restricted_page = Mechanize::Page.new(nil,{'content-type'=>'text/html'},html.to_s, nil,@agent)
+            restricted_page = mechanize_page(html)
             new_instance = Instance.create(extraction_id: @extraction.id, parent_id: @parent_stack[-1])
             nested_row = row['postprocessing'][0]['data']
-            iterate_json(nested_row, restricted_page, new_instance, parent_url, row['name'])
+            iterate_json(nested_row, restricted_page, new_instance, nil, row['name'])
           end
 
           @parent_stack.pop
@@ -89,6 +95,23 @@ module Crawling
         
       end
       instance.save!
+    end
+
+    def create_extraction_data(instance, page, row)
+      if @post.is_restrict(row['postprocessing'])
+        puts "\n\n returning #{extract_value(page, row)}\n\n"
+        return
+      end
+
+      extraction_datum = ExtractionDatum.create(
+        instance_id: instance.id, extraction_id: @extraction.id,
+        field_name:  row['name'], value: extract_value(page, row)
+      )
+      @logger.debug(log_msg(extraction_datum, row), @extraction)
+    end
+
+    def mechanize_page(html)
+      Mechanize::Page.new(nil, { 'content-type' => 'text/html' }, html.to_s, nil, @agent)
     end
 
     def log_msg(extraction_datum, nested_row)
@@ -114,7 +137,6 @@ module Crawling
       value = @post.extract_text(doc, row['xpath'])
       return value.to_s.strip if @post.is_trim(row['postprocessing'])
       return value.to_s.gsub(/\s+/, '') if @post.is_whitespace(row['postprocessing'])
-      value.to_s.strip
       value.to_s.strip
     end
 
