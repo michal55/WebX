@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get 'debug' => 'debug#home'
-  get 'api-export-instructions' => 'debug#api_export_instructions'
+  get 'export-api-instructions' => 'debug#api_export_instructions'
   use_doorkeeper
 
   mount API::Root => '/'
