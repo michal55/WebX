@@ -2,6 +2,14 @@
     <%= form_for(@script, remote: true, url: project_script_path(@script.project, @script)) do |f|  %>
         <%= extends :basic_panel_heading do %>
             <%= f.text_field(:name, class: 'form-control editable heading') %>
+            <div class="row">
+              <div class="col-md-6">
+                <ol class="breadcrumb">
+                  <li><%= link_to('Projects', projects_path()) %></li>
+                  <li><%= link_to('Scripts', project_path(@project.id)) %></li>
+                </ol>
+              </div>
+            </div>
         <% end %>
         <%= extends :basic_panel_body do %>
             <div class="row">
