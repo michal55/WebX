@@ -44,6 +44,7 @@ GEM
     arel (6.0.3)
     autoprefixer-rails (6.5.3)
       execjs
+    awesome_print (1.7.0)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -411,6 +412,7 @@ PLATFORMS
 
 DEPENDENCIES
   angularjs-rails
+  awesome_print
   better_errors
   bootstrap-sass (>= 3.3.6)
   bootstrap3-datetimepicker-rails (~> 4.17.43)

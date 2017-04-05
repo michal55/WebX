@@ -4,7 +4,7 @@
   <% end %>
   <%= extends :basic_panel_body do %>
     <h3><%= @user.email %></h3>
-    <p>Joined: <%= @user.created_at.strftime("%d/%m/%Y") %></p>
+    <p>Joined: <%= @user.created_at.strftime(t('time.format')) %></p>
     <p>
       API key:
       <code><%= @user.api_key%></code>
