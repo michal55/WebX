@@ -1,16 +1,16 @@
 module ExtractionHelper
   def format_time seconds
+    format = ""
     if seconds.nil?
-      ''
+      return ''
     elsif seconds < 1
-      Time.at(seconds).utc.strftime("%-Lms").to_s.sub(/^[0]*/,"")
+      format = "%-Lms"
+    elsif seconds < 60
+      format = "%-Ss %-Lms"
     else
-      result = ""
-      Time.at(seconds).utc.strftime("%-Ss %-Lms").to_s.split(' ').each do |s|
-        result += s.sub(/^[0]*/," ")
-      end
-      result
+      format = "%-Mm %-Ss %-Lms"
     end
+    Time.at(seconds).utc.strftime(format)
   end
 
   def extraction_status status
