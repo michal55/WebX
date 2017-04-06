@@ -18,6 +18,9 @@ class ExtractionDatumController < ApplicationController
           headers['Content-Dsiposition'] = "attachment; filename=\"extraction_data\""
           headers['Content-Type'] ||= 'text/csv'
         end
+        format.xlsx do
+          render xlsx: 'index', filename: "extraction_data.xlsx"
+        end
       end
 
   end
