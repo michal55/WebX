@@ -1,20 +1,23 @@
 module ExtractionDatumMapper
   require 'set'
 
-  def ExtractionDatumMapper.get_parents(leafs)
+  def ExtractionDatumMapper.get_parents(leaf)
     parents_set = Set.new
-    leafs.each do |i|
-      inst = i
-      while parents_set.exclude?(inst.parent_id)
-        parents_set.add(inst.parent_id)
-        inst = Instance.find(inst.parent_id)
-      end
+    inst = leaf
+    while parents_set.exclude?(inst.parent_id)
+      parents_set.add(inst.parent_id)
+      inst = Instance.find(inst.parent_id)
     end
     Instance.where(id: parents_set.to_a).order('id ASC')
   end
 
-  def ExtractionDatumMapper.get_field_array(parents,leafs)
+  def ExtractionDatumMapper.get_field_array(leafs)
     fields_set = Set.new
+    if leafs.length == 0
+      return []
+    end
+
+    parents = ExtractionDatumMapper.get_parents(leafs[0])
 
     parents.each do |parent|
       parent.extraction_data.each do |extraction_data|
@@ -22,11 +25,10 @@ module ExtractionDatumMapper
       end
     end
 
-    if leafs.length > 0
-      leafs[0].extraction_data.each do |extraction_data|
+    leafs[0].extraction_data.each do |extraction_data|
         fields_set.add(extraction_data.field_name)
-      end
     end
+
     fields_set.to_a
   end
 

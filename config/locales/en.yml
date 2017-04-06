@@ -156,6 +156,7 @@ en:
 
 
   buttons:
+    refresh_api_key: "Refresh API key"
     delete: "Delete"
     edit: "Edit"
     create: "Create"

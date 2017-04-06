@@ -77,9 +77,8 @@ module API
           if leafs.length == 0
             error!(make_error_json('Unavailable data.'),404)
           end
-          parents = ExtractionDatumMapper.get_parents(leafs)
 
-          fields_array = ExtractionDatumMapper.get_field_array(parents,leafs)
+          fields_array = ExtractionDatumMapper.get_field_array(leafs)
 
           response_array = []
           leafs.each do |leaf|
