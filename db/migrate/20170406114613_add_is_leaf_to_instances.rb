@@ -7,7 +7,7 @@ class AddIsLeafToInstances < ActiveRecord::Migration
       references = Instance.where(parent_id: inst.id).count
 
       if references == 1
-        references = 0 if Instance.where(parent_id: inst.id).id == inst.id
+        references = 0 if Instance.where(parent_id: inst.id).first.id == inst.id
       end
 
       if references == 0

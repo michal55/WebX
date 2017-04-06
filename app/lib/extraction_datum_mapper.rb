@@ -22,8 +22,10 @@ module ExtractionDatumMapper
       end
     end
 
-    leafs[0].extraction_data.each do |extraction_data|
-      fields_set.add(extraction_data.field_name)
+    if leafs.length > 0
+      leafs[0].extraction_data.each do |extraction_data|
+        fields_set.add(extraction_data.field_name)
+      end
     end
     fields_set.to_a
   end
