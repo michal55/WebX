@@ -1,5 +1,6 @@
 require 'rspec'
 require 'rails_helper'
+require 'json'
 
 describe 'Exporting API' do
   # listing
@@ -60,6 +61,21 @@ describe 'Exporting API' do
     expect(response.response_code).to eq(200)
   end
 
+  it "Listing should return correct values" do
+    extraction = create(:extraction)
+    script = extraction.script
+    user = script.project.user
+    user.confirm
+    expect(user.confirmed?).to eq true
+
+    get "/api/export/list?token=#{user.api_key}&script_id=#{script.id}"
+    expect(response.response_code).to eq(200)
+    json = JSON.parse(response.body)
+    expect(json['data'][0]['id']).to eq(extraction.id)
+    expect(json['data'][0]['created_at'][0..9]).to eq(extraction.created_at.to_s[0..9])
+    expect(json['data'][0]['success']).to eq(extraction.success)
+
+  end
 
   # extracting
   it 'Extraction should have token and extraction_id required' do

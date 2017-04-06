@@ -220,7 +220,7 @@ en:
       token: "token - required, your API key from profile"
       script_id: "scrpit_id - required, ID of script's results you want to list"
       limit: "limit - optional, limit of extraction to return, default value is 10"
-      offset: "offset - optional, offset for executions of script in past, default value is 0"
+      offset: "offset - optional, offset for extractions of script to past, default value is 0"
       example_url: "api/export/list?token=YourToken&script_id=1&limit=10&offset=0"
     api_extraction:
       header: "Extraction instances"
