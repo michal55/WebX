@@ -3,8 +3,7 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
-  before_create :default_role
-  after_create :set_api_key
+  before_create :default_role, :set_api_key
 
   def default_role
     self.role = 'user'

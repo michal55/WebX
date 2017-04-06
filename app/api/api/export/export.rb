@@ -14,19 +14,8 @@ module API
             # Params are valid
             token = params[:token]
             script_id = (Integer params[:script_id]).abs
-
-            if params[:limit]
-              limit = (Integer params[:limit]).abs
-              limit = 100 if limit > 100
-            else
-              limit = 10
-            end
-
-            if params[:offset]
-              offset = (Integer params[:offset]).abs
-            else
-              offset = 0
-            end
+            limit = limit_init(params[:limit])
+            offset = offset_init(params[:offset])
           rescue
             error!(make_error_json('Parameters not valid.'),404)
           end
@@ -39,9 +28,7 @@ module API
             error!(make_error_json('Script, Project or User with this ID does not exist.'),404)
           end
 
-          if user.api_key != token
-            error!(make_error_json('Invalid token.'),404)
-          end
+          authorize_user(user,token)
 
           extractions = Extraction.where(script_id: script_id).order('created_at DESC').offset(offset).limit(limit)
           extractions_array = []
@@ -55,9 +42,64 @@ module API
           end
           { data: extractions_array }
         end
+
+        get :extraction do
+          if not params[:token] or not params[:extraction_id]
+            # Params not present
+            error!(make_error_json('Token or extraction_id is missing.'),404)
+          end
+
+          begin
+            # Params are valid
+            token = params[:token]
+            extraction_id = (Integer params[:extraction_id]).abs
+            limit = limit_init(params[:limit])
+            offset = offset_init(params[:offset])
+          rescue
+            error!(make_error_json('Parameters not valid.'),404)
+          end
+
+          begin
+            extraction = Extraction.find(extraction_id)
+            script = Script.find(extraction.script_id)
+            project = Project.find(script.project_id)
+            user = User.find(project.user_id)
+          rescue
+            error!(make_error_json('Script, Project or User with this ID does not exist.'),404)
+          end
+
+          authorize_user(user, token)
+
+          { hello: "world"}
+        end
       end
 
       helpers do
+        def limit_init(param)
+          if param
+            limit = (Integer param).abs
+            limit = 100 if limit > 100
+          else
+            limit = 10
+          end
+          limit
+        end
+
+        def offset_init(param)
+          if param
+            offset = (Integer param).abs
+          else
+            offset = 0
+          end
+          offset
+        end
+
+        def authorize_user(user, token)
+          if user.api_key != token
+            error!(make_error_json('Invalid token.'),404)
+          end
+        end
+
         def make_error_json(text)
           error_msg =  "#{text} Read manual at #{request.base_url}#{Rails.application.config.relative_url_root}#{Rails.application.routes.url_helpers.export_api_instructions_path  }"
           { error: "#{error_msg}" }
