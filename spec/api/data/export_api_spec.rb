@@ -85,6 +85,7 @@ describe 'Exporting API' do
     user.confirm
     expect(user.confirmed?).to eq true
 
+
     # No param
     get '/api/export/extraction'
     expect(response.response_code).to eq(404)
