@@ -1,6 +1,8 @@
 module API
   module Export
     class Export < Grape::API
+      include ExtractionDatumMapper
+      require 'set'
       format :json
 
       resource 'export' do
@@ -44,6 +46,7 @@ module API
         end
 
         get :extraction do
+
           if not params[:token] or not params[:extraction_id]
             # Params not present
             error!(make_error_json('Token or extraction_id is missing.'),404)
@@ -70,7 +73,36 @@ module API
 
           authorize_user(user, token)
 
-          { hello: "world"}
+          leafs = Instance.where(extraction_id: extraction_id).where(is_leaf: true).order('created_at ASC').offset(offset).limit(limit)
+          if leafs.length == 0
+            error!(make_error_json('Unavailable data.'),404)
+          end
+          parents = ExtractionDatumMapper.get_parents(leafs)
+
+          fields_array = ExtractionDatumMapper.get_field_array(parents,leafs)
+
+          response_array = []
+          leafs.each do |leaf|
+            leaf_dict = {}
+            leaf_dict['id'] = leaf.id
+            row = ExtractionDatumMapper.make_row(leaf,fields_array)
+            (0..(row.length-1)).each do |i|
+              leaf_dict[fields_array[i]] = row[i]
+            end
+            response_array << leaf_dict
+          end
+
+          info = {}
+          info['extraction_id'] = extraction.id
+          info['extraction_execution_time'] = extraction.execution_time
+          info['script_id'] = script.id
+          info['instances_count'] = leafs.length
+
+
+          {
+              info: info,
+              data: response_array
+          }
         end
       end
 
