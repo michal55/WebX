@@ -5,8 +5,8 @@
             <div class="row">
               <div class="col-md-6">
                 <ol class="breadcrumb">
-                  <li><%= link_to('Projects', projects_path()) %></li>
-                  <li><%= link_to('Scripts', project_path(@project.id)) %></li>
+                  <li><%= link_to(t('layouts.projects'), projects_path()) %></li>
+                  <li><%= link_to(@project.name, project_path(@project.id)) %></li>
                 </ol>
               </div>
             </div>

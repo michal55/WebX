@@ -24,6 +24,8 @@ en:
     administration: "Administration"
     logout: "Logout"
     account: "Account"
+    projects: "Projects"
+    extractions: "Extractions"
 
   users:
     header: "All users"
