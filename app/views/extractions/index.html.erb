@@ -13,6 +13,7 @@
         <th> <%= t('extractions.columns.empty_fields') %></th>
         <th> <%= t('extractions.columns.status') %></th>
         <th> <%= t('data_fields.columns.action') %></th>
+        <th> <%= t('data_fields.columns.export') %></th>
       </tr>
       </thead>
       <tbody>
@@ -24,8 +25,8 @@
             <td> <%= empty_fields_count e %></td>
             <td class="<%= find_class e.success %>"> <%= extraction_status e.success %></td>
             <td> <%= link_to t('extraction_datum.index'), project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id) %></td>
-            <td> <%= link_to "CSV", project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id, format: :csv) %></td>
-            <td> <%= link_to "XLSX", project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id, format: :xlsx) %></td>
+            <td> <%= link_to "CSV", project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id, format: :csv) %>
+             <%= link_to "XLSX", project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id, format: :xlsx) %></td>
           </tr>
         <% end %>
       </tbody>

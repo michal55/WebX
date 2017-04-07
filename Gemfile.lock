@@ -163,12 +163,12 @@ GEM
       rack-accept
       virtus (>= 1.0.0)
     hashie (3.4.6)
+    htmlentities (4.3.4)
     http (2.2.1)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
       http-form_data (~> 1.0.1)
       http_parser.rb (~> 0.6.0)
-    htmlentities (4.3.4)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     http-form_data (1.0.1)
@@ -421,9 +421,9 @@ PLATFORMS
 
 DEPENDENCIES
   angularjs-rails
+  awesome_print
   axlsx (= 2.0.1)
   axlsx_rails
-  awesome_print
   better_errors
   bootstrap-sass (>= 3.3.6)
   bootstrap3-datetimepicker-rails (~> 4.17.43)
