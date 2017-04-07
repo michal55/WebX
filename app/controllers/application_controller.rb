@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   end
 
   def home
+    @extractions = Extraction.order("created_at DESC").limit(5)
   end
 
 
