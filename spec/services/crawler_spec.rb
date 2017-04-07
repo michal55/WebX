@@ -51,7 +51,7 @@ describe 'Extracting data from rubygems.org' do
     extraction = Extraction.find_by(script_id: script.id)
     expect(extraction.success).to eq true
     datum = ExtractionDatum.find_by(field_name: "title")
-    expect(datum.value).to eq "\n            Web page of team 16\n          "
+    expect(datum.value).to eq "Web page of team 16"
     datum = ExtractionDatum.find_by(field_name: "branches_url")
     #TODO: vymysliet to lepsie, do PG sa uklada pole ako string, cize sa porovnava "http/url" s "[\"http/url\"]", match() to zatial riesi
     expect("/michal55/WebX-Team16/branches").to eq datum.value.match("/michal55/WebX-Team16/branches").to_s
