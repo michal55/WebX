@@ -101,7 +101,7 @@ module Crawling
       value = @post.extract_text(doc, row['xpath'])
       return value.to_s.strip if @post.is_trim(row['postprocessing'])
       return value.to_s.gsub(/\s+/, '') if @post.is_whitespace(row['postprocessing'])
-      value
+      value.to_s.strip
     end
 
   end

@@ -69,6 +69,10 @@ gem 'elasticsearch-persistence', require: 'elasticsearch/persistence/model'
 
 gem 'nestive'
 
+# XLSX
+gem 'axlsx', '= 2.0.1'
+gem 'axlsx_rails'
+
 gem 'http'
 # Test suite related gems
 group :development, :test do

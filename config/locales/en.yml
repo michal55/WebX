@@ -128,6 +128,7 @@ en:
       name: "Field"
       type: "Type"
       action: "Actions"
+      export: "Export"
     no_schemas: "Your project does not have any data schema"
     placeholder_new: "Add data schema field"
     flash_create: "You successfully created field %{field_name}"

@@ -49,6 +49,13 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
+    axlsx (2.0.1)
+      htmlentities (~> 4.3.1)
+      nokogiri (>= 1.4.1)
+      rubyzip (~> 1.0.0)
+    axlsx_rails (0.5.1)
+      actionpack (>= 3.1)
+      axlsx (>= 2.0.1)
     bcrypt (3.1.11)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
@@ -160,6 +167,7 @@ GEM
       rack-accept
       virtus (>= 1.0.0)
     hashie (3.4.6)
+    htmlentities (4.3.4)
     http (2.2.1)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -344,6 +352,7 @@ GEM
       rspec-mocks (~> 3.5.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    rubyzip (1.0.0)
     rufus-scheduler (3.2.2)
     sass (3.4.22)
     sass-rails (5.0.6)
@@ -417,6 +426,8 @@ PLATFORMS
 DEPENDENCIES
   angularjs-rails
   awesome_print
+  axlsx (= 2.0.1)
+  axlsx_rails
   better_errors
   bootstrap-sass (>= 3.3.6)
   bootstrap3-datetimepicker-rails (~> 4.17.43)
