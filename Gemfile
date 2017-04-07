@@ -69,6 +69,11 @@ gem 'elasticsearch-persistence', require: 'elasticsearch/persistence/model'
 
 gem 'nestive'
 
+# XLSX
+gem 'axlsx', '= 2.0.1'
+gem 'axlsx_rails'
+
+gem 'http'
 # Test suite related gems
 group :development, :test do
   gem 'rspec', '>= 3.0'
@@ -80,6 +85,7 @@ group :development, :test do
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'awesome_print'
 end
 
 group :test do

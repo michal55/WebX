@@ -26,7 +26,7 @@ module Crawling
 
       instance = Instance.create(extraction_id: @extraction.id)
       instance.parent_id = instance.id
-      instance.save
+
       data_row = script_json['data']
 
       iterate_json(data_row, doc, instance, script_json['url'], 'url')
@@ -46,6 +46,8 @@ module Crawling
           instance_id: instance.id, extraction_id: @extraction.id,
           field_name: field_name, value: parent_url
       )
+
+      instance.is_leaf = true
       data_row.each do |row|
         extraction_datum = ExtractionDatum.create(
             instance_id: instance.id, extraction_id: @extraction.id,
@@ -54,6 +56,7 @@ module Crawling
         @logger.debug(log_msg(extraction_datum, row), @extraction)
 
         if @post.is_nested(row['postprocessing'])
+          instance.is_leaf = false
           product_urls = @post.extract_attribute(page, row['xpath'], 'href')
           @parent_stack.push(instance.id)
 
@@ -71,8 +74,8 @@ module Crawling
 
           @parent_stack.pop
         end
-
       end
+      instance.save!
     end
 
     def log_msg(extraction_datum, nested_row)
@@ -98,7 +101,7 @@ module Crawling
       value = @post.extract_text(doc, row['xpath'])
       return value.to_s.strip if @post.is_trim(row['postprocessing'])
       return value.to_s.gsub(/\s+/, '') if @post.is_whitespace(row['postprocessing'])
-      value
+      value.to_s.strip
     end
 
   end
