@@ -10,14 +10,18 @@
           <li><%= link_to(t('layouts.extractions'), project_script_extractions_path(@project.id, @script.id)) %></li>
         </ol>
       </div>
+      <div class="col-md-6">
+        <p class="general-actions">
+           Export&nbsp;
+          <i class="glyphicon glyphicon-save"></i>
+           <%= link_to "CSV", project_script_extraction_extraction_datum_index_path(@project.id, @script.id, @extraction.id, format: :csv) %>
+           &nbsp;|&nbsp;
+           <%= link_to "XLSX", project_script_extraction_extraction_datum_index_path(@project.id, @script.id, @extraction.id, format: :xlsx) %>
+         </p>
+      </div>
     </div>
    <% end %>
   <%= extends :basic_panel_body do %>
-     <p>
-       Export:
-       <%= link_to "CSV", project_script_extraction_extraction_datum_index_path(@project.id, @script.id, @extraction.id, format: :csv) %>
-       <%= link_to "XSLX", project_script_extraction_extraction_datum_index_path(@project.id, @script.id, @extraction.id, format: :xlsx) %>
-     </p>
     <table class="table table-striped table-hover table-scrollable">
       <thead>
       <tr>

@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th class="name-input"><%=t('scripts.columns.name')%></th>
-      <th><%= t('scripts.columns.extract') %></th>
+      <th class="number-column"><%= t('scripts.columns.extract') %></th>
       <th class="action-icon"></th>
     </tr>
   </thead>
@@ -11,7 +11,12 @@
   <% @scripts.each do |s| %>
     <tr>
       <td class="name-input"><%=link_to(s.name, project_script_path(@project.id, s.id) )%></td>
-      <td><%= link_to s.extractions.length, project_script_extractions_path(@project.id, s.id) %></td>
+      <td class="number-column">
+        <%= link_to project_script_extractions_path(@project.id, s.id) do %>
+          <span class="number"><%= s.extractions.size %>&nbsp<i class="glyphicon glyphicon-link"></i></span>
+        <% end %>
+      </td>
+        </td>
       <td class="action-icon" >
         <span 
           ng-click=<%="deleteInterval(#{s.id})"%>
