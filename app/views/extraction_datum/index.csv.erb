@@ -1,0 +1,4 @@
+<%= csv_row(@fields_array) %>
+<% get_all_leafs(@extraction.id).each do |inst| %>
+    <%= csv_row(make_array(inst, @fields_array))%>
+<% end %>
