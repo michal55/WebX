@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get 'debug' => 'debug#home'
-
+  get 'export-api-instructions' => 'debug#api_export_instructions'
   use_doorkeeper
 
   mount API::Root => '/'
@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :show, :update, :profile]
   get 'users/:id/profile' => 'users#profile', as: :profile
+  post 'user/:id/profile/refresh-api-key' => 'users#refresh_api_key'
 
   resources :projects do
     resources :scripts do

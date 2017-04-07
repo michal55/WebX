@@ -5,6 +5,7 @@
   <% end %>
 
   <%= extends :basic_panel_body do %>
+    <a href="<%= debug_path%>"><%= t('users.debug')%></a>
     <table class="table table-striped table-hover">
       <thead>
         <tr>
@@ -27,6 +28,5 @@
         <% end %>
       </tbody>
     </table>
-  <a href="<%= debug_path%>"><%= t('users.debug')%></a>
   <% end %>
 <% end %>
