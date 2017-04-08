@@ -27,8 +27,10 @@
               '',
               project_path(p.id),
               method: :delete,
-              class: 'btn btn-default glyphicon glyphicon-remove table-button confirm',
-              :'id' => "remove_#{p.id}"
+              class: 'btn btn-default glyphicon glyphicon-remove table-button confirm has-tooltip',
+              :'id' => "remove_#{p.id}",
+              :'data-toggle' => "tooltip",
+              :'title' => t('layout.delete_message')
             ) %>
           </td>
         </tr>
