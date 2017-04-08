@@ -1,49 +1,48 @@
 <div class="container">
-  <div class="col-md-6">
-    <h1><%= t('dashboard.header')%></h1>
-    <table class="table table-striped table-hover">
-      <thead>
-      <tr>
-        <th><%= t('dashboard.row_script')%></th>
-        <th><%= t('dashboard.row_extraction')%></th>
-        <th><%= t('dashboard.row_status')%></th>
-      </tr>
-      </thead>
-      <tbody>
-          <% @extractions.each do |ex| %>
-          <tr>
-            <td><%= link_to(ex.script.name,project_script_path(ex.script.project.id,ex.script.id)) %></td>
-            <td><%= link_to(ex.created_at.strftime(t('time.format_extended')),project_script_extraction_extraction_datum_index_path(ex.script.project.id,ex.script.id,ex.id)) %></td>
-            <td class="<%= find_class ex.success %>"><%= extraction_status ex.success%></td>
-          </tr>
-          <% end %>
-      </tbody>
-    </table>
+  <div class="col-md-8">
+    <div class="dashboard-item">
+      <h1><%= t('dashboard.header')%></h1>
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th><%= t('dashboard.row_script')%></th>
+          <th><%= t('dashboard.row_extraction')%></th>
+          <th><%= t('dashboard.row_status')%></th>
+        </tr>
+        </thead>
+        <tbody>
+            <% @extractions.each do |ex| %>
+            <tr>
+              <td><%= link_to(ex.script.name,project_script_path(ex.script.project.id,ex.script.id)) %></td>
+              <td><%= link_to(ex.created_at.strftime(t('time.format_extended')),project_script_extraction_extraction_datum_index_path(ex.script.project.id,ex.script.id,ex.id)) %></td>
+              <td class="<%= find_class ex.success %>"><%= extraction_status ex.success%></td>
+            </tr>
+            <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
-  <div class="col-md-6">
-    <h1> <%= t('home.welcome') %></h1>
-
-    <p>
-      <%= link_to t('home.team_link'), target: "_blank" do %>
-          <%= t('home.team')%> <i class="glyphicon glyphicon-new-window"></i>
-      <% end %>
-    </p>
-
-    <p>
-      <%= link_to t('home.github_server_link'), target: "_blank" do %>
-          <%= t('home.github_server')%> <i class="glyphicon glyphicon-new-window"></i>
-      <% end %>
-    </p>
-
-    <p>
-      <%= link_to t('home.github_extension_link'), target: "_blank" do %>
-          <%= t('home.github_extension')%> <i class="glyphicon glyphicon-new-window"></i>
-      <% end %>
-    </p>
-
-    <h1> <%= t('instructions.header') %></h1>
-    <p>
-      <%= link_to t('instructions.api_instructions_link'),  export_api_instructions_path %>
-    </p>
+  <div class="col-md-4">
+    <div class="dashboard-item">
+      <p>
+        <%= link_to t('home.team_link'), target: "_blank" do %>
+            <%= t('home.team')%> <i class="glyphicon glyphicon-new-window"></i>
+        <% end %>
+      </p>
+      <p>
+        <%= link_to t('home.github_server_link'), target: "_blank" do %>
+            <%= t('home.github_server')%> <i class="glyphicon glyphicon-new-window"></i>
+        <% end %>
+      </p>
+      <p>
+        <%= link_to t('home.github_extension_link'), target: "_blank" do %>
+            <%= t('home.github_extension')%> <i class="glyphicon glyphicon-new-window"></i>
+        <% end %>
+      </p>
+      <hr>
+      <p>
+        <%= link_to t('instructions.api_instructions_link'),  export_api_instructions_path %>
+      </p>
+    </div>
   </div>
 </div>
