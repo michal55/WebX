@@ -30,8 +30,9 @@
           </div>
         <% end %>
     <% end %>
-    <hr>
+<% end %>
+<%= extends :basic_panel do %>
     <%= extends :basic_panel_body do %>
-        <%= render 'frequencies/index', script: @script, project: @project, frequencies: @script.frequencies, frequency_new: @new_frequency %>
+       <%= render 'frequencies/index', script: @script, project: @project, frequencies: @script.frequencies, frequency_new: @new_frequency %>
     <% end %>
 <% end %>
