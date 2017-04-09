@@ -15,16 +15,18 @@ module ExtractionHelper
 
   def extraction_status status
     return t('extractions.success') if status
+    return t('extractions.running') if status.nil?
     t('extractions.fail')
   end
 
   def find_class status
     return 'extraction-success' if status
+    return 'extraction-running' if status.nil?
     'extraction-fail'
   end
 
   def instance_count extraction
-    Instance.where(extraction_id: extraction.id).count
+    Instance.where(extraction_id: extraction.id, is_leaf: true).count
   end
 
   def empty_fields_count extraction

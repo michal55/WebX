@@ -156,6 +156,7 @@ en:
       empty_fields: "Empty fields"
     no_extraction: "You haven't extracted any data yet"
     fail: "Fail"
+    running: "Running"
     success: "Success"
 
 
