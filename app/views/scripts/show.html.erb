@@ -2,6 +2,14 @@
     <%= form_for(@script, remote: true, url: project_script_path(@script.project, @script)) do |f|  %>
         <%= extends :basic_panel_heading do %>
             <%= f.text_field(:name, class: 'form-control editable heading') %>
+            <div class="row">
+              <div class="col-md-6">
+                <ol class="breadcrumb">
+                  <li><%= link_to(t('layouts.projects'), projects_path()) %></li>
+                  <li><%= link_to(@project.name, project_path(@project.id)) %></li>
+                </ol>
+              </div>
+            </div>
         <% end %>
         <%= extends :basic_panel_body do %>
             <div class="row">
@@ -22,8 +30,9 @@
           </div>
         <% end %>
     <% end %>
-    <hr>
+<% end %>
+<%= extends :basic_panel do %>
     <%= extends :basic_panel_body do %>
-        <%= render 'frequencies/index', script: @script, project: @project, frequencies: @script.frequencies, frequency_new: @new_frequency %>
+       <%= render 'frequencies/index', script: @script, project: @project, frequencies: @script.frequencies, frequency_new: @new_frequency %>
     <% end %>
 <% end %>

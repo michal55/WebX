@@ -2,7 +2,13 @@
   <%= form_for(@project, remote: true) do |f|  %>
     <%= extends :basic_panel_heading do %>
       <%= f.text_field(:name, class: 'form-control editable heading') %>
-      <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
+      <div class="row">
+        <div class="col-md-6">
+          <ol class="breadcrumb">
+            <li><%= link_to(t('layouts.projects'), projects_path()) %></li>
+          </ol>
+        </div>
+      </div>
     <% end %>
   <% end %>
   <%= extends :basic_panel_body do %>

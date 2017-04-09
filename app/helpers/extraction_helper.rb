@@ -1,30 +1,32 @@
 module ExtractionHelper
   def format_time seconds
+    format = ""
     if seconds.nil?
-      ''
+      return ''
     elsif seconds < 1
-      Time.at(seconds).utc.strftime("%-Lms").to_s.sub(/^[0]*/,"")
+      format = "%-Lms"
+    elsif seconds < 60
+      format = "%-Ss %-Lms"
     else
-      result = ""
-      Time.at(seconds).utc.strftime("%-Ss %-Lms").to_s.split(' ').each do |s|
-        result += s.sub(/^[0]*/," ")
-      end
-      result
+      format = "%-Mm %-Ss %-Lms"
     end
+    Time.at(seconds).utc.strftime(format)
   end
 
   def extraction_status status
     return t('extractions.success') if status
+    return t('extractions.running') if status.nil?
     t('extractions.fail')
   end
 
   def find_class status
     return 'extraction-success' if status
+    return 'extraction-running' if status.nil?
     'extraction-fail'
   end
 
   def instance_count extraction
-    Instance.where(extraction_id: extraction.id).count
+    Instance.where(extraction_id: extraction.id, is_leaf: true).count
   end
 
   def empty_fields_count extraction

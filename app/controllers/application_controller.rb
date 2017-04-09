@@ -8,6 +8,9 @@ class ApplicationController < ActionController::Base
   end
 
   def home
+    projects_ids = Project.where(user_id: current_user.id).pluck(:id)
+    scripts_ids = Script.where(project_id: projects_ids)
+    @extractions = Extraction.where(script_id: scripts_ids).order("created_at DESC").limit(5)
   end
 
 

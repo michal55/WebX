@@ -2,6 +2,9 @@ class FrequenciesController < ApplicationController
   def create
     @frequency_new = Frequency.new
     @frequency_new.assign_attributes({script_id: params[:script_id], interval: params[:frequency][:interval], period: params[:frequency][:period], first_exec: params[:frequency][:first_exec], last_run: nil})
+    if params[:frequency][:first_exec] == ''
+      @frequency_new.first_exec = Time.now
+    end
     @frequency_new.save!
     flash[:notice] = I18n.t('frequencies.flash_create')
     redirect_to :back
