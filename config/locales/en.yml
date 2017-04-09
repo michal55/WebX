@@ -26,6 +26,7 @@ en:
     account: "Account"
     projects: "Projects"
     extractions: "Extractions"
+    delete_message: "Click again to confirm delete"
 
   users:
     header: "All users"

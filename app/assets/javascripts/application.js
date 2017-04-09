@@ -143,3 +143,7 @@ function showLess(link) {
     fullContent.hide();
 
 }
+
+$(document).ready(function() {
+  $('.has-tooltip').tooltip();
+});

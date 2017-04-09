@@ -39,8 +39,10 @@
                 '',
                 project_script_frequency_path(project.id, script.id, d.id),
                 method: :delete,
-                class: 'btn btn-default glyphicon glyphicon-remove table-button confirm',
-                :'id' => "remove_#{d.id}"
+                class: 'btn btn-default glyphicon glyphicon-remove table-button confirm has-tooltip',
+                :'id' => "remove_#{d.id}",
+                :'data-toggle' => "tooltip",
+                :'title' => t('layout.delete_message')
               ) %>
             </td>
             <% end %>
