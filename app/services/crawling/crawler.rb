@@ -133,27 +133,5 @@ module Crawling
       value.to_s.strip
     end
 
-    def try_html
-      agent = Mechanize.new
-      url = "https://www.alza.sk/notebooky/podla-vyuzitia/hracie/18848814.htm"
-      # url = "https://www.alza.sk/pocitace/18852653.htm"
-      page = agent.get(url)
-      restrict = '//*[@id="boxes"]/div'
-      xpath = '//*[@id="litp18852653"]/div[2]/ul[position() > 3]/li/span/a'
-      # boxes = page.parser.xpath(restrict)
-      # puts page.parser.xpath('//*[@id="litp18852653"]/div[2]/ul/li[position() < 4]/span/a')
-      puts page.parser.xpath('//*[contains(@class, "categoryPageTitle")]/h1')
-      puts page.parser.xpath('//*[@itemprop="name"]\h1')
-
-
-      '//*[@id="boxes"]/div/div[1]/div/a'
-      # restricted_page = Mechanize::Page.new(nil,{'content-type'=>'text/html'},boxes[1].to_s, nil,agent)
-      # puts restricted_page.body
-      # puts restricted_page.parser.xpath('//div[1]/div/div/text()')
-      # '//*[@id="litp18852653"]/div[2]/ul[position() > 3]/li/span/a'
-      # '//*[@id="boxes"]/div[5]/div[1]/div/div/text()
-      # //*[@id="boxes"]/div[9]/div[1]/div/a
-    end
-
   end
 end
