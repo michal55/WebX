@@ -24,6 +24,9 @@ en:
     administration: "Administration"
     logout: "Logout"
     account: "Account"
+    projects: "Projects"
+    extractions: "Extractions"
+    delete_message: "Click again to confirm delete"
 
   users:
     header: "All users"
@@ -232,3 +235,8 @@ en:
       limit: "limit - optional, number of instances to return, default is 10"
       offset: "offset - optional, offset for data instances of an extraction, default is 0"
       example_url: "api/export/extraction?token=YourToken&extraction_id=1&limit=10&offset=0"
+  dashboard:
+    header: "Last 5 extractions"
+    row_script: "Script"
+    row_extraction: "Extraction time"
+    row_status: "Status"
