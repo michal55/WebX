@@ -26,7 +26,7 @@ module Crawling
 
       instance = Instance.create(extraction_id: @extraction.id)
       instance.parent_id = instance.id
-
+      instance.save!
       data_row = script_json['data']
 
       iterate_json(data_row, doc, instance, script_json['url'], 'url')
@@ -34,8 +34,6 @@ module Crawling
       script.last_run = Time.now
       script.save!
       @extraction.execution_time = Time.now - @extraction.created_at
-      puts Time.now
-      puts @extraction.created_at
       @extraction.success = true
       @extraction.save!
       @logger.debug("Execution time: #{@extraction.execution_time}", @extraction)
@@ -44,18 +42,14 @@ module Crawling
     def iterate_json(data_row, page, instance, parent_url, field_name)
       sleep(rand(1..5))
 
-
       ExtractionDatum.create(
           instance_id: instance.id, extraction_id: @extraction.id,
           field_name: field_name, value: parent_url
       ) unless parent_url.nil?
 
+      instance.is_leaf = true
+
       data_row.each do |row|
-        extraction_datum = ExtractionDatum.create(
-            instance_id: instance.id, extraction_id: @extraction.id,
-            field_name:  row['name'], value: extract_value(page, row)
-        )
-        @logger.debug(log_msg(extraction_datum, row), @extraction)
         create_extraction_data(instance, page, row)
 
         if @post.is_nested(row['postprocessing'])
@@ -78,6 +72,7 @@ module Crawling
           @parent_stack.pop
 
         elsif @post.is_restrict(row['postprocessing'])
+          instance.is_leaf = false
           partial_htmls = page.parser.xpath(row['xpath'])
           @parent_stack.push(instance.id)
 
@@ -98,10 +93,8 @@ module Crawling
     end
 
     def create_extraction_data(instance, page, row)
-      if @post.is_restrict(row['postprocessing'])
-        puts "\n\n returning #{extract_value(page, row)}\n\n"
-        return
-      end
+      # don't save restricted parent element
+      return if @post.is_restrict(row['postprocessing'])
 
       extraction_datum = ExtractionDatum.create(
         instance_id: instance.id, extraction_id: @extraction.id,
