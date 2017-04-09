@@ -15,7 +15,7 @@ module ExtractionHelper
 
   def extraction_status status
     return t('extractions.success') if status
-    return t('extraction.running') if status.nil?
+    return t('extractions.running') if status.nil?
     t('extractions.fail')
   end
 
