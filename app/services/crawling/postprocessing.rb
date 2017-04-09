@@ -22,7 +22,7 @@ module Crawling
       if xpath[-7..-1].eql?("/text()")
         doc.parser.xpath(xpath)
       else
-        doc.parser.xpath "#{xpath}/text()"
+        doc.parser.xpath "#{xpath}//text()"
       end
     end
 

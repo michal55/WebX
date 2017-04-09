@@ -10,6 +10,8 @@ module Crawling
         try_execute(script)
       rescue Exception => e
         @logger.error(e.to_s, @extraction)
+        @extraction.success = false
+        @extraction.save!
         puts e.to_s
       end
     end
