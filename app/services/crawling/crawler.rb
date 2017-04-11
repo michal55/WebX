@@ -30,7 +30,7 @@ module Crawling
       instance.parent_id = instance.id
       instance.save!
       data_row = script_json['data']
-
+      @logger.warning(data_row.to_s, @extraction)
       iterate_json(data_row, doc, instance, script_json['url'], 'url')
 
       script.last_run = Time.now
@@ -92,6 +92,20 @@ module Crawling
         
       end
       instance.save!
+
+      # NEXT PAGE
+      return if @post.pagination(data_row, 'limit') == 0
+      next_page_xpath = @post.pagination(data_row, 'xpath')
+      data_row = @post.decr_page_limit(data_row)
+
+      unless next_page_xpath.nil?
+        next_url = page.parser.xpath(next_page_xpath)
+        next_page = try_get_url(next_url, @extraction)
+        return if next_page.nil?
+
+        iterate_json(data_row, next_page, instance, next_url, field_name)
+      end
+
     end
 
     def create_extraction_data(instance, page, row)
@@ -135,5 +149,16 @@ module Crawling
       value.to_s.strip
     end
 
+    def try_html
+      @agent = Mechanize.new
+      url = "http://www.byty.sk/3-izbove-byty"
+      page = @agent.get(url)
+      # xpath = "//*[@id=\"nastranu\"]/ul/li[2]/following-sibling::li[1]/a"
+      # xpath = "//li[@class=\"active\"]"
+      # xpath = "/html/head/link[@rel=\"next\"]"
+      xpath = "//*[@rel=\"next\"]"
+      puts page.parser.xpath(xpath)
+
+    end
   end
 end

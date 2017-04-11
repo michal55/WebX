@@ -18,6 +18,33 @@ module Crawling
       row.is_a?(Array) and row.size > 0 and row[0]['type'] == "restrict"
     end
 
+    def pagination(data_row, arg)
+      data_row.each do |row|
+        next if row['postprocessing'].nil?
+        if row['postprocessing'][0]['type'] == "pagination"
+          return row['xpath'] if arg.eql?("xpath")
+          if arg.eql?("limit")
+            return row['postprocessing'][0]['limit'].nil? ? 0 : row['postprocessing'][0]['limit']
+          end
+        end
+      end
+      nil
+    end
+
+    def decr_page_limit(data_row)
+      data_row.map! do |row|
+        if row['postprocessing'].nil?
+          row
+        elsif row['postprocessing'][0]['type'] == "pagination"
+          row['postprocessing'][0]['limit'] -= 1
+          row
+        else
+          row
+        end
+      end
+      data_row
+    end
+
     def extract_text doc, xpath
       if xpath[-7..-1].eql?("/text()")
         doc.parser.xpath(xpath)
@@ -33,7 +60,6 @@ module Crawling
       # TODO: may need fixing
       if links.is_a?(String)
         result.push(links)
-        puts result
         return result
       end
 
