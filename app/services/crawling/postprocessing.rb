@@ -28,7 +28,16 @@ module Crawling
 
     def extract_attribute doc, xpath, attribute
       result = []
-      doc.parser.xpath(xpath).each do |link|
+      links = doc.parser.xpath(xpath)
+      # when link has to be extracted differently, not from href attribute of <a> element
+      # TODO: may need fixing
+      if links.is_a?(String)
+        result.push(links)
+        puts result
+        return result
+      end
+
+      links.each do |link|
         result.push(link.attributes[attribute].to_s)
       end
       puts result
