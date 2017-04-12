@@ -9,6 +9,8 @@
       API key:
       <code><%= @user.api_key%></code>
     </p>
-    <%= button_to t('buttons.refresh_api_key'), action: :refresh_api_key %>
+    <%= form_tag(action: :refresh_api_key) do  %>
+      <%= submit_tag(t('buttons.refresh_api_key'), class: 'btn btn-primary') %>
+    <% end %>
   <% end %>
 <% end %>
