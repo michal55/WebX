@@ -5,9 +5,7 @@ module Crawling
     def is_postprocessing(row, type)
       return false if row['postprocessing'].nil?
       row = row['postprocessing']
-      # puts 'pagination:'
-      # puts row
-      # puts row.is_a?(Array) and row.size > 0 and row[0]['type'] == type
+
       row.is_a?(Array) and row.size > 0 and row[0]['type'] == type
     end
 

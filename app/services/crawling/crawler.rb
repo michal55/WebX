@@ -153,18 +153,6 @@ module Crawling
       return value.to_s.gsub(/\s+/, '') if @post.is_postprocessing(row, 'whitespace')
       value.to_s.strip
     end
-
-    def try_html
-      @agent = Mechanize.new
-      url = "http://www.byty.sk/3-izbove-byty"
-      page = @agent.get(url)
-      puts @agent.cookie_jar.to_s
-      # xpath = "//*[@id=\"nastranu\"]/ul/li[2]/following-sibling::li[1]/a"
-      # xpath = "//li[@class=\"active\"]"
-      # xpath = "/html/head/link[@rel=\"next\"]"
-      xpath = "//*[@rel=\"next\"]"
-      puts page.parser.xpath(xpath)
-
-    end
+    
   end
 end
