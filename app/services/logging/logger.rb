@@ -23,7 +23,7 @@ module Logging
     end
 
     def error msg, resource
-      write(2, msg, resource.id, resource.class.name.downcase) if @severity == 2
+      write(2, msg, resource.id, resource.class.name.downcase)
     end
 
     def store log
