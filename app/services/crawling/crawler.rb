@@ -29,6 +29,7 @@ module Crawling
       instance = Instance.create(extraction_id: @extraction.id)
       instance.parent_id = instance.id
       instance.save!
+      
       data_row = script_json['data']
       @logger.warning(data_row.to_s, @extraction)
       iterate_json(data_row, doc, instance, script_json['url'], 'url')
@@ -41,7 +42,7 @@ module Crawling
       @logger.debug("Execution time: #{@extraction.execution_time}", @extraction)
     end
 
-    def iterate_json(data_row, page, instance, parent_url, field_name)
+    def iterate_json(data_row, page, instance, parent_url, field_name, page_number=0)
       sleep(rand(1..5))
 
       ExtractionDatum.create(
@@ -54,7 +55,7 @@ module Crawling
       data_row.each do |row|
         create_extraction_data(instance, page, row)
 
-        if @post.is_nested(row['postprocessing'])
+        if @post.is_postprocessing(row['postprocessing'], 'nested')
           instance.is_leaf = false
           product_urls = @post.extract_attribute(page, row['xpath'], 'href')
           @parent_stack.push(instance.id)
@@ -73,7 +74,7 @@ module Crawling
 
           @parent_stack.pop
 
-        elsif @post.is_restrict(row['postprocessing'])
+        elsif @post.is_postprocessing(row['postprocessing'], 'restrict')
           instance.is_leaf = false
           partial_htmls = page.parser.xpath(row['xpath'])
           @parent_stack.push(instance.id)
@@ -94,28 +95,22 @@ module Crawling
       instance.save!
 
       # NEXT PAGE
-      # return unless data_row.is_a?(Array)
-      puts "\n\n\n pagination: #{data_row}"
-      puts @post.is_pagination(data_row)
-      return unless @post.is_pagination(data_row) and @post.pagination(data_row, 'limit') > 0
+      return if !@post.is_pagination(data_row) or @post.pagination(data_row, 'limit') <= page_number
       next_page_xpath = @post.pagination(data_row, 'xpath')
-      # data_row = @post.decr_page_limit(data_row)
 
       unless next_page_xpath.nil?
         next_url = page.parser.xpath(next_page_xpath)
         next_page = try_get_url(@extraction, next_url)
         return if next_page.nil?
 
-        puts "\n\n\n\n\n\n #{next_url}"
-        puts next_page.title
-        iterate_json(data_row, next_page, instance, next_url, field_name)
+        iterate_json(data_row, next_page, instance, next_url, 'url', page_number+1)
       end
 
     end
 
     def create_extraction_data(instance, page, row)
       # don't save restricted parent element
-      return if @post.is_restrict(row['postprocessing']) or @post.is_pagination(row)
+      return if @post.is_postprocessing(row['postprocessing'], 'restrict') or @post.is_pagination(row)
 
       extraction_datum = ExtractionDatum.create(
         instance_id: instance.id, extraction_id: @extraction.id,
@@ -148,12 +143,11 @@ module Crawling
 
     def extract_value(doc, row)
       #TODO: refactor postprocessing
-      return @post.extract_attribute(doc, row['xpath'], 'href') if @post.is_nested(row['postprocessing'])
+      return @post.extract_attribute(doc, row['xpath'], 'href') if @post.is_postprocessing(row['postprocessing'], 'nested')
       return @post.extract_attribute(doc, row['xpath'], row['postprocessing'][0]['attribute']) if @post.attributes?(row['postprocessing'])
       value = @post.extract_text(doc, row['xpath'])
-      return value.to_s.strip if @post.is_trim(row['postprocessing'])
-      return value.to_s.gsub(/\s+/, '') if @post.is_whitespace(row['postprocessing'])
-      puts "\n\n#{value.to_s} #{value.to_s.encoding}"
+      return value.to_s.strip if @post.is_postprocessing(row['postprocessing'], 'trim')
+      return value.to_s.gsub(/\s+/, '') if @post.is_postprocessing(row['postprocessing'], 'whitespace')
       value.to_s.strip
     end
 

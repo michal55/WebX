@@ -9,23 +9,6 @@ module Crawling
       row.is_a?(Array) and row.size > 0 and row[0]['type'] == type
     end
 
-    def is_whitespace(row)
-      row.is_a?(Array) and row.size > 0 and row[0]['type'] == "whitespace"
-    end
-
-    def is_trim(row)
-      row.is_a?(Array) and row.size > 0 and row[0]['type'] == "trim"
-    end
-
-    def is_nested(row)
-      #TODO: kontrola na array nemusi byt idealna, uvidime co do toho jsonu este pribudne
-      row.is_a?(Array) and row.size > 0 and row[0]['type'] == "nested"
-    end
-
-    def is_restrict(row)
-      row.is_a?(Array) and row.size > 0 and row[0]['type'] == "restrict"
-    end
-
     def is_pagination(data_row)
       # data_row can be a simple json hash or an array of json hashes
       # entire data_row has to be iterated through to check if pagination postprocessing is present
@@ -53,20 +36,6 @@ module Crawling
       nil
     end
 
-    def decr_page_limit(data_row)
-      data_row.map! do |row|
-        if row['postprocessing'].nil?
-          row
-        elsif row['postprocessing'][0]['type'] == "pagination"
-          row['postprocessing'][0]['limit'] -= 1
-          row
-        else
-          row
-        end
-      end
-      data_row
-    end
-
     def extract_text doc, xpath
       if xpath[-7..-1].eql?("/text()")
         doc.parser.xpath(xpath)
@@ -79,6 +48,7 @@ module Crawling
       result = []
       links = doc.parser.xpath(xpath)
       # when link has to be extracted differently, not from href attribute of <a> element
+      # i.e. onclick() function
       # TODO: may need fixing
       if links.is_a?(String)
         result.push(links)
