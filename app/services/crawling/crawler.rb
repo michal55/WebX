@@ -66,7 +66,7 @@ module Crawling
             next if nested_page.nil?
 
             new_instance = Instance.create(extraction_id: @extraction.id, parent_id: @parent_stack[-1])
-            nested_row = row[0]['data']
+            nested_row = row['postprocessing'][0]['data']
 
             iterate_json(nested_row, nested_page, new_instance, url, row['name'])
           end
