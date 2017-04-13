@@ -28,7 +28,7 @@
     </ul>
   </div>
 </nav>
-<% unless current_page?(new_user_session_path) || current_page?(user_session_path) || current_page?(root_path) %>
+<% if user_signed_in? and !current_page?(root_path) %>
   <div class="row">
     <div class="col-md-12">
       <div class="container container-flash">
@@ -37,3 +37,4 @@
     </div>
   </div>
 <% end %>
+

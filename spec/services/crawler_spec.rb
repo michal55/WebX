@@ -95,11 +95,39 @@ describe 'Extracting data from rubygems.org' do
     Crawling::Crawler.execute(script)
     extraction = Extraction.find_by(script_id: script.id)
     expect(extraction.success).to eq true
-    datum = ExtractionDatum.find_by(field_name: "category_url")
+    datum = ExtractionDatum.find_by(field_name: "category_url", extraction_id: extraction.id)
     expect(datum.value).to eq "[\"/notebooky/18842920.htm\", \"/alza-pocitace/18845023.htm\", \"/pocitacove-zostavy/18842956.htm\"]"
     datum = ExtractionDatum.find_by(field_name: "category", extraction_id: extraction.id)
     expect(datum.value).to eq "Notebooky | Alza.sk"
     #nemozem dat testovat na konkretny title, nakolko sa stale meni a padali by testy
     # datum = ExtractionDatum.find_by(field_name: "title", extraction_id: extraction.id)
+  end
+
+  it 'should extract first item from 3 pages' do
+    script = create(:script)
+    script.xpaths =
+        {"url"=>"http://www.byty.sk/3-izbove-byty",
+         "data"=>[{
+                      "name"=>"offer-link",
+                      "xpath"=>"//*[@id='inzeraty']/div[1]",
+                      "postprocessing"=>[{
+                                             "type"=>"restrict",
+                                             "data"=>[{
+                                                          "name"=>"offer",
+                                                          "xpath"=>"//div/div[2]/h2/a",
+                                                          "postprocessing"=>[]}]}]}, {
+                      "name"=>"next_page",
+                      "xpath"=>"//*[@rel='next']/@href",
+                      "postprocessing"=>[{
+                                             "type"=>"pagination",
+                                             "limit"=>2}
+                      ]
+                  }
+         ]
+        }.to_json
+    Crawling::Crawler.execute(script)
+    extraction = Extraction.where(script_id: script.id).order(updated_at: :desc)[0]
+    expect(extraction.success).to eq true
+    expect(Instance.where(extraction_id: extraction.id, is_leaf: true).size).to eq 3
   end
 end

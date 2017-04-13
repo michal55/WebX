@@ -5,7 +5,7 @@ module API
       require 'set'
       format :json
 
-      resource 'export' do
+      resource :export do
         get :list do
           if not params[:token] or not params[:script_id]
             # Params not present
