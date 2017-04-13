@@ -26,6 +26,9 @@ gem 'jbuilder', '>= 2.0'
 # Bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '>= 0.4.0', group: :doc
 
+# versions
+gem 'bump', github: 'pavolzbell/bump'
+
 # Authorization
 gem 'cancancan'
 
