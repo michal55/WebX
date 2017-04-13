@@ -1,0 +1,3 @@
+--schema=rails
+--branches=development, staging
+--message="Bump version to %v"
