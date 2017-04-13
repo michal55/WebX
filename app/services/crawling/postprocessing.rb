@@ -3,6 +3,8 @@ module Crawling
 
     #TODO: still only one postprocessing
     def is_postprocessing(row, type)
+      return false if row['postprocessing'].nil?
+      row = row['postprocessing']
       # puts 'pagination:'
       # puts row
       # puts row.is_a?(Array) and row.size > 0 and row[0]['type'] == type
@@ -14,10 +16,10 @@ module Crawling
       # entire data_row has to be iterated through to check if pagination postprocessing is present
 
       if !data_row.is_a?(Array)
-        is_postprocessing(data_row['postprocessing'], 'pagination')
+        return is_postprocessing(data_row, 'pagination')
       else
         data_row.each do |row|
-          return true if is_postprocessing(row['postprocessing'], 'pagination')
+          return true if is_postprocessing(row, 'pagination')
         end
       end
       false
@@ -62,8 +64,9 @@ module Crawling
       result
     end
 
-    def attributes? row
-      row.is_a?(Array) and row.size > 0 and row[0]['type'] == 'attribute'
+    def attribute row
+      return "" if row['postprocessing'].nil?
+      row['postprocessing'][0]['attribute']
     end
 
   end

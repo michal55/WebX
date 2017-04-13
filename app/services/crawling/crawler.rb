@@ -29,9 +29,8 @@ module Crawling
       instance = Instance.create(extraction_id: @extraction.id)
       instance.parent_id = instance.id
       instance.save!
-      
+
       data_row = script_json['data']
-      @logger.warning(data_row.to_s, @extraction)
       iterate_json(data_row, doc, instance, script_json['url'], 'url')
 
       script.last_run = Time.now
@@ -55,7 +54,7 @@ module Crawling
       data_row.each do |row|
         create_extraction_data(instance, page, row)
 
-        if @post.is_postprocessing(row['postprocessing'], 'nested')
+        if @post.is_postprocessing(row, 'nested')
           instance.is_leaf = false
           product_urls = @post.extract_attribute(page, row['xpath'], 'href')
           @parent_stack.push(instance.id)
@@ -67,14 +66,14 @@ module Crawling
             next if nested_page.nil?
 
             new_instance = Instance.create(extraction_id: @extraction.id, parent_id: @parent_stack[-1])
-            nested_row = row['postprocessing'][0]['data']
+            nested_row = row[0]['data']
 
             iterate_json(nested_row, nested_page, new_instance, url, row['name'])
           end
 
           @parent_stack.pop
 
-        elsif @post.is_postprocessing(row['postprocessing'], 'restrict')
+        elsif @post.is_postprocessing(row, 'restrict')
           instance.is_leaf = false
           partial_htmls = page.parser.xpath(row['xpath'])
           @parent_stack.push(instance.id)
@@ -95,7 +94,7 @@ module Crawling
       instance.save!
 
       # NEXT PAGE
-      return if !@post.is_pagination(data_row) or @post.pagination(data_row, 'limit') <= page_number
+      return unless next_page?(data_row, page_number)
       next_page_xpath = @post.pagination(data_row, 'xpath')
 
       unless next_page_xpath.nil?
@@ -108,9 +107,13 @@ module Crawling
 
     end
 
+    def next_page?(data_row, page_number)
+      @post.is_pagination(data_row) and @post.pagination(data_row, 'limit') > page_number
+    end
+
     def create_extraction_data(instance, page, row)
-      # don't save restricted parent element
-      return if @post.is_postprocessing(row['postprocessing'], 'restrict') or @post.is_pagination(row)
+      # don't save restricted parent element or pagination element
+      return if @post.is_postprocessing(row, 'restrict') or @post.is_pagination(row)
 
       extraction_datum = ExtractionDatum.create(
         instance_id: instance.id, extraction_id: @extraction.id,
@@ -143,11 +146,11 @@ module Crawling
 
     def extract_value(doc, row)
       #TODO: refactor postprocessing
-      return @post.extract_attribute(doc, row['xpath'], 'href') if @post.is_postprocessing(row['postprocessing'], 'nested')
-      return @post.extract_attribute(doc, row['xpath'], row['postprocessing'][0]['attribute']) if @post.attributes?(row['postprocessing'])
+      return @post.extract_attribute(doc, row['xpath'], 'href') if @post.is_postprocessing(row, 'nested')
+      return @post.extract_attribute(doc, row['xpath'], @post.attribute(row)) if @post.is_postprocessing(row, 'attribute')
       value = @post.extract_text(doc, row['xpath'])
-      return value.to_s.strip if @post.is_postprocessing(row['postprocessing'], 'trim')
-      return value.to_s.gsub(/\s+/, '') if @post.is_postprocessing(row['postprocessing'], 'whitespace')
+      return value.to_s.strip if @post.is_postprocessing(row, 'trim')
+      return value.to_s.gsub(/\s+/, '') if @post.is_postprocessing(row, 'whitespace')
       value.to_s.strip
     end
 
