@@ -94,15 +94,20 @@ module Crawling
       instance.save!
 
       # NEXT PAGE
-      return if @post.pagination(data_row, 'limit') == 0
+      # return unless data_row.is_a?(Array)
+      puts "\n\n\n pagination: #{data_row}"
+      puts @post.is_pagination(data_row)
+      return unless @post.is_pagination(data_row) and @post.pagination(data_row, 'limit') > 0
       next_page_xpath = @post.pagination(data_row, 'xpath')
-      data_row = @post.decr_page_limit(data_row)
+      # data_row = @post.decr_page_limit(data_row)
 
       unless next_page_xpath.nil?
         next_url = page.parser.xpath(next_page_xpath)
-        next_page = try_get_url(next_url, @extraction)
+        next_page = try_get_url(@extraction, next_url)
         return if next_page.nil?
 
+        puts "\n\n\n\n\n\n #{next_url}"
+        puts next_page.title
         iterate_json(data_row, next_page, instance, next_url, field_name)
       end
 
@@ -110,7 +115,7 @@ module Crawling
 
     def create_extraction_data(instance, page, row)
       # don't save restricted parent element
-      return if @post.is_restrict(row['postprocessing'])
+      return if @post.is_restrict(row['postprocessing']) or @post.is_pagination(row)
 
       extraction_datum = ExtractionDatum.create(
         instance_id: instance.id, extraction_id: @extraction.id,
@@ -120,7 +125,9 @@ module Crawling
     end
 
     def mechanize_page(html)
-      Mechanize::Page.new(nil, { 'content-type' => 'text/html' }, html.to_s, nil, @agent)
+      page = Mechanize::Page.new(nil, { 'content-type' => 'text/html' }, html.to_s, nil, @agent)
+      page.encoding = "utf-8"
+      page
     end
 
     def log_msg(extraction_datum, nested_row)
@@ -146,6 +153,7 @@ module Crawling
       value = @post.extract_text(doc, row['xpath'])
       return value.to_s.strip if @post.is_trim(row['postprocessing'])
       return value.to_s.gsub(/\s+/, '') if @post.is_whitespace(row['postprocessing'])
+      puts "\n\n#{value.to_s} #{value.to_s.encoding}"
       value.to_s.strip
     end
 
@@ -153,6 +161,7 @@ module Crawling
       @agent = Mechanize.new
       url = "http://www.byty.sk/3-izbove-byty"
       page = @agent.get(url)
+      puts @agent.cookie_jar.to_s
       # xpath = "//*[@id=\"nastranu\"]/ul/li[2]/following-sibling::li[1]/a"
       # xpath = "//li[@class=\"active\"]"
       # xpath = "/html/head/link[@rel=\"next\"]"

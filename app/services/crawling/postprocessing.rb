@@ -1,6 +1,14 @@
 module Crawling
   class Postprocessing
 
+    #TODO: still only one postprocessing
+    def is_postprocessing(row, type)
+      # puts 'pagination:'
+      # puts row
+      # puts row.is_a?(Array) and row.size > 0 and row[0]['type'] == type
+      row.is_a?(Array) and row.size > 0 and row[0]['type'] == type
+    end
+
     def is_whitespace(row)
       row.is_a?(Array) and row.size > 0 and row[0]['type'] == "whitespace"
     end
@@ -18,9 +26,23 @@ module Crawling
       row.is_a?(Array) and row.size > 0 and row[0]['type'] == "restrict"
     end
 
+    def is_pagination(data_row)
+      # data_row can be a simple json hash or an array of json hashes
+      # entire data_row has to be iterated through to check if pagination postprocessing is present
+
+      if !data_row.is_a?(Array)
+        is_postprocessing(data_row['postprocessing'], 'pagination')
+      else
+        data_row.each do |row|
+          return true if is_postprocessing(row['postprocessing'], 'pagination')
+        end
+      end
+      false
+    end
+
     def pagination(data_row, arg)
       data_row.each do |row|
-        next if row['postprocessing'].nil?
+        next if row['postprocessing'].nil? or row['postprocessing'].size == 0
         if row['postprocessing'][0]['type'] == "pagination"
           return row['xpath'] if arg.eql?("xpath")
           if arg.eql?("limit")
