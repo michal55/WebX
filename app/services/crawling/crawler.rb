@@ -153,6 +153,6 @@ module Crawling
       return value.to_s.gsub(/\s+/, '') if @post.is_postprocessing(row, 'whitespace')
       value.to_s.strip
     end
-    
+
   end
 end
