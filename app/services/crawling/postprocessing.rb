@@ -1,12 +1,21 @@
 module Crawling
   class Postprocessing
 
-    #TODO: still only one postprocessing
     def is_postprocessing(row, type)
-      return false if row['postprocessing'].nil?
-      row = row['postprocessing']
+      return false if row['postprocessing'].nil? or !row['postprocessing'].is_a?(Array)
+      row['postprocessing'].each do |post|
+        return true if post['type'] == type
+      end
+      false
+    end
 
-      row.is_a?(Array) and row.size > 0 and row[0]['type'] == type
+    def postprocessing_data(row, type, data)
+      return nil if row['postprocessing'].nil? or !row['postprocessing'].is_a?(Array)
+      row['postprocessing'].each do |post|
+        if post['type'] == type
+          return post[data]
+        end
+      end
     end
 
     def is_pagination(data_row)
@@ -25,13 +34,9 @@ module Crawling
 
     def pagination(data_row, arg)
       data_row.each do |row|
-        next if row['postprocessing'].nil? or row['postprocessing'].size == 0
-        if row['postprocessing'][0]['type'] == "pagination"
-          return row['xpath'] if arg.eql?("xpath")
-          if arg.eql?("limit")
-            return row['postprocessing'][0]['limit'].nil? ? 0 : row['postprocessing'][0]['limit']
-          end
-        end
+        next if row['postprocessing'].nil? or row['postprocessing'].size == 0 or !is_postprocessing(row, 'pagination')
+        return row['xpath'] if arg.eql?("xpath")
+        return postprocessing_data(row,'pagination','limit').nil? ? 0 : postprocessing_data(row,'pagination','limit') if arg.eql?("limit")
       end
       nil
     end

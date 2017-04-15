@@ -57,6 +57,7 @@ module Crawling
 
         if @post.is_postprocessing(row, 'nested')
           instance.is_leaf = false
+          product_urls = []
           product_urls = @post.extract_attribute(page, row['xpath'], 'href')
           @parent_stack.push(instance.id)
 
@@ -67,7 +68,7 @@ module Crawling
             next if nested_page.nil?
 
             new_instance = Instance.create(extraction_id: @extraction.id, parent_id: @parent_stack[-1])
-            nested_row = row['postprocessing'][0]['data']
+            nested_row = @post.postprocessing_data(row, 'nested', 'data')
 
             iterate_json(nested_row, nested_page, new_instance, url, row['name'])
           end
@@ -76,6 +77,7 @@ module Crawling
 
         elsif @post.is_postprocessing(row, 'restrict')
           instance.is_leaf = false
+          partial_htmls = []
           partial_htmls = page.parser.xpath(row['xpath'])
           @parent_stack.push(instance.id)
 
@@ -84,7 +86,7 @@ module Crawling
           partial_htmls.each do |html|
             restricted_page = mechanize_page(html)
             new_instance = Instance.create(extraction_id: @extraction.id, parent_id: @parent_stack[-1])
-            nested_row = row['postprocessing'][0]['data']
+            nested_row = @post.postprocessing_data(row, 'restrict', 'data')
             iterate_json(nested_row, restricted_page, new_instance, nil, row['name'])
           end
 
@@ -116,11 +118,13 @@ module Crawling
       # don't save restricted parent element or pagination element
       return if @post.is_postprocessing(row, 'restrict') or @post.is_pagination(row)
 
+
       extraction_datum = ExtractionDatum.create(
         instance_id: instance.id, extraction_id: @extraction.id,
         field_name:  row['name'], value: extract_value(page, row)
       )
       @logger.debug(log_msg(extraction_datum, row), @extraction)
+
     end
 
     def mechanize_page(html)
@@ -168,6 +172,6 @@ module Crawling
       return value.to_s.gsub(/\s+/, '') if @post.is_postprocessing(row, 'whitespace')
       value.to_s.strip
     end
-
+    
   end
 end
