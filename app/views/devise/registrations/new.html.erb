@@ -1,8 +1,4 @@
-<div class="sign-in-label">
-  <span><%=t('auth.register.info1')%></span>
-  <span class="phrase"><%=t('auth.register.info2')%></span>
-</div>
-<div class="container col-md-offset-4 col-md-4 login-form">
+<div class="container col-md-offset-1 col-md-4 login-form">
   <h2><%=t('auth.register.header')%></h2>
   <div class="form-group">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
@@ -32,7 +28,12 @@
         </div>
         <%= render "devise/shared/links" %>
     <% end %>
-
-
+  </div>
+</div>
+<div class="col-md-6">
+  <div class="sign-in-label">
+    <span><img  class="logo" src="/webx/assets/logo.png" width="120px"></span>
+    <span><%=t('auth.register.info1')%></span>
+    <span class="phrase"><%=t('auth.register.info2')%></span>
   </div>
 </div>

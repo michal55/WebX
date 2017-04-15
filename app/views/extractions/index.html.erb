@@ -1,32 +1,47 @@
-<%= paginate @extraction %>
 <%= extends :basic_panel do %>
   <%= extends :basic_panel_heading do %>
     <h1> <%= @script.name %> <%= t('extractions.index') %> </h1>
+    <div class="row">
+      <div class="col-md-6">
+        <ol class="breadcrumb">
+          <li><%= link_to(t('layouts.projects'), projects_path()) %></li>
+          <li><%= link_to(@project.name, project_path(@project.id)) %></li>
+          <li><%= link_to(@script.name, project_script_path(@project.id, @script.id)) %></li>
+        </ol>
+      </div>
+    </div>
   <% end %>
   <%= extends :basic_panel_body do %>
     <table class="table table-striped table-hover">
       <thead>
       <tr>
         <th> <%= t('extractions.columns.executed') %> </th>
-        <th> <%= t('extractions.columns.execution_time') %></th>
-        <th> <%= t('extractions.columns.instances') %></th>
-        <th> <%= t('extractions.columns.empty_fields') %></th>
+        <th class="number-column"> <span><%= t('extractions.columns.execution_time') %></span></th>
+        <th class="number-column"> <span><%= t('extractions.columns.instances') %></span></th>
+        <th class="number-column"> <span><%= t('extractions.columns.empty_fields') %></span></th>
         <th> <%= t('extractions.columns.status') %></th>
         <th> <%= t('data_fields.columns.action') %></th>
+        <th> <%= t('data_fields.columns.export') %> <i class="glyphicon glyphicon-save"></i></th>
       </tr>
       </thead>
       <tbody>
         <% @extraction.each do |e| %>
           <tr>
             <td> <%=link_to(e.created_at.strftime(t('time.format_extended')), project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id) )%> </td>
-            <td> <%= format_time e.execution_time %></td>
-            <td> <%= instance_count e %></td>
-            <td> <%= empty_fields_count e %></td>
+            <td class="number-column"> <span><%= format_time e.execution_time %></span></td>
+            <td class="number-column"> <span><%= instance_count e %></span></td>
+            <td class="number-column"> <span><%= empty_fields_count e %></span></td>
             <td class="<%= find_class e.success %>"> <%= extraction_status e.success %></td>
             <td> <%= link_to t('extraction_datum.index'), project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id) %></td>
+            <td>
+              <%= link_to "CSV", project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id, format: :csv) %>
+              &nbsp;|&nbsp;
+              <%= link_to "XLSX", project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id, format: :xlsx) %>
+            </td>
           </tr>
         <% end %>
       </tbody>
     </table>
+    <%= paginate @extraction %>
   <% end %>
 <% end %>

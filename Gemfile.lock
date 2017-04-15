@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/pavolzbell/bump.git
+  revision: 136e59f21d8effccd4c259e7b22066f27a904942
+  specs:
+    bump (0.3.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -44,10 +50,18 @@ GEM
     arel (6.0.3)
     autoprefixer-rails (6.5.3)
       execjs
+    awesome_print (1.7.0)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
+    axlsx (2.0.1)
+      htmlentities (~> 4.3.1)
+      nokogiri (>= 1.4.1)
+      rubyzip (~> 1.0.0)
+    axlsx_rails (0.5.1)
+      actionpack (>= 3.1)
+      axlsx (>= 2.0.1)
     bcrypt (3.1.11)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
@@ -159,8 +173,16 @@ GEM
       rack-accept
       virtus (>= 1.0.0)
     hashie (3.4.6)
+    htmlentities (4.3.4)
+    http (2.2.1)
+      addressable (~> 2.3)
+      http-cookie (~> 1.0)
+      http-form_data (~> 1.0.1)
+      http_parser.rb (~> 0.6.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
+    http-form_data (1.0.1)
+    http_parser.rb (0.6.0)
     i18n (0.7.0)
     ice_nine (0.11.2)
     jbuilder (2.6.0)
@@ -336,6 +358,7 @@ GEM
       rspec-mocks (~> 3.5.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    rubyzip (1.0.0)
     rufus-scheduler (3.2.2)
     sass (3.4.22)
     sass-rails (5.0.6)
@@ -408,9 +431,13 @@ PLATFORMS
 
 DEPENDENCIES
   angularjs-rails
+  awesome_print
+  axlsx (= 2.0.1)
+  axlsx_rails
   better_errors
   bootstrap-sass (>= 3.3.6)
   bootstrap3-datetimepicker-rails (~> 4.17.43)
+  bump!
   byebug
   cancancan
   capistrano (= 3.6.1)
@@ -429,6 +456,7 @@ DEPENDENCIES
   factory_girl_rails (>= 4.5)
   font-awesome-sass (~> 4.4.0)
   grape
+  http
   jbuilder (>= 2.0)
   jquery-rails
   jquery-ui-rails

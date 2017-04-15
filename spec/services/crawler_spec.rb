@@ -17,6 +17,7 @@ describe 'Extracting data from rubygems.org' do
     script.xpaths = json.to_json
     script.log_level = 1
     script.save
+
     Crawling::Crawler.execute(script)
     extraction = Extraction.find_by(script_id: script.id)
     expect(extraction.success).to eq true
@@ -47,11 +48,12 @@ describe 'Extracting data from rubygems.org' do
     script.xpaths = json.to_json
     script.log_level = 0
     script.save
+
     Crawling::Crawler.execute(script)
     extraction = Extraction.find_by(script_id: script.id)
     expect(extraction.success).to eq true
     datum = ExtractionDatum.find_by(field_name: "title")
-    expect(datum.value).to eq "\n            Web page of team 16\n          "
+    expect(datum.value).to eq "Web page of team 16"
     datum = ExtractionDatum.find_by(field_name: "branches_url")
     #TODO: vymysliet to lepsie, do PG sa uklada pole ako string, cize sa porovnava "http/url" s "[\"http/url\"]", match() to zatial riesi
     expect("/michal55/WebX-Team16/branches").to eq datum.value.match("/michal55/WebX-Team16/branches").to_s
@@ -59,5 +61,73 @@ describe 'Extracting data from rubygems.org' do
     expect(datum.value).to eq "master"
     script = Script.find(script.id)
     expect(script.last_run).to be > script.created_at
+  end
+
+  it 'should extract notebook from restricted select xPath' do
+    script = create(:script)
+    json = {}
+    json['url'] = "https://www.alza.sk/pocitace/18852653.htm"
+    json['data'] = []
+    json['data'][0] = {}
+    json['data'][0]['name'] = "category_url"
+    json['data'][0]['xpath'] = "//*[@id=\"litp18852653\"]/div[2]/ul/li[position() < 4]/span/a"
+    json['data'][0]['postprocessing'] = []
+    json['data'][0]['postprocessing'][0] = {}
+    json['data'][0]['postprocessing'][0]['type'] = "nested"
+    json['data'][0]['postprocessing'][0]['data'] = []
+    json['data'][0]['postprocessing'][0]['data'][0] = {}
+    json['data'][0]['postprocessing'][0]['data'][0]['name'] = "category"
+    json['data'][0]['postprocessing'][0]['data'][0]['xpath'] = "//*[@id=\"rootHtml\"]/head/title"
+    json['data'][0]['postprocessing'][0]['data'][1] = {}
+    json['data'][0]['postprocessing'][0]['data'][1]['name'] = "product"
+    json['data'][0]['postprocessing'][0]['data'][1]['xpath'] = "//*[@id=\"boxes\"]/div[position() < 4]"
+    json['data'][0]['postprocessing'][0]['data'][1]['postprocessing'] = []
+    json['data'][0]['postprocessing'][0]['data'][1]['postprocessing'][0] = {}
+    json['data'][0]['postprocessing'][0]['data'][1]['postprocessing'][0]['type'] = "restrict"
+    json['data'][0]['postprocessing'][0]['data'][1]['postprocessing'][0]['data'] = []
+    json['data'][0]['postprocessing'][0]['data'][1]['postprocessing'][0]['data'][0] = {}
+    json['data'][0]['postprocessing'][0]['data'][1]['postprocessing'][0]['data'][0]['name'] = "title"
+    json['data'][0]['postprocessing'][0]['data'][1]['postprocessing'][0]['data'][0]['xpath'] = "//div[1]/div/a"
+    script.xpaths = json.to_json
+    script.log_level = 0
+    script.save
+
+    Crawling::Crawler.execute(script)
+    extraction = Extraction.find_by(script_id: script.id)
+    expect(extraction.success).to eq true
+    datum = ExtractionDatum.find_by(field_name: "category_url", extraction_id: extraction.id)
+    expect(datum.value).to eq "[\"/notebooky/18842920.htm\", \"/alza-pocitace/18845023.htm\", \"/pocitacove-zostavy/18842956.htm\"]"
+    datum = ExtractionDatum.find_by(field_name: "category", extraction_id: extraction.id)
+    expect(datum.value).to eq "Notebooky | Alza.sk"
+    #nemozem dat testovat na konkretny title, nakolko sa stale meni a padali by testy
+    # datum = ExtractionDatum.find_by(field_name: "title", extraction_id: extraction.id)
+  end
+
+  it 'should extract first item from 3 pages' do
+    script = create(:script)
+    script.xpaths =
+        {"url"=>"http://www.byty.sk/3-izbove-byty",
+         "data"=>[{
+                      "name"=>"offer-link",
+                      "xpath"=>"//*[@id='inzeraty']/div[1]",
+                      "postprocessing"=>[{
+                                             "type"=>"restrict",
+                                             "data"=>[{
+                                                          "name"=>"offer",
+                                                          "xpath"=>"//div/div[2]/h2/a",
+                                                          "postprocessing"=>[]}]}]}, {
+                      "name"=>"next_page",
+                      "xpath"=>"//*[@rel='next']/@href",
+                      "postprocessing"=>[{
+                                             "type"=>"pagination",
+                                             "limit"=>2}
+                      ]
+                  }
+         ]
+        }.to_json
+    Crawling::Crawler.execute(script)
+    extraction = Extraction.where(script_id: script.id).order(updated_at: :desc)[0]
+    expect(extraction.success).to eq true
+    expect(Instance.where(extraction_id: extraction.id, is_leaf: true).size).to eq 3
   end
 end

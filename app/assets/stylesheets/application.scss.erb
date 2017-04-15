@@ -62,7 +62,7 @@ h5 {
 	}
 
 	.sign-in-label {
-		padding-bottom: 50px;
+		padding-top: 150px;
 		span  {
 			text-align: center; 
 			font-size: 1.4em;
@@ -79,6 +79,9 @@ h5 {
 		background: linear-gradient(rgba(0,0,0,0.0),rgba(0,0,0,0.5), rgba(0,0,0,0.6), rgba(0,0,0,0.5), rgba(0,0,0,0.0));
 		border-radius: 5px;
 		padding: 60px 30px 60px 30px;
+		&.login{
+			margin-top: 80px;
+		}
 	}
 
 	.navbar-brand, .navbar-nav li a {
@@ -273,7 +276,10 @@ a.btn:hover {
 }
 
 .container {
-	max-height: 20px;
+	//max-height: 20px;
+}
+.container-flash {
+  max-height: 20px;
 }
 .navbar {
 	background-color: $primary-color;
@@ -405,6 +411,10 @@ div.form-group {
   color: red;
 }
 
+.extraction-running {
+    color: orange;
+}
+
 .editable {
     height: 40px;
 	transition-property: padding-left;
@@ -500,4 +510,35 @@ td {
 
 .ng-invalid-number {
 	background-color: $danger;
+}
+
+.number-column {
+	width: 120px;
+	span {
+		float: right;
+	}
+}
+
+.number {
+	float: right;
+}
+
+.general-actions {
+	float: right;
+}
+
+.dashboard-item {
+	background-color: white;
+	margin-top: 20px;
+	padding: 12px;
+}
+
+.logo {
+	background-color: rgba(255,255,255,0.05);
+	padding: 15px;
+	border-radius: 400px;
+	margin-bottom: 30px;
+	&:hover {
+		background-color: rgba(255,255,255,0.1);
+	}
 }

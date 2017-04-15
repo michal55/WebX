@@ -1,0 +1,29 @@
+<div class="container">
+<div class="row">
+  <div class="col-md-6">
+    <h2>Script example:</h2>
+    <pre><%= JSON.pretty_generate(example_script) %></pre>
+  </div>
+  <div class="col-md-6">
+    <div class="row">
+      <h2>Restrict</h2>
+      <p>Div with question-summary class specifies an outer boundary for the next xpath queries.</p>
+      <p>Views, Title and Question link will be returned only if they are inside the question-summary div.</p>
+      <img src="<%= Rails.configuration.relative_url_root %>/assets/restrict_example" width="600px">
+    </div>
+    <div class="row">
+      <h2>Nested</h2>
+      <p>Element with 'nested' postprocessing - question-link - describes a link to a page where the 'question-body' xpath is evaluated.</p>
+      <img src="<%= Rails.configuration.relative_url_root %>/assets/nested_example" width="600px">
+    </div>
+    <div class="row">
+      <h2>Pagination</h2>
+      <p>This xpaths describes an element that points to the next page. Usually, it's a link with a rel='next' attribute.</p>
+      <p>After scraping all the user-specified data from the page, the crawler repeats the process on the next page.</p>
+      <p>The limit attribute determines how many next page 'clicks' will the crawler perform.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+

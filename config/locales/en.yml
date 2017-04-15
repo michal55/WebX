@@ -24,6 +24,9 @@ en:
     administration: "Administration"
     logout: "Logout"
     account: "Account"
+    projects: "Projects"
+    extractions: "Extractions"
+    delete_message: "Click again to confirm delete"
 
   users:
     header: "All users"
@@ -128,6 +131,7 @@ en:
       name: "Field"
       type: "Type"
       action: "Actions"
+      export: "Export"
     no_schemas: "Your project does not have any data schema"
     placeholder_new: "Add data schema field"
     flash_create: "You successfully created field %{field_name}"
@@ -152,10 +156,12 @@ en:
       empty_fields: "Empty fields"
     no_extraction: "You haven't extracted any data yet"
     fail: "Fail"
+    running: "Running"
     success: "Success"
 
 
   buttons:
+    refresh_api_key: "Refresh API key"
     delete: "Delete"
     edit: "Edit"
     create: "Create"
@@ -207,3 +213,31 @@ en:
   link:
     show_more: "Show More"
     show_less: "Show Less"
+
+  instructions:
+    header: "Instructions"
+    api_instructions_link: "Export API instructions"
+    example: "Request example:"
+    params: "API parameters:"
+
+    api_listing:
+      header: "Listing Extractions"
+      url: "api/export/list"
+      token: "token - required, your personal API key (check profile)"
+      script_id: "script_id - required, ID of a script results of which you want to list"
+      limit: "limit - optional, number of extractions to return, default is 10"
+      offset: "offset - optional, offset for extractions starting from the latest, default is 0"
+      example_url: "api/export/list?token=YourToken&script_id=1&limit=10&offset=0"
+    api_extraction:
+      header: "Extracted data"
+      url: "api/export/extraction"
+      token: "token - required, your personal API key (check profile)"
+      script_id: "extraction_id - required, ID of an extraction from witch you want to export data"
+      limit: "limit - optional, number of instances to return, default is 10"
+      offset: "offset - optional, offset for data instances of an extraction, default is 0"
+      example_url: "api/export/extraction?token=YourToken&extraction_id=1&limit=10&offset=0"
+  dashboard:
+    header: "Last 5 extractions"
+    row_script: "Script"
+    row_extraction: "Extraction time"
+    row_status: "Status"

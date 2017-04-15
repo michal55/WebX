@@ -1,8 +1,4 @@
-<div class="sign-in-label">
-  <span><%=t('auth.login.info1')%></span>
-  <span class="phrase"><%=t('auth.login.info2')%></span>
-</div>
-<div class="container col-md-offset-4 col-md-4 login-form">
+<div class="container col-md-offset-1 col-md-4 login-form login">
     <h2><%=t('auth.login.header')%></h2>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
@@ -27,4 +23,11 @@
       </div>
       <%= render "devise/shared/links" %>
     <% end %>
+</div>
+<div class="col-md-6">
+  <div class="sign-in-label">
+    <span><img  class="logo" src="<%= Rails.configuration.relative_url_root %>/assets/logo.png" width="120px"></span>
+    <span><%=t('auth.login.info1')%></span>
+    <span class="phrase"><%=t('auth.login.info2')%></span>
+  </div>
 </div>

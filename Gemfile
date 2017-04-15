@@ -26,6 +26,9 @@ gem 'jbuilder', '>= 2.0'
 # Bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '>= 0.4.0', group: :doc
 
+# versions
+gem 'bump', github: 'pavolzbell/bump'
+
 # Authorization
 gem 'cancancan'
 
@@ -69,6 +72,11 @@ gem 'elasticsearch-persistence', require: 'elasticsearch/persistence/model'
 
 gem 'nestive'
 
+# XLSX
+gem 'axlsx', '= 2.0.1'
+gem 'axlsx_rails'
+
+gem 'http'
 # Test suite related gems
 group :development, :test do
   gem 'rspec', '>= 3.0'
@@ -80,6 +88,7 @@ group :development, :test do
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'awesome_print'
 end
 
 group :test do

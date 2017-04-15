@@ -1,0 +1,7 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Extraction") do |sheet|
+  sheet.add_row @fields_array
+  get_all_leafs(@extraction.id).each do |inst|
+    sheet.add_row make_array(inst, @fields_array)
+  end
+end

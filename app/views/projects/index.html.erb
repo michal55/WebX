@@ -7,7 +7,7 @@
       <thead>
       <tr>
         <th> <%=t('projects.columns.name')%> </th>
-        <th> <%=t('projects.columns.scripts')%> </th>
+        <th class="number-column"> <span class="number"><%=t('projects.columns.scripts')%></span> </th>
         <th class="action-icon"></th>
       </tr>
       </thead>
@@ -16,7 +16,7 @@
       <% @projects.each do |p| %>
         <tr>
           <td> <%=link_to(p.name, project_path(p.id) )%> </td>
-          <td> <%= p.scripts.length %> </td>
+          <td class="number-column"> <span class="number"><%= p.scripts.length %></span> </td>
           <td class="action-icon" >
             <span 
               ng-click=<%="deleteInterval(#{p.id})"%>
@@ -27,8 +27,10 @@
               '',
               project_path(p.id),
               method: :delete,
-              class: 'btn btn-default glyphicon glyphicon-remove table-button confirm',
-              :'id' => "remove_#{p.id}"
+              class: 'btn btn-default glyphicon glyphicon-remove table-button confirm has-tooltip',
+              :'id' => "remove_#{p.id}",
+              :'data-toggle' => "tooltip",
+              :'title' => t('layout.delete_message')
             ) %>
           </td>
         </tr>
