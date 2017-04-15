@@ -118,13 +118,11 @@ module Crawling
       # don't save restricted parent element or pagination element
       return if @post.is_postprocessing(row, 'restrict') or @post.is_pagination(row)
 
-
       extraction_datum = ExtractionDatum.create(
         instance_id: instance.id, extraction_id: @extraction.id,
         field_name:  row['name'], value: extract_value(page, row)
       )
       @logger.debug(log_msg(extraction_datum, row), @extraction)
-
     end
 
     def mechanize_page(html)
@@ -172,36 +170,6 @@ module Crawling
       return value.to_s.gsub(/\s+/, '') if @post.is_postprocessing(row, 'whitespace')
       value.to_s.strip
     end
-
-    def try_html
-      @agent = Mechanize.new
-      @agent.user_agent_alias = 'Mac Safari'
-      @agent.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-      page = @agent.get("http://localhost:3000/webx/login")
-      form = page.form(id: "new_user")
-      form.field_with(type: "email").value="michal.kren94@gmail.com"
-      form.field_with(type: "password").value=""
-      form.submit
-      page = @agent.get("http://localhost:3000/webx")
-      puts page.body
-
-      page = @agent.get("https://github.com/login")
-      form = page.form(action: "/session")
-      form.field_with('name'.to_sym => "login").value="michal.kren94@gmail.com"
-      form.field_with('name'.to_sym => "password").value=""
-      form.submit
-      page = @agent.get("https://github.com")
-      puts page.body
-
-      page = @agent.get("https://predplatne.dennikn.sk/sign/in/?_fid=y2qo")
-      form = page.form(action: "/sign/in/")
-      form.field_with(name: "username").value="michal.kren94@gmail.com"
-      form.field_with(name: "password").value=""
-      form.submit
-      page = @agent.get("https://dennikn.sk/731063/dramaturg-snd-ak-trafi-blesk-do-kazdeho-domu-kde-je-nieco-ukradnute-kolko-ich-zostane-nedoknutych/?ref=tit")
-      puts page.parser.xpath("//*[@id=\"top\"]/div[1]/div/div[2]/article/div[2]/p[21]")
-    end
-
+    
   end
 end
