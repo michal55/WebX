@@ -22,6 +22,34 @@
           </tbody>
         </table>
       </div>
+      <div class="dashboard-item">
+        <h1><%= t('dashboard.active_scripts') %></h1>
+        <table class="table table-striped table-hover">
+          <thead>
+          <tr>
+            <th><%= t('dashboard.row_script')%></th>
+            <th><%= t('dashboard.row_extraction')%></th>
+            <th class="number-column"><%= t('scripts.columns.extract') %></th>
+            <th><%= t('dashboard.row_status')%></th>
+          </tr>
+          </thead>
+          <tbody>
+            <% @active_scripts.each do |script| %>
+              <% extraction = script.extractions.order(:created_at)[-1]  %>
+              <tr>
+                <td><%= link_to script.name, project_script_path(script.project.id,script.id) %></td>
+                <td><%= link_to  extraction.created_at.strftime(t('time.format_extended')),project_script_extraction_extraction_datum_index_path(script.project.id,script.id,extraction.id) %></td>
+                <td>
+                  <%= link_to project_script_extractions_path(script.project.id, script.id) do %>
+                      <span><%= script.extractions.size %>&nbsp<i class="glyphicon glyphicon-link"></i></span>
+                  <% end %>
+                </td>
+                <td class="<%= find_class extraction.success %>"><%= extraction_status extraction.success%></td>
+              </tr>
+            <% end  %>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div class="col-md-4">
       <div class="dashboard-item">
