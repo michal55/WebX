@@ -95,7 +95,7 @@ module API
           info['extraction_id'] = extraction.id
           info['extraction_execution_time'] = extraction.execution_time
           info['script_id'] = script.id
-          info['instances_count'] = leafs.length
+          info['instances_count'] = Instance.where(extraction_id: extraction_id).where(is_leaf: true).count
 
 
           {
