@@ -7,8 +7,10 @@ module ExtractionHelper
       format = "%-Lms"
     elsif seconds < 60
       format = "%-Ss %-Lms"
+    elsif seconds < 3600
+      format = "%-Mm %-Ss"
     else
-      format = "%-Mm %-Ss %-Lms"
+      format = "%-Hh %-Mm"
     end
     Time.at(seconds).utc.strftime(format)
   end
