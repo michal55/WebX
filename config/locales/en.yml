@@ -204,6 +204,7 @@ en:
     github_server_link: "https://github.com/michal55/WebX"
     github_extension: "Chrome extension part Github"
     github_extension_link: "https://github.com/michal55/WebX-Extension"
+    script_help: "Script JSON help"
 
   time:
     format: "%Y-%m-%d %H:%M"
