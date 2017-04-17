@@ -5,6 +5,8 @@ module Crawling
     def execute(script)
       @logger = Logging::Logger.new(severity: script.log_level)
       @extraction = Extraction.create(script: script)
+      project = Project.find(script.project_id)
+      @fields = DataField.where(project_id: project.id)
       @logger.debug('Extraction created', @extraction)
       begin
         try_execute(script)
@@ -148,7 +150,15 @@ module Crawling
       #TODO: refactor postprocessing
       return @post.extract_attribute(doc, row['xpath'], 'href') if @post.is_postprocessing(row, 'nested')
       return @post.extract_attribute(doc, row['xpath'], @post.attribute(row)) if @post.is_postprocessing(row, 'attribute')
-      value = @post.extract_text(doc, row['xpath'])
+
+      type = nil
+      @fields.each do |f|
+        if f.name.to_s.eql?(row['name'])
+          type = f.data_type
+          break
+        end
+      end
+      value = @post.extract_text(doc, type,row['xpath'])
       return value.to_s.strip if @post.is_postprocessing(row, 'trim')
       return value.to_s.gsub(/\s+/, '') if @post.is_postprocessing(row, 'whitespace')
       value.to_s.strip

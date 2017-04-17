@@ -36,12 +36,15 @@ module Crawling
       nil
     end
 
-    def extract_text doc, xpath
+    def extract_text doc, type, xpath #pridat volania metod na kontrolu datovych typov
       if xpath[-7..-1].eql?("/text()")
-        doc.parser.xpath(xpath)
+        parsed_text = doc.parser.xpath(xpath)
       else
-        doc.parser.xpath "#{xpath}//text()"
+        parsed_text = doc.parser.xpath "#{xpath}//text()"
       end
+
+      return type_check(parsed_text, type)
+
     end
 
     def extract_attribute doc, xpath, attribute
@@ -65,6 +68,19 @@ module Crawling
     def attribute row
       return "" if row['postprocessing'].nil?
       row['postprocessing'][0]['attribute']
+    end
+
+    def type_check data, type
+      case type
+        when 'integer'
+          puts "Integer uprava pre " + data.to_s
+          data = (data.to_s).gsub(/[[:space:]]/, '')
+          puts data.to_s
+          data = data.match('[-+]?[0-9]*\.?[0-9]+')
+          puts "VYSLEDOK: " + data.to_s
+      end
+
+      return data
     end
 
   end
