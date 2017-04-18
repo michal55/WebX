@@ -71,16 +71,15 @@ module Crawling
     end
 
     def type_check data, type
+      new_data = data.to_s
       case type
         when 'integer'
-          puts "Integer uprava pre " + data.to_s
-          data = (data.to_s).gsub(/[[:space:]]/, '')
-          puts data.to_s
-          data = data.match('[-+]?[0-9]*\.?[0-9]+')
-          puts "VYSLEDOK: " + data.to_s
+          new_data = (new_data.gsub(/[[:space:]]/, '')).match(/\d+/)
+        when 'float'
+          new_data = (new_data.gsub(/[[:space:]]/, '')).match(/[+-]?([0-9]+|0)(\.|,[0-9]+)?/)
       end
 
-      return data
+      return new_data.to_s
     end
 
   end
