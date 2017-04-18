@@ -12,12 +12,14 @@ Rails.application.routes.draw do
   get 'users/:id/profile' => 'users#profile', as: :profile
   post 'user/:id/profile/refresh-api-key' => 'users#refresh_api_key'
 
+
   resources :projects do
     resources :scripts do
       resources :frequencies
       resources :extractions do
         resources :extraction_datum
       end
+      post 'run-now' => 'scripts#run_now'
     end
     resources :data_fields
   end
