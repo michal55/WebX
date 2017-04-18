@@ -30,6 +30,13 @@
           </div>
         <% end %>
     <% end %>
+    <%= extends :basic_panel_body do %>
+      <%= link_to(t('scripts.button_api_list'), api_list_link(@script), method: :get,class: 'btn btn-primary') %>
+      <%= link_to(t('scripts.button_api_export'), api_export_link(@script), method: :get,class: 'btn btn-primary') %>
+      <%= form_tag(project_script_run_now_path(@script.project,@script), class: "form-inline") do  %>
+          <%= submit_tag(t('scripts.button_run_now'), class: 'btn btn-primary') %>
+      <% end %>
+    <% end %>
 <% end %>
 <%= extends :basic_panel do %>
     <%= extends :basic_panel_body do %>
