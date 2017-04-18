@@ -7,15 +7,15 @@ module API
 
       resource :export do
         get :list do
-          if not params[:token] or not params[:script_id]
+          if not params[:token] or not params[:id]
             # Params not present
-            error!(make_error_json('Token or script_id is missing.'),404)
+            error!(make_error_json('Token or script ID is missing.'),404)
           end
 
           begin
             # Params are valid
             token = params[:token]
-            script_id = (Integer params[:script_id]).abs
+            script_id = (Integer params[:id]).abs
             limit = limit_init(params[:limit])
             offset = offset_init(params[:offset])
           rescue
@@ -47,15 +47,28 @@ module API
 
         get :extraction do
 
-          if not params[:token] or not params[:extraction_id]
+          if not params[:token] or not params[:id]
             # Params not present
-            error!(make_error_json('Token or extraction_id is missing.'),404)
+            error!(make_error_json('Token or extraction ID is missing.'),404)
           end
+
+          script_id = nil
+          extraction_id = nil
 
           begin
             # Params are valid
             token = params[:token]
-            extraction_id = (Integer params[:extraction_id]).abs
+            if params[:id] == 'last'
+              last = true
+              if not params[:script_id]
+                error!(make_error_json('Script id is missing'),404)
+              else
+                script_id = (Integer params[:script_id]).abs
+              end
+            else
+              last = false
+              extraction_id = (Integer params[:id]).abs
+            end
             limit = limit_init(params[:limit])
             offset = offset_init(params[:offset])
           rescue
@@ -63,7 +76,12 @@ module API
           end
 
           begin
-            extraction = Extraction.find(extraction_id)
+            if last
+              extraction = Extraction.where(script_id: script_id).order('created_at DESC').limit(1).first
+              extraction_id = extraction.id
+            else
+              extraction = Extraction.find(extraction_id)
+            end
             script = Script.find(extraction.script_id)
             project = Project.find(script.project_id)
             user = User.find(project.user_id)

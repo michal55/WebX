@@ -30,6 +30,11 @@
           </div>
         <% end %>
     <% end %>
+    <%= extends :basic_panel_body do %>
+        <%= link_to(t('scripts.button_api_list'), api_list_link(@script), method: :get,class: 'btn btn-primary') %>
+      <%= link_to(t('scripts.button_api_export'), api_export_link(@script), method: :get,class: 'btn btn-primary') %>
+      <%= link_to(t('scripts.button_run_now'), "#", method: :get,class: 'btn btn-primary') %>
+    <% end %>
 <% end %>
 <%= extends :basic_panel do %>
     <%= extends :basic_panel_body do %>
