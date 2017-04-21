@@ -43,7 +43,7 @@ module Crawling
         parsed_text = doc.parser.xpath "#{xpath}//text()"
       end
 
-      return type_check(parsed_text, type)
+      return type_check(parsed_text, type, doc)
 
     end
 
@@ -70,16 +70,28 @@ module Crawling
       row['postprocessing'][0]['attribute']
     end
 
-    def type_check data, type
+    def type_check data, type, page
       new_data = data.to_s
       case type
         when 'integer'
           new_data = (new_data.gsub(/[[:space:]]/, '')).match(/\d+/)
+          new_data = ((new_data.to_s).to_i).to_s
         when 'float'
-          new_data = (new_data.gsub(/[[:space:]]/, '')).match(/[+-]?([0-9]+|0)(\.|,[0-9]+)?/)
+          new_data = (new_data.gsub(/[[:space:]]/, '')).match(/[+-]?([0-9]+)([.,][0-9]+)?/)
+          new_data = ((new_data.to_s).to_f).to_s
+        when 'link'
+          domain = page.uri.to_s
+          arr = domain.split('/')
+          domain = arr[0] + "//" + arr[2]
+
+
+          data.collect!  do |d|
+            domain + d.to_s
+          end
+          return data
       end
 
-      return new_data.to_s
+      return new_data
     end
 
   end
