@@ -78,7 +78,7 @@ module Crawling
           new_data = ((new_data.to_s).to_i).to_s
         when 'float'
           new_data = (new_data.gsub(/[[:space:]]/, '')).match(/[+-]?([0-9]+)([.,][0-9]+)?/)
-          new_data = ((new_data.to_s).to_f).to_s
+          new_data = (new_data.to_s).sub(',','.')
         when 'link'
           domain = page.uri.to_s
           arr = domain.split('/')
