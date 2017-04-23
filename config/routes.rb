@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       resources :frequencies
       resources :extractions do
         resources :extraction_datum
+        get 'logs' => 'extraction_datum#logs'
       end
       post 'run-now' => 'scripts#run_now'
     end

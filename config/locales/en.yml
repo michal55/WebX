@@ -147,6 +147,12 @@ en:
       field: "Field"
       value: "Value"
     index: "Data"
+    logs: "Logs"
+    logs_header: "Logs of extraction"
+    logs_table:
+      created: "Created at"
+      severity: "Severity"
+      message: "Message"
 
   extractions:
     index: "Extractions"

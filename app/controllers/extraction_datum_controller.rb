@@ -22,7 +22,18 @@ class ExtractionDatumController < ApplicationController
           render xlsx: 'index', filename: "extraction_data.xlsx"
         end
       end
+  end
 
+  def logs
+    @extraction = Extraction.find(params[:extraction_id])
+    @script = Script.find(params[:script_id])
+    @project = Project.find(params[:project_id])
+
+    @logs = Log.search_by_resource(@extraction.id)
+    @logs = @logs.page(params[:page]).records
+
+    puts("...\n\n\n",@logs,"\n\n\n...")
+    render 'extraction_datum/logs'
   end
 
 
