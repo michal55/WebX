@@ -36,12 +36,15 @@ module Crawling
       nil
     end
 
-    def extract_text doc, xpath
+    def extract_text doc, type, xpath
       if xpath[-7..-1].eql?("/text()")
-        doc.parser.xpath(xpath)
+        parsed_text = doc.parser.xpath(xpath)
       else
-        doc.parser.xpath "#{xpath}//text()"
+        parsed_text = doc.parser.xpath "#{xpath}//text()"
       end
+
+      return type_check(parsed_text, type, doc)
+
     end
 
     def extract_attribute doc, xpath, attribute
@@ -65,6 +68,30 @@ module Crawling
     def attribute row
       return "" if row['postprocessing'].nil?
       row['postprocessing'][0]['attribute']
+    end
+
+    def type_check data, type, page
+      new_data = data.to_s
+      case type
+        when 'integer'
+          new_data = (new_data.gsub(/[[:space:]]/, '')).match(/\d+/)
+          new_data = new_data.to_s
+        when 'float'
+          new_data = (new_data.gsub(/[[:space:]]/, '')).match(/[+-]?([0-9]+)([.,][0-9]+)?/)
+          new_data = (new_data.to_s).sub(',','.')
+        when 'link'
+          domain = page.uri.to_s
+          arr = domain.split('/')
+          domain = arr[0] + "//" + arr[2]
+
+
+          data.collect!  do |d|
+            domain + d.to_s
+          end
+          return data
+      end
+
+      return new_data
     end
 
   end

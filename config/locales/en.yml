@@ -120,6 +120,10 @@ en:
     flash_create: "You successfully created script %{script_name}"
     flash_delete: "You deleted script %{script_name}"
     flash_update: "You updated script %{script_name}"
+    flash_execute: "You executed script %{script_name}"
+    button_api_list: "API List Extractions"
+    button_api_export: "API Export Extractions"
+    button_run_now: "Run Now"
 
 
   data_fields:
@@ -219,24 +223,29 @@ en:
     header: "Instructions"
     api_instructions_link: "Export API instructions"
     example: "Request example:"
+    example2: "Request example #2:"
+
     params: "API parameters:"
 
     api_listing:
       header: "Listing Extractions"
       url: "api/export/list"
       token: "token - required, your personal API key (check profile)"
-      script_id: "script_id - required, ID of a script results of which you want to list"
+      script_id: "id - required, ID of a script results of which you want to list"
       limit: "limit - optional, number of extractions to return, default is 10"
       offset: "offset - optional, offset for extractions starting from the latest, default is 0"
-      example_url: "api/export/list?token=YourToken&script_id=1&limit=10&offset=0"
+      example_url: "api/export/list?token=YourToken&id=1&limit=10&offset=0"
     api_extraction:
       header: "Extracted data"
       url: "api/export/extraction"
       token: "token - required, your personal API key (check profile)"
-      script_id: "extraction_id - required, ID of an extraction from witch you want to export data"
+      id: "id - required, ID of an extraction from witch you want to export data"
+      script_id: "script_id - required only if id=last, ID of a script"
       limit: "limit - optional, number of instances to return, default is 10"
       offset: "offset - optional, offset for data instances of an extraction, default is 0"
-      example_url: "api/export/extraction?token=YourToken&extraction_id=1&limit=10&offset=0"
+      example_url: "api/export/extraction?token=YourToken&id=1&limit=10&offset=0"
+      example_url2: "api/export/extraction?token=YourToken&id=last&script_id=1"
+
   dashboard:
     header: "Last 5 extractions"
     row_script: "Script"

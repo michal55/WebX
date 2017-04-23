@@ -5,6 +5,7 @@ module Crawling
     def execute(script)
       @logger = Logging::Logger.new(severity: script.log_level)
       @extraction = Extraction.create(script: script)
+      @fields = script.project.data_fields
       @logger.debug('Extraction created', @extraction)
       begin
         try_execute(script)
@@ -146,9 +147,23 @@ module Crawling
 
     def extract_value(doc, row)
       #TODO: refactor postprocessing
-      return @post.extract_attribute(doc, row['xpath'], 'href') if @post.is_postprocessing(row, 'nested')
-      return @post.extract_attribute(doc, row['xpath'], @post.attribute(row)) if @post.is_postprocessing(row, 'attribute')
-      value = @post.extract_text(doc, row['xpath'])
+      type = nil
+      @fields.each do |f|
+        if f.name.to_s.eql?(row['name'])
+          type = f.data_type
+          break
+        end
+      end
+
+      value = nil
+      value = @post.extract_attribute(doc, row['xpath'], 'href') if @post.is_postprocessing(row, 'nested')
+      value = @post.extract_attribute(doc, row['xpath'], @post.attribute(row)) if @post.is_postprocessing(row, 'attribute')
+      if type.to_s.eql?('link')
+        value = @post.type_check(value, type, doc)
+      end
+
+      return value unless value == nil
+      value = @post.extract_text(doc, type,row['xpath'])
       return value.to_s.strip if @post.is_postprocessing(row, 'trim')
       return value.to_s.gsub(/\s+/, '') if @post.is_postprocessing(row, 'whitespace')
       value.to_s.strip

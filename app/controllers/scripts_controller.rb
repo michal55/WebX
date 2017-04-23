@@ -1,5 +1,5 @@
 class ScriptsController < ApplicationController
-  load_and_authorize_resource :except => [:create, :new]
+  load_and_authorize_resource :except => [:create, :new, :run_now]
   def index
     @scripts = Script.where(project_id: params[:project_id])
     @project = Project.find(params[:project_id])
@@ -51,5 +51,12 @@ class ScriptsController < ApplicationController
     @script.destroy!
     flash[:notice] = I18n.t('scripts.flash_delete', script_name: @script.name)
     redirect_to project_path(params[:project_id])
+  end
+
+  def run_now
+    @script = Script.find(params[:script_id])
+    Resque.enqueue(CrawlerExecuter, params[:script_id])
+    flash[:notice] =I18n.t('scripts.flash_execute', script_name: @script.name)
+    redirect_to project_script_path(params[:project_id],params[:script_id])
   end
 end
