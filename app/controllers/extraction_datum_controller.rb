@@ -30,7 +30,6 @@ class ExtractionDatumController < ApplicationController
     elsif request.method == 'POST'
       @severities = set_by_params
     end
-    puts("...\n\n\n",@severities,@severities.length,"\n\n",params,"\n\n",session[:logs_filter],"\n\n\n...")
     @extraction = Extraction.find(params[:extraction_id])
     @script = Script.find(params[:script_id])
     @project = Project.find(params[:project_id])
@@ -38,6 +37,12 @@ class ExtractionDatumController < ApplicationController
     @logs = Log.search_by_resource(@extraction.id, @severities)
     @logs = @logs.page(params[:page]).records
 
+    begin
+      @logs[0].msg
+    rescue Faraday::ConnectionFailed
+      render '_elastic_error'
+      return
+    end
     render 'extraction_datum/logs'
   end
 
