@@ -41,6 +41,14 @@ module Crawling
       nil
     end
 
+    def login(data_row)
+      data_row.each do |row|
+        next if row['postprocessing'].nil? or row['postprocessing'].size == 0 or !is_postprocessing(row, 'post')
+        return row
+      end
+      nil
+    end
+    
     def extract_text doc, type, xpath
       if xpath[-7..-1].eql?("/text()")
         parsed_text = doc.parser.xpath(xpath)
@@ -48,8 +56,7 @@ module Crawling
         parsed_text = doc.parser.xpath "#{xpath}//text()"
       end
 
-      return type_check(parsed_text, type, doc)
-
+      type_check(parsed_text, type, doc)
     end
 
     def extract_attribute doc, xpath, attribute

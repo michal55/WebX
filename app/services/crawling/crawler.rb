@@ -19,7 +19,11 @@ module Crawling
 
     def try_execute(script)
       @agent = Mechanize.new
+      @agent.user_agent_alias = 'Mac Safari'
+      @agent.verify_mode = OpenSSL::SSL::VERIFY_NONE
       @post = Postprocessing.new
+      @logged_in = false
+
       script_json = script.xpaths
       @parent_stack = []
 
@@ -45,6 +49,9 @@ module Crawling
     def iterate_json(data_row, page, instance, parent_url, field_name, page_number=0)
       sleep(rand(1..5))
 
+      login_row = @post.login(data_row)
+      page, parent_url = log_in(page, login_row) unless login_row.nil?
+
       ExtractionDatum.create(
           instance_id: instance.id, extraction_id: @extraction.id,
           field_name: field_name, value: parent_url
@@ -54,6 +61,7 @@ module Crawling
 
       data_row.each do |row|
         create_extraction_data(instance, page, row)
+
 
         if @post.is_postprocessing(row, 'nested')
           instance.is_leaf = false
@@ -116,7 +124,7 @@ module Crawling
 
     def create_extraction_data(instance, page, row)
       # don't save restricted parent element or pagination element
-      return if @post.is_postprocessing(row, 'restrict') or @post.is_pagination(row)
+      return if @post.is_postprocessing(row, 'restrict') or @post.is_pagination(row) or @post.is_postprocessing(row, 'post')
 
       extraction_datum = ExtractionDatum.create(
         instance_id: instance.id, extraction_id: @extraction.id,
@@ -147,6 +155,29 @@ module Crawling
       nested_page
     end
 
+    def log_in(page, row)
+      #TODO doplnit logy ak sa nepodari najst formular atd
+      form_node = page.at(row['xpath'])
+      form = page.form(form_node: form_node)
+      if form.nil?
+        @logger.warning("Form not found at xpath: #{row['xpath']}", @extraction)
+        return
+      end
+
+      #TODO lepsie najst fields, nemusi byt prvy PP
+      row['postprocessing'][0]['fields'].each do |field_row|
+        next if field_row['disabled'] == 1 or field_row['value'].empty?
+
+        form.field_with(name: field_row['name']).value = field_row['value']
+
+        @logger.debug("Submitting #{field_row['name']}", @extraction)
+      end
+
+      form.submit
+      #vrati novu page a URL
+      return try_get_url(nil, row['postprocessing'][0]['redirect_url']), row['postprocessing'][0]['redirect_url']
+    end
+
     def extract_value(doc, row)
       #TODO: refactor postprocessing
       type = nil
@@ -169,36 +200,6 @@ module Crawling
       return value.to_s.strip if @post.is_postprocessing(row, 'trim')
       return value.to_s.gsub(/\s+/, '') if @post.is_postprocessing(row, 'whitespace')
       value.to_s.strip
-    end
-
-    def try_html
-      @agent = Mechanize.new
-      @agent.user_agent_alias = 'Mac Safari'
-      @agent.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-      page = @agent.get("http://localhost:3000/webx/login")
-      form = page.form(id: "new_user")
-      form.field_with(type: "email").value="michal.kren94@gmail.com"
-      form.field_with(type: "password").value=""
-      form.submit
-      page = @agent.get("http://localhost:3000/webx")
-      puts page.body
-
-      page = @agent.get("https://github.com/login")
-      form = page.form(action: "/session")
-      form.field_with('name'.to_sym => "login").value="michal.kren94@gmail.com"
-      form.field_with('name'.to_sym => "password").value=""
-      form.submit
-      page = @agent.get("https://github.com")
-      puts page.body
-
-      page = @agent.get("https://predplatne.dennikn.sk/sign/in/?_fid=y2qo")
-      form = page.form(action: "/sign/in/")
-      form.field_with(name: "username").value="michal.kren94@gmail.com"
-      form.field_with(name: "password").value=""
-      form.submit
-      page = @agent.get("https://dennikn.sk/731063/dramaturg-snd-ak-trafi-blesk-do-kazdeho-domu-kde-je-nieco-ukradnute-kolko-ich-zostane-nedoknutych/?ref=tit")
-      puts page.parser.xpath("//*[@id=\"top\"]/div[1]/div/div[2]/article/div[2]/p[21]")
     end
 
   end
