@@ -25,16 +25,44 @@ class ExtractionDatumController < ApplicationController
   end
 
   def logs
+    if request.method == 'GET'
+      @severities = set_by_session
+    elsif request.method == 'POST'
+      @severities = set_by_params
+    end
+    puts("...\n\n\n",@severities,@severities.length,"\n\n",params,"\n\n",session[:logs_filter],"\n\n\n...")
     @extraction = Extraction.find(params[:extraction_id])
     @script = Script.find(params[:script_id])
     @project = Project.find(params[:project_id])
 
-    @logs = Log.search_by_resource(@extraction.id)
+    @logs = Log.search_by_resource(@extraction.id, @severities)
     @logs = @logs.page(params[:page]).records
 
-    puts("...\n\n\n",@logs,"\n\n\n...")
     render 'extraction_datum/logs'
   end
 
+  private
 
+  def set_by_session()
+    if session[:logs_filter] == nil
+      session[:logs_filter] = [0,1,2]
+    end
+    session[:logs_filter]
+  end
+
+  def set_by_params()
+    sev_array = []
+    if params[:logs_filter_debug] == "logs_filter_debug"
+      sev_array << 0
+    end
+    if params[:logs_filter_warning] == "logs_filter_warning"
+      sev_array << 1
+    end
+    if params[:logs_filter_error] == "logs_filter_error"
+      sev_array << 2
+    end
+
+    session[:logs_filter] = sev_array
+    sev_array
+  end
 end

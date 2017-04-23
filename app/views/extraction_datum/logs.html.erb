@@ -13,6 +13,18 @@
         </div>
     <% end %>
     <%= extends :basic_panel_body do %>
+        <%= form_tag(project_script_extraction_logs_path(@project, @script, @extraction), class: "form-inline") do %>
+            <%= check_box_tag('logs_filter_debug', 'logs_filter_debug',  @severities.include?(0) )%>
+            <%= t('extraction_datum.filter.debug') %>
+
+            <%= check_box_tag('logs_filter_warning', 'logs_filter_warning',  @severities.include?(1) )%>
+            <%= t('extraction_datum.filter.warning') %>
+
+            <%= check_box_tag('logs_filter_error', 'logs_filter_error', @severities.include?(2) )%>
+            <%= t('extraction_datum.filter.error') %>
+
+            <%= submit_tag(t('extraction_datum.filter.submit'), class: 'btn btn-primary') %>
+        <% end %>
         <table class="table table-striped table-hover table-scrollable">
           <thead>
           <tr>
@@ -46,6 +58,6 @@
             <% end %>
           </tbody>
         </table>
-      <%= paginate @logs%>
+      <%=  paginate @logs%>
     <% end %>
 <% end %>

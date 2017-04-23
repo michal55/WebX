@@ -11,7 +11,7 @@ class CrawlerInitializer
 
   # Action
   def self.perform()
-    puts('[DEBUG] CRAWLER ENQUE')
+    # puts('[DEBUG] CRAWLER ENQUE')
 
     time_now = Time.now
     frequencies = Frequency.all
@@ -32,7 +32,7 @@ class CrawlerInitializer
       f.save!
 
       script = f.script
-      print("[DEBUG] Enqueing script: ", script.name, " | Frequency: ", f.id, "\n")
+      # print("[DEBUG] Enqueing script: ", script.name, " | Frequency: ", f.id, "\n")
       Resque.enqueue(CrawlerExecuter, script.id)
     end
 
