@@ -148,12 +148,12 @@ en:
       value: "Value"
     index: "Data"
     logs: "Logs"
-    logs_header: "Logs of extraction"
+    logs_header: "Extraction logs"
     logs_table:
       created: "Created at"
       severity: "Severity"
       message: "Message"
-    logs_script_link: "Logs of last extraction"
+    logs_script_link: "Last extraction logs"
     filter:
       debug: "Debug"
       warning: "Warning"
