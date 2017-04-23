@@ -54,14 +54,13 @@ module Crawling
 
       ExtractionDatum.create(
           instance_id: instance.id, extraction_id: @extraction.id,
-          field_name: field_name, value: parent_url
+          field_name: field_name, value: @post.type_check(parent_url, 'link', page)
       ) unless parent_url.nil?
 
       instance.is_leaf = true
 
       data_row.each do |row|
         create_extraction_data(instance, page, row)
-
 
         if @post.is_postprocessing(row, 'nested')
           instance.is_leaf = false
@@ -172,7 +171,6 @@ module Crawling
 
         @logger.debug("Submitting #{field_row['name']}", @extraction)
       end
-
       form.submit
       #vrati novu page a URL
       return try_get_url(nil, row['postprocessing'][0]['redirect_url']), row['postprocessing'][0]['redirect_url']
@@ -182,7 +180,7 @@ module Crawling
       #TODO: refactor postprocessing
       type = nil
       @fields.each do |f|
-        if f.name.to_s.eql?(row['name'])
+        if f.name.eql?(row['name'])
           type = f.data_type
           break
         end
@@ -191,9 +189,7 @@ module Crawling
       value = nil
       value = @post.extract_attribute(doc, row['xpath'], 'href') if @post.is_postprocessing(row, 'nested')
       value = @post.extract_attribute(doc, row['xpath'], @post.attribute(row)) if @post.is_postprocessing(row, 'attribute')
-      if type.to_s.eql?('link')
-        value = @post.type_check(value, type, doc)
-      end
+      value = @post.type_check(value, type, doc) if type.eql?("link")
 
       return value unless value == nil
       value = @post.extract_text(doc, type,row['xpath'])

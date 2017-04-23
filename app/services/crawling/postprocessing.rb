@@ -73,7 +73,6 @@ module Crawling
       links.each do |link|
         result.push(link.attributes[attribute].to_s)
       end
-      puts result
       result
     end
 
@@ -83,28 +82,55 @@ module Crawling
     end
 
     def type_check data, type, page
-      new_data = data.to_s
-      case type
-        when 'integer'
-          new_data = (new_data.gsub(/[[:space:]]/, '')).match(/\d+/)
-          new_data = new_data.to_s
-        when 'float'
-          new_data = (new_data.gsub(/[[:space:]]/, '')).match(/[+-]?([0-9]+)([.,][0-9]+)?/)
-          new_data = (new_data.to_s).sub(',','.')
-        when 'link'
-          domain = page.uri.to_s
-          arr = domain.split('/')
-          domain = arr[0] + "//" + arr[2]
-
-
-          data.collect!  do |d|
-            domain + d.to_s
+      new_data = nil
+      if data.is_a?(Array)
+        new_data = []
+        data.each do |d|
+          case type
+          when 'integer'
+            new_data << type_integer(d.to_s)
+          when 'float'
+            new_data << type_float(d.to_s)
+          when 'link'
+            new_data << type_link(d, page)
+          else
+            new_data << d.to_s
           end
-          return data
+        end
+      else
+        case type
+        when 'integer'
+          new_data = type_integer(data.to_s)
+        when 'float'
+          new_data = type_float(data.to_s)
+        when 'link'
+          new_data = type_link(data, page)
+        else
+          new_data = data.to_s
+        end
       end
+      new_data
 
-      return new_data
     end
 
+    def type_link(data, page)
+      return data if data[0..3].eql?('http')
+      domain_url = page.uri.to_s
+      arr        = domain_url.split('/')
+      domain_url = arr[0] + "//" + arr[2]
+      data = domain_url + data.to_s
+      # data.collect! do |d|
+      #   domain_url + d.to_s
+      # end
+      # data
+    end
+
+    def type_float(new_data)
+      new_data.gsub(/[[:space:]]/, '').match(/[+-]?([0-9]+)([.,][0-9]+)?/).to_s.sub(',', '.')
+    end
+
+    def type_integer(new_data)
+      new_data.gsub(/[[:space:]]/, '').match(/\d+/).to_s
+    end
   end
 end
