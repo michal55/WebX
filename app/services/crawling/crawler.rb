@@ -5,8 +5,7 @@ module Crawling
     def execute(script)
       @logger = Logging::Logger.new(severity: script.log_level)
       @extraction = Extraction.create(script: script)
-      project = Project.find(script.project_id)
-      @fields = DataField.where(project_id: project.id)
+      @fields = script.project.data_fields
       @logger.debug('Extraction created', @extraction)
       begin
         try_execute(script)

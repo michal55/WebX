@@ -36,7 +36,7 @@ module Crawling
       nil
     end
 
-    def extract_text doc, type, xpath #pridat volania metod na kontrolu datovych typov
+    def extract_text doc, type, xpath
       if xpath[-7..-1].eql?("/text()")
         parsed_text = doc.parser.xpath(xpath)
       else
