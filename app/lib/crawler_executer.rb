@@ -11,7 +11,7 @@ class CrawlerExecuter
 
   # Action
   def self.perform(script_id)
-    print('[DEBUG] Crawler Executer: ', script_id, "\n")
+    # print('[DEBUG] Crawler Executer: ', script_id, "\n")
     script = Script.find(script_id)
     Crawling::Crawler.execute(script)
   end

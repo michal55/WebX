@@ -15,7 +15,11 @@
               <% @extractions.each do |ex| %>
               <tr>
                 <td><%= link_to(ex.script.name,project_script_path(ex.script.project.id,ex.script.id)) %></td>
-                <td><%= link_to(ex.created_at.strftime(t('time.format_extended')),project_script_extraction_extraction_datum_index_path(ex.script.project.id,ex.script.id,ex.id)) %></td>
+                <td>
+                  <%= link_to(project_script_extraction_extraction_datum_index_path(ex.script.project.id,ex.script.id,ex.id)) do %>
+                    <span><%= ex.created_at.strftime(t('time.format_extended')) %>&nbsp<i class="glyphicon glyphicon-link"></i></span>
+                  <% end %>
+                </td>
                 <td class="<%= find_class ex.success %>"><%= extraction_status ex.success%></td>
               </tr>
               <% end %>

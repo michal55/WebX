@@ -7,7 +7,7 @@ module API
 
       resource :export do
         get :list do
-          if not params[:token] or not params[:id]
+          if not params[:token] or not params[:script_id]
             # Params not present
             error!(make_error_json('Token or script ID is missing.'),404)
           end
@@ -15,7 +15,7 @@ module API
           begin
             # Params are valid
             token = params[:token]
-            script_id = (Integer params[:id]).abs
+            script_id = (Integer params[:script_id]).abs
             limit = limit_init(params[:limit])
             offset = offset_init(params[:offset])
           rescue

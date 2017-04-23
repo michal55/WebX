@@ -147,6 +147,18 @@ en:
       field: "Field"
       value: "Value"
     index: "Data"
+    logs: "Logs"
+    logs_header: "Extraction logs"
+    logs_table:
+      created: "Created at"
+      severity: "Severity"
+      message: "Message"
+    logs_script_link: "Last extraction logs"
+    filter:
+      debug: "Debug"
+      warning: "Warning"
+      error: "Error"
+      submit: "Filter"
 
   extractions:
     index: "Extractions"
@@ -231,10 +243,10 @@ en:
       header: "Listing Extractions"
       url: "api/export/list"
       token: "token - required, your personal API key (check profile)"
-      script_id: "id - required, ID of a script results of which you want to list"
+      script_id: "script_id - required, ID of a script results of which you want to list"
       limit: "limit - optional, number of extractions to return, default is 10"
       offset: "offset - optional, offset for extractions starting from the latest, default is 0"
-      example_url: "api/export/list?token=YourToken&id=1&limit=10&offset=0"
+      example_url: "api/export/list?token=YourToken&script_id=1&limit=10&offset=0"
     api_extraction:
       header: "Extracted data"
       url: "api/export/extraction"
