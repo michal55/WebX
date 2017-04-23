@@ -75,7 +75,7 @@ module Crawling
       case type
         when 'integer'
           new_data = (new_data.gsub(/[[:space:]]/, '')).match(/\d+/)
-          new_data = ((new_data.to_s).to_i).to_s
+          new_data = new_data.to_s
         when 'float'
           new_data = (new_data.gsub(/[[:space:]]/, '')).match(/[+-]?([0-9]+)([.,][0-9]+)?/)
           new_data = (new_data.to_s).sub(',','.')
