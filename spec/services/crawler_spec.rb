@@ -114,8 +114,8 @@ describe 'Extracting data from rubygems.org' do
     Crawling::Crawler.execute(script)
     extraction = Extraction.find_by(script_id: script.id)
     expect(extraction.success).to eq true
-    datum = ExtractionDatum.where(field_name: "category_url", extraction_id: extraction.id).order('created_at ASC')[0]
-    expect(datum.value).to eq "[\"https://www.alza.sk/notebooky/18842920.htm\", \"https://www.alza.sk/alza-pocitace/18845023.htm\", \"https://www.alza.sk/pocitacove-zostavy/18842956.htm\"]"
+    datum = ExtractionDatum.where(field_name: "category_url", extraction_id: extraction.id).order('created_at ASC')[1]
+    expect(datum.value.start_with?("https:")).to eq true
     datum = ExtractionDatum.find_by(field_name: "price", extraction_id: extraction.id)
     expect(datum.value.to_f).not_to eq 0
   end

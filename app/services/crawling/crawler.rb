@@ -49,7 +49,7 @@ module Crawling
     def iterate_json(data_row, page, instance, parent_url, field_name, page_number=0)
       sleep(rand(1..5))
 
-      login_row = @post.login(data_row)
+      login_row = @post.login_row(data_row)
       page, parent_url = log_in(page, login_row) unless login_row.nil?
 
       ExtractionDatum.create(
@@ -163,8 +163,7 @@ module Crawling
         return
       end
 
-      #TODO lepsie najst fields, nemusi byt prvy PP
-      row['postprocessing'][0]['fields'].each do |field_row|
+      @post.postprocessing_data(row, 'post', 'fields').each do |field_row|
         next if field_row['disabled'] == 1 or field_row['value'].empty?
 
         form.field_with(name: field_row['name']).value = field_row['value']
@@ -172,8 +171,10 @@ module Crawling
         @logger.debug("Submitting #{field_row['name']}", @extraction)
       end
       form.submit
+
       #vrati novu page a URL
-      return try_get_url(nil, row['postprocessing'][0]['redirect_url']), row['postprocessing'][0]['redirect_url']
+      redirect_url = @post.postprocessing_data(row, 'post', 'redirect_url')
+      return try_get_url(nil, redirect_url), redirect_url
     end
 
     def extract_value(doc, row)

@@ -41,7 +41,7 @@ module Crawling
       nil
     end
 
-    def login(data_row)
+    def login_row(data_row)
       data_row.each do |row|
         next if row['postprocessing'].nil? or row['postprocessing'].size == 0 or !is_postprocessing(row, 'post')
         return row
@@ -118,11 +118,7 @@ module Crawling
       domain_url = page.uri.to_s
       arr        = domain_url.split('/')
       domain_url = arr[0] + "//" + arr[2]
-      data = domain_url + data.to_s
-      # data.collect! do |d|
-      #   domain_url + d.to_s
-      # end
-      # data
+      domain_url + data.to_s
     end
 
     def type_float(new_data)
