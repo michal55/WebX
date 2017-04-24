@@ -32,7 +32,15 @@
             <td class="number-column"> <span><%= instance_count e %></span></td>
             <td class="number-column"> <span><%= empty_fields_count e %></span></td>
             <td class="<%= find_class e.success %>"> <%= extraction_status e.success %></td>
-            <td> <%= link_to t('extraction_datum.index'), project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id) %></td>
+            <td>
+              <% if instance_count(e) == 0 %>
+              <div class="disabled"> <%= t('extraction_datum.index')%></div>
+              <% else %>
+                <%= link_to(t('extraction_datum.index'), project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id)) %>
+              <% end %>
+              |
+              <%= link_to(t('extraction_datum.logs'), project_script_extraction_logs_path(@project.id,@script.id,e.id)) %>
+            </td>
             <td>
               <%= link_to "CSV", project_script_extraction_extraction_datum_index_path(@project.id, @script.id, e.id, format: :csv) %>
               &nbsp;|&nbsp;

@@ -12,4 +12,14 @@ module ExtractionDatumHelper
     Instance.where(extraction_id: extraction_id).where(is_leaf: true).order('id ASC')
   end
 
+  def logs_severity_to_string(severity)
+    severity_hash =
+        {
+          0 => "Debug",
+          1 => "Warning",
+          2 => "Error"
+        }
+    severity_hash[severity]
+  end
+
 end

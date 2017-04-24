@@ -107,27 +107,15 @@ describe 'Extracting data from rubygems.org' do
 
   it 'should extract and validate data field types' do
     script = create(:script_with_nested_and_restrict)
-    fields = Array.new(2)
-    fields[0] = DataField.new()
-    fields[1] = DataField.new()
-
-    fields.each do |f|
-      f.project = script.project
-    end
-    fields[0].name = "category_url"
-    fields[0].data_type = 'link'
-    fields[1].name = "price"
-    fields[1].data_type = 'float'
-
-    fields.each do |f|
-      f.save!
-    end
+    fields = [2]
+    fields[0] = DataField.create(name: "category_url", data_type: "link", project: script.project)
+    fields[1] = DataField.create(name: "price", data_type: "float", project: script.project)
 
     Crawling::Crawler.execute(script)
     extraction = Extraction.find_by(script_id: script.id)
     expect(extraction.success).to eq true
-    datum = ExtractionDatum.find_by(field_name: "category_url", extraction_id: extraction.id)
-    expect(datum.value).to eq "[\"https://www.alza.sk/notebooky/18842920.htm\", \"https://www.alza.sk/alza-pocitace/18845023.htm\", \"https://www.alza.sk/pocitacove-zostavy/18842956.htm\"]"
+    datum = ExtractionDatum.where(field_name: "category_url", extraction_id: extraction.id).order('created_at ASC')[1]
+    expect(datum.value.start_with?("https:")).to eq true
     datum = ExtractionDatum.find_by(field_name: "price", extraction_id: extraction.id)
     expect(datum.value.to_f).not_to eq 0
   end
