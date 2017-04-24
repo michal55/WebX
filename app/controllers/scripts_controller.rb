@@ -39,7 +39,15 @@ class ScriptsController < ApplicationController
     puts params[:script][:xpaths]
     @script.xpaths = params[:script][:xpaths].gsub("\n","").to_json
     @script.log_level = params[:script][:log_level].to_i
-    @script.save!
+    begin
+      @script.save!
+    rescue
+      respond_to do |format|
+        format.text { render(nothing: true, status: 200, content_type: "text/html") }
+        format.js { render :js => "flash_error(\"#{ I18n.t('scripts.flash_update_error', script_name: @script.name)}\");"  }
+      end
+      return
+    end
     respond_to do |format|
       format.text { render(nothing: true, status: 200, content_type: "text/html") }
       format.js { render :js => "flash(\"#{ I18n.t('scripts.flash_update', script_name: @script.name)}\");"  }

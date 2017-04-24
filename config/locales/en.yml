@@ -120,6 +120,7 @@ en:
     flash_create: "You successfully created script %{script_name}"
     flash_delete: "You deleted script %{script_name}"
     flash_update: "You updated script %{script_name}"
+    flash_update_error: "Incorrect script data: %{script_name} has not been updated"
     flash_execute: "You executed script %{script_name}"
     button_api_list: "API List Extractions"
     button_api_export: "API Export Extractions"
