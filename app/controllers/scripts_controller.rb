@@ -1,5 +1,5 @@
 class ScriptsController < ApplicationController
-  load_and_authorize_resource :except => [:create, :new]
+  load_and_authorize_resource :except => [:create, :new, :run_now]
   def index
     @scripts = Script.where(project_id: params[:project_id])
     @project = Project.find(params[:project_id])
@@ -39,7 +39,15 @@ class ScriptsController < ApplicationController
     puts params[:script][:xpaths]
     @script.xpaths = params[:script][:xpaths].gsub("\n","").to_json
     @script.log_level = params[:script][:log_level].to_i
-    @script.save!
+    begin
+      @script.save!
+    rescue
+      respond_to do |format|
+        format.text { render(nothing: true, status: 200, content_type: "text/html") }
+        format.js { render :js => "flash_error(\"#{ I18n.t('scripts.flash_update_error', script_name: @script.name)}\");"  }
+      end
+      return
+    end
     respond_to do |format|
       format.text { render(nothing: true, status: 200, content_type: "text/html") }
       format.js { render :js => "flash(\"#{ I18n.t('scripts.flash_update', script_name: @script.name)}\");"  }
@@ -51,5 +59,12 @@ class ScriptsController < ApplicationController
     @script.destroy!
     flash[:notice] = I18n.t('scripts.flash_delete', script_name: @script.name)
     redirect_to project_path(params[:project_id])
+  end
+
+  def run_now
+    @script = Script.find(params[:script_id])
+    Resque.enqueue(CrawlerExecuter, params[:script_id])
+    flash[:notice] =I18n.t('scripts.flash_execute', script_name: @script.name)
+    redirect_to project_script_path(params[:project_id],params[:script_id])
   end
 end

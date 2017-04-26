@@ -66,7 +66,7 @@ angular.module('webx', [])
 ]);
 
 // info message animation
-function messageAnimation() {
+function messageAnimation(full) {
     var container = $('.msg-container');
     setTimeout(function() {
         for (var i=0; i <= 100; i += 1){
@@ -79,33 +79,37 @@ function messageAnimation() {
                 container.width(width + "%");
                 if (width == 60) {
                     $('.msg').fadeIn(100);
-                    setTimeout(function() {
-                        $('.msg').fadeOut(200);
-                    }, 2000);
+                    if(full) {
+                        setTimeout(function() {
+                            $('.msg').fadeOut(200);
+                        }, 2000);
+                    }
                 }
             }, width*width*width*width/300000);
         }
 
         function decrease(width) {
-            setTimeout(function() {
-                if (width == 100) {
-                    container.addClass('bounce');
-                    for (var i = 850; i < 1000; i++) {
-                        swimOut(i/10);
+            if(full) {
+                setTimeout(function() {
+                    if (width == 100) {
+                        container.addClass('bounce');
+                        for (var i = 850; i < 1000; i++) {
+                            swimOut(i/10);
+                        }
+                        container.fadeOut(1000);
+                    } else {
+                        container.width((100-width) + "%");
+                        re_width = width - 0.15*width;
+                        container.css({'margin-left': re_width + "%"});
                     }
-                    container.fadeOut(1000);
-                } else {
-                    container.width((100-width) + "%");
-                    re_width = width - 0.15*width;
-                    container.css({'margin-left': re_width + "%"});
-                }
-            }, 2500 + Math.sqrt(Math.sqrt(width*1000000000)));
+                }, 2500 + Math.sqrt(Math.sqrt(width*1000000000)));
+            }
         }
 
         function swimOut(width) {
             setTimeout(function() {
                 container.css({'margin-left': width + "%"});
-            }, (width-85)*(width-85)*10); 
+            }, (width-85)*(width-85)*10);
         }
     }, 100);
 }
@@ -116,6 +120,16 @@ $(function(){
 function flash(msg) {
     $('.flash-msg').html(
         '<div class="msg-container">' +
+        '<div class="notice msg" id="flash_notice">' +
+        msg +
+        '</div></div>'
+    );
+    messageAnimation(true);
+}
+
+function flash_error(msg) {
+    $('.flash-msg').html(
+        '<div class="msg-container error">' +
         '<div class="notice msg" id="flash_notice">' +
         msg +
         '</div></div>'

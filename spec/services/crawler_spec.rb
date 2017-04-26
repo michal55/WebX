@@ -64,33 +64,7 @@ describe 'Extracting data from rubygems.org' do
   end
 
   it 'should extract notebook from restricted select xPath' do
-    script = create(:script)
-    json = {}
-    json['url'] = "https://www.alza.sk/pocitace/18852653.htm"
-    json['data'] = []
-    json['data'][0] = {}
-    json['data'][0]['name'] = "category_url"
-    json['data'][0]['xpath'] = "//*[@id=\"litp18852653\"]/div[2]/ul/li[position() < 4]/span/a"
-    json['data'][0]['postprocessing'] = []
-    json['data'][0]['postprocessing'][0] = {}
-    json['data'][0]['postprocessing'][0]['type'] = "nested"
-    json['data'][0]['postprocessing'][0]['data'] = []
-    json['data'][0]['postprocessing'][0]['data'][0] = {}
-    json['data'][0]['postprocessing'][0]['data'][0]['name'] = "category"
-    json['data'][0]['postprocessing'][0]['data'][0]['xpath'] = "//*[@id=\"rootHtml\"]/head/title"
-    json['data'][0]['postprocessing'][0]['data'][1] = {}
-    json['data'][0]['postprocessing'][0]['data'][1]['name'] = "product"
-    json['data'][0]['postprocessing'][0]['data'][1]['xpath'] = "//*[@id=\"boxes\"]/div[position() < 4]"
-    json['data'][0]['postprocessing'][0]['data'][1]['postprocessing'] = []
-    json['data'][0]['postprocessing'][0]['data'][1]['postprocessing'][0] = {}
-    json['data'][0]['postprocessing'][0]['data'][1]['postprocessing'][0]['type'] = "restrict"
-    json['data'][0]['postprocessing'][0]['data'][1]['postprocessing'][0]['data'] = []
-    json['data'][0]['postprocessing'][0]['data'][1]['postprocessing'][0]['data'][0] = {}
-    json['data'][0]['postprocessing'][0]['data'][1]['postprocessing'][0]['data'][0]['name'] = "title"
-    json['data'][0]['postprocessing'][0]['data'][1]['postprocessing'][0]['data'][0]['xpath'] = "//div[1]/div/a"
-    script.xpaths = json.to_json
-    script.log_level = 0
-    script.save
+    script = create(:script_with_nested_and_restrict)
 
     Crawling::Crawler.execute(script)
     extraction = Extraction.find_by(script_id: script.id)
@@ -130,4 +104,20 @@ describe 'Extracting data from rubygems.org' do
     expect(extraction.success).to eq true
     expect(Instance.where(extraction_id: extraction.id, is_leaf: true).size).to eq 3
   end
+
+  it 'should extract and validate data field types' do
+    script = create(:script_with_nested_and_restrict)
+    fields = [2]
+    fields[0] = DataField.create(name: "category_url", data_type: "link", project: script.project)
+    fields[1] = DataField.create(name: "price", data_type: "float", project: script.project)
+
+    Crawling::Crawler.execute(script)
+    extraction = Extraction.find_by(script_id: script.id)
+    expect(extraction.success).to eq true
+    datum = ExtractionDatum.where(field_name: "category_url", extraction_id: extraction.id).order('created_at ASC')[1]
+    expect(datum.value.start_with?("https:")).to eq true
+    datum = ExtractionDatum.find_by(field_name: "price", extraction_id: extraction.id)
+    expect(datum.value.to_f).not_to eq 0
+  end
+
 end

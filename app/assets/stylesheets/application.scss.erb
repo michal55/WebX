@@ -142,7 +142,12 @@ a.btn:hover {
 		background-color: #4CAF50;
 		min-height: 20px;
 		background-image: -webkit-linear-gradient(150deg, #66BB6A 35%, #4CAF50 35%);
-		-webkit-animation:slider 3s;
+		
+		&.error {
+			-webkit-animation:slider 0s;
+			background-color: $danger;
+			background-image: -webkit-linear-gradient(150deg, $danger*1.1 35%, $danger 35%);
+		}
 	}
 	.slider {
 		@-webkit-keyframes slider {
@@ -541,4 +546,23 @@ td {
 	&:hover {
 		background-color: rgba(255,255,255,0.1);
 	}
+}
+
+.form-inline {
+  display: inline-block;
+}
+
+.fixed-column{
+  width: 20%;
+}
+
+.disabled {
+  opacity: 0.8;
+  cursor:  not-allowed;
+  display: inline-block;
+}
+
+.filter-checkbox {
+  margin-right: 2em;
+  display: inline-block;
 }

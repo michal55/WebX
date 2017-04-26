@@ -93,10 +93,10 @@ describe 'Exporting API' do
     get "/api/export/extraction?token=#{user.api_key}"
     expect(response.response_code).to eq(404)
     # script_id only
-    get "/api/export/extraction?extraction_id=#{extraction.id}"
+    get "/api/export/extraction?id=#{extraction.id}"
     expect(response.response_code).to eq(404)
     # Correct
-    get "/api/export/extraction?token=#{user.api_key}&extraction_id=#{extraction.id}"
+    get "/api/export/extraction?token=#{user.api_key}&id=#{extraction.id}"
     expect(response.response_code).to eq(200)
   end
 
@@ -108,16 +108,16 @@ describe 'Exporting API' do
     expect(user.confirmed?).to eq true
 
     # Incorrect script_id
-    get "/api/export/extraction?token=#{user.api_key}&extraction_id=xy#{extraction.id}&offset=0&limit=10"
+    get "/api/export/extraction?token=#{user.api_key}&id=xy#{extraction.id}&offset=0&limit=10"
     expect(response.response_code).to eq(404)
     # Incorrect offset
-    get "/api/export/extraction?token=#{user.api_key}&extraction_id=#{extraction.id}&offset=xy0&limit=10"
+    get "/api/export/extraction?token=#{user.api_key}&id=#{extraction.id}&offset=xy0&limit=10"
     expect(response.response_code).to eq(404)
     # Incorrect limit
-    get "/api/export/extraction?token=#{user.api_key}&extraction_id=#{extraction.id}&offset=0&limit=xy10"
+    get "/api/export/extraction?token=#{user.api_key}&id=#{extraction.id}&offset=0&limit=xy10"
     expect(response.response_code).to eq(404)
     # Correct
-    get "/api/export/extraction?token=#{user.api_key}&extraction_id=#{extraction.id}&offset=0&limit=10"
+    get "/api/export/extraction?token=#{user.api_key}&id=#{extraction.id}&offset=0&limit=10"
     expect(response.response_code).to eq(200)
   end
 
@@ -129,13 +129,13 @@ describe 'Exporting API' do
     expect(user.confirmed?).to eq true
 
     # Invalid token
-    get "/api/export/extraction?token=xyz&extraction_id=#{extraction.id}"
+    get "/api/export/extraction?token=xyz&id=#{extraction.id}"
     expect(response.response_code).to eq(404)
     # Invalid script id
-    get "/api/export/extraction?token=#{user.api_key}&extraction_id=5"
+    get "/api/export/extraction?token=#{user.api_key}&id=5"
     expect(response.response_code).to eq(404)
     # Correct
-    get "/api/export/extraction?token=#{user.api_key}&extraction_id=#{extraction.id}"
+    get "/api/export/extraction?token=#{user.api_key}&id=#{extraction.id}"
     expect(response.response_code).to eq(200)
   end
 end

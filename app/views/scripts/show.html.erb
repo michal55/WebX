@@ -1,4 +1,5 @@
 <%= extends :basic_panel do %>
+    <% extractions = Extraction.where(script_id: @script.id).order('created_at DESC') %>
     <%= form_for(@script, remote: true, url: project_script_path(@script.project, @script)) do |f|  %>
         <%= extends :basic_panel_heading do %>
             <%= f.text_field(:name, class: 'form-control editable heading') %>
@@ -20,7 +21,6 @@
               <%= f.select(:log_level, Script.log_levels, class: 'form-control') %>
             </div>
             <div class="col-md-5">
-              <% extractions = Extraction.where(script_id: @script.id).order('created_at DESC') %>
               <h4><%= t('extractions.no_extraction') unless extractions.size > 0 %></h4>
               <%= render('last_extraction', extraction: extractions.first) if extractions.size > 0%>
             </div>
@@ -29,6 +29,16 @@
             </div>
           </div>
         <% end %>
+    <% end %>
+    <%= extends :basic_panel_body do %>
+      <%= link_to(t('scripts.button_api_list'), api_list_link(@script), method: :get,class: 'btn btn-primary') %>
+      <%= link_to(t('scripts.button_api_export'), api_export_link(@script), method: :get,class: 'btn btn-primary') %>
+      <%= form_tag(project_script_run_now_path(@script.project,@script), class: "form-inline") do  %>
+          <%= submit_tag(t('scripts.button_run_now'), class: 'btn btn-primary') %>
+      <% end %>
+      <% if extractions.length >0 %>
+        <%= link_to(t('extraction_datum.logs_script_link'), project_script_extraction_logs_path(@script.project,@script, extractions.first.id), method: :get,class: 'btn btn-primary') %>
+      <% end %>
     <% end %>
 <% end %>
 <%= extends :basic_panel do %>
