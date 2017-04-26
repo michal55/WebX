@@ -39,7 +39,7 @@ class ExtractionDatumController < ApplicationController
 
     begin
       @logs.size
-    rescue Faraday::ConnectionFailed, Elasticsearch::Transport::Transport::Errors::NotFound
+    rescue Faraday::ConnectionFailed, Elasticsearch::Transport::Transport::Errors::NotFound, Elasticsearch::Transport::Transport::Errors::ServiceUnavailable
       render '_elastic_error'
       return
     end
