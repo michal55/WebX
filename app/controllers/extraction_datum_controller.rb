@@ -38,8 +38,8 @@ class ExtractionDatumController < ApplicationController
     @logs = @logs.page(params[:page]).records
 
     begin
-      @logs[0].msg
-    rescue Faraday::ConnectionFailed, Elasticsearch::Transport::Transport::Errors::NotFound
+      @logs.size
+    rescue Faraday::ConnectionFailed, Elasticsearch::Transport::Transport::Errors::NotFound, Elasticsearch::Transport::Transport::Errors::ServiceUnavailable
       render '_elastic_error'
       return
     end
