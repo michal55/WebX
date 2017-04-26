@@ -1,13 +1,10 @@
-sample_resque_job: 1
 crawler_initializer: 1
 crawler_executer: 3
 
 production:
-  sample_resque_job: 1
   crawler_initializer: 1
-  crawler_executer: 5
+  crawler_executer: 2
 
 staging:
-  sample_resque_job: 1
   crawler_initializer: 1
-  crawler_executer: 3
+  crawler_executer: 1
