@@ -124,7 +124,7 @@ module Crawling
     def create_extraction_data(instance, page, row)
       # don't save restricted parent element or pagination element
       return if @post.is_postprocessing(row, 'restrict') or @post.is_pagination(row) or @post.is_postprocessing(row, 'post')
-
+      @logger.debug("creating #{page.nil?}", @extraction)
       extraction_datum = ExtractionDatum.create(
         instance_id: instance.id, extraction_id: @extraction.id,
         field_name:  row['name'], value: extract_value(page, row)
@@ -160,7 +160,7 @@ module Crawling
       form = page.form(form_node: form_node)
       if form.nil?
         @logger.warning("Form not found at xpath: #{row['xpath']}", @extraction)
-        return
+        return page, nil
       end
 
       @post.postprocessing_data(row, 'post', 'fields').each do |field_row|
@@ -168,9 +168,10 @@ module Crawling
 
         form.field_with(name: field_row['name']).value = field_row['value']
 
-        @logger.debug("Submitting #{field_row['name']}", @extraction)
+        @logger.debug("Filling in field #{field_row['name']}", @extraction)
       end
       form.submit
+      @logger.debug("Submitted", @extraction)
 
       #vrati novu page a URL
       redirect_url = @post.postprocessing_data(row, 'post', 'redirect_url')
