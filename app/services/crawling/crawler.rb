@@ -124,7 +124,6 @@ module Crawling
     def create_extraction_data(instance, page, row)
       # don't save restricted parent element or pagination element
       return if @post.is_postprocessing(row, 'restrict') or @post.is_pagination(row) or @post.is_postprocessing(row, 'post')
-      @logger.debug("creating #{page.nil?}", @extraction)
       extraction_datum = ExtractionDatum.create(
         instance_id: instance.id, extraction_id: @extraction.id,
         field_name:  row['name'], value: extract_value(page, row)
