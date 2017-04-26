@@ -14,14 +14,20 @@
     <% end %>
     <%= extends :basic_panel_body do %>
         <%= form_tag(project_script_extraction_logs_path(@project, @script, @extraction), class: "form-inline") do %>
+            <div class="filter-checkbox">
             <%= check_box_tag('logs_filter_debug', 'logs_filter_debug',  @severities.include?(0) )%>
             <%= t('extraction_datum.filter.debug') %>
+            </div>
 
+            <div class="filter-checkbox">
             <%= check_box_tag('logs_filter_warning', 'logs_filter_warning',  @severities.include?(1) )%>
             <%= t('extraction_datum.filter.warning') %>
+            </div>
 
+            <div class="filter-checkbox">
             <%= check_box_tag('logs_filter_error', 'logs_filter_error', @severities.include?(2) )%>
             <%= t('extraction_datum.filter.error') %>
+            </div>
 
             <%= submit_tag(t('extraction_datum.filter.submit'), class: 'btn btn-primary') %>
         <% end %>
