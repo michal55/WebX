@@ -39,6 +39,7 @@
       <% if extractions.length >0 %>
         <%= link_to(t('extraction_datum.logs_script_link'), project_script_extraction_logs_path(@script.project,@script, extractions.first.id), method: :get,class: 'btn btn-primary') %>
       <% end %>
+        <%= link_to t('extractions.index'), project_script_extractions_path(@script.project, @script), method: :get,class: 'btn btn-primary' %>
     <% end %>
 <% end %>
 <%= extends :basic_panel do %>
