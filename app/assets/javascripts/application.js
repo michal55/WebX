@@ -114,7 +114,7 @@ function messageAnimation(full) {
     }, 100);
 }
 $(function(){
-    messageAnimation();
+    messageAnimation(true);
 });
 
 function flash(msg) {
