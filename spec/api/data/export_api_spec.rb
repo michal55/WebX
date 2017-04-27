@@ -20,7 +20,7 @@ describe 'Exporting API' do
     get "/api/export/list?script_id=#{script.id}"
     expect(response.response_code).to eq(404)
     # Correct
-    get "/api/export/list?token=#{user.api_key}&script_id=#{script.id}"
+    get "/api/export/list?token=#{user.api_key}&id=#{script.id}"
     expect(response.response_code).to eq(200)
   end
 
@@ -31,16 +31,16 @@ describe 'Exporting API' do
     expect(user.confirmed?).to eq true
 
     # Incorrect script_id
-    get "/api/export/list?token=#{user.api_key}&script_id=xy#{script.id}&offset=0&limit=10"
+    get "/api/export/list?token=#{user.api_key}&id=xy#{script.id}&offset=0&limit=10"
     expect(response.response_code).to eq(404)
     # Incorrect offset
-    get "/api/export/list?token=#{user.api_key}&script_id=#{script.id}&offset=xy0&limit=10"
+    get "/api/export/list?token=#{user.api_key}&id=#{script.id}&offset=xy0&limit=10"
     expect(response.response_code).to eq(404)
     # Incorrect limit
-    get "/api/export/list?token=#{user.api_key}&script_id=#{script.id}&offset=0&limit=xy10"
+    get "/api/export/list?token=#{user.api_key}&id=#{script.id}&offset=0&limit=xy10"
     expect(response.response_code).to eq(404)
     # Correct
-    get "/api/export/list?token=#{user.api_key}&script_id=#{script.id}&offset=0&limit=10"
+    get "/api/export/list?token=#{user.api_key}&id=#{script.id}&offset=0&limit=10"
     expect(response.response_code).to eq(200)
   end
 
@@ -51,13 +51,13 @@ describe 'Exporting API' do
     expect(user.confirmed?).to eq true
 
     # Invalid token
-    get "/api/export/list?token=xyz&script_id=#{script.id}"
+    get "/api/export/list?token=xyz&id=#{script.id}"
     expect(response.response_code).to eq(404)
     # Invalid script id
-    get "/api/export/list?token=#{user.api_key}&script_id=5"
+    get "/api/export/list?token=#{user.api_key}&id=5"
     expect(response.response_code).to eq(404)
     # Correct
-    get "/api/export/list?token=#{user.api_key}&script_id=#{script.id}"
+    get "/api/export/list?token=#{user.api_key}&id=#{script.id}"
     expect(response.response_code).to eq(200)
   end
 
@@ -68,7 +68,7 @@ describe 'Exporting API' do
     user.confirm
     expect(user.confirmed?).to eq true
 
-    get "/api/export/list?token=#{user.api_key}&script_id=#{script.id}"
+    get "/api/export/list?token=#{user.api_key}&id=#{script.id}"
     expect(response.response_code).to eq(200)
     json = JSON.parse(response.body)
     expect(json['data'][0]['id']).to eq(extraction.id)
