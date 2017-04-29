@@ -120,4 +120,23 @@ describe 'Extracting data from rubygems.org' do
     expect(datum.value.to_f).not_to eq 0
   end
 
+  it 'should extract date to date field' do
+    script = create(:script)
+    fields = DataField.create(name: "date", data_type: "date", project: script.project)
+
+    json = {}
+    json['url'] = "https://rubygems.org/gems/a"
+    json['data'] = []
+    json['data'][0] = {}
+    json['data'][0]['name'] = "date"
+    json['data'][0]['xpath'] = "/html/body/main/div/div/div[1]/div[2]/div/ol/li[1]/small"
+    script.xpaths = json.to_json
+    script.log_level = 1
+    script.save
+
+    Crawling::Crawler.execute(script)
+    extraction = Extraction.find_by(script_id: script.id)
+    expect(extraction.success).to eq true
+  end
+
 end
