@@ -162,7 +162,7 @@ module Crawling
         return page, nil
       end
 
-      @post.postprocessing_data(row, 'post', 'fields').each do |field_row|
+      @post.postprocessing_data(row, 'post',ArgumentError 'fields').each do |field_row|
         next if field_row['disabled'] == true or field_row['value'].empty?
 
         form.field_with(name: field_row['name']).value = field_row['value']
@@ -195,7 +195,7 @@ module Crawling
       return value unless value == nil
       begin
         value = @post.extract_text(doc, type,row['xpath'])
-      rescue ArgumentError => e
+      rescue Exception => e
         @logger.warning(e.to_s + ": #{row['xpath']}", @extraction)
         value = ""
       end
