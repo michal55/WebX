@@ -137,6 +137,8 @@ describe 'Extracting data from rubygems.org' do
     Crawling::Crawler.execute(script)
     extraction = Extraction.find_by(script_id: script.id)
     expect(extraction.success).to eq true
+    datum = ExtractionDatum.find_by(field_name: "date", extraction_id: extraction.id)
+    expect(datum.value).not_to eq ""
   end
 
   it 'should check number data type' do

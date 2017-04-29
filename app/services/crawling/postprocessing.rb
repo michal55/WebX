@@ -108,7 +108,11 @@ module Crawling
         when 'link'
           new_data = type_link(data, page)
         when 'date'
-          new_data = type_date(data.to_s)
+          begin
+            new_data = type_date(data.to_s)
+          rescue Exception
+            raise Exception
+          end
         else
           new_data = data.to_s
         end
@@ -134,7 +138,11 @@ module Crawling
     end
 
     def type_date(new_data)
-      Date.parse(new_data).strftime('%F')
+      begin
+        Date.parse(new_data).strftime('%F')
+      rescue ArgumentError
+        raise Exception.new("Date not parsed: Wrong string")
+      end
     end
 
     def regex_number (input)

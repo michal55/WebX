@@ -193,7 +193,12 @@ module Crawling
       value = @post.type_check(value, type, doc) if type.eql?("link")
 
       return value unless value == nil
-      value = @post.extract_text(doc, type,row['xpath'])
+      begin
+        value = @post.extract_text(doc, type,row['xpath'])
+      rescue Exception
+        @logger.warning("Date not parsed (invalid string): #{row['xpath']}", @extraction)
+        value = ""
+      end
       return value.to_s.strip if @post.is_postprocessing(row, 'trim')
       return value.to_s.gsub(/\s+/, '') if @post.is_postprocessing(row, 'whitespace')
       value.to_s.strip
