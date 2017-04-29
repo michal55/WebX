@@ -77,6 +77,7 @@ gem 'axlsx', '= 2.0.1'
 gem 'axlsx_rails'
 
 gem 'http'
+gem 'monetize'
 # Test suite related gems
 group :development, :test do
   gem 'rspec', '>= 3.0'

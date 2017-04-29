@@ -93,6 +93,8 @@ module Crawling
             new_data << type_float(d.to_s)
           when 'link'
             new_data << type_link(d, page)
+          when 'date'
+            new_data << type_date(d.to_s)
           else
             new_data << d.to_s
           end
@@ -105,6 +107,12 @@ module Crawling
           new_data = type_float(data.to_s)
         when 'link'
           new_data = type_link(data, page)
+        when 'date'
+          begin
+            new_data = type_date(data.to_s)
+          rescue Exception => e
+            raise e
+          end
         else
           new_data = data.to_s
         end
@@ -122,11 +130,23 @@ module Crawling
     end
 
     def type_float(new_data)
-      new_data.gsub(/[[:space:]]/, '').match(/[+-]?([0-9]+)([.,][0-9]+)?/).to_s.sub(',', '.')
+      Monetize.parse("USD" + regex_number(new_data)).to_f.to_s
     end
 
     def type_integer(new_data)
-      new_data.gsub(/[[:space:]]/, '').match(/\d+/).to_s
+      Monetize.parse("USD" + regex_number(new_data)).to_i.to_s
+    end
+
+    def type_date(new_data)
+      begin
+        Date.parse(new_data).strftime('%F')
+      rescue ArgumentError => e
+        raise e
+      end
+    end
+
+    def regex_number (input)
+      input.gsub(/[[:space:]]/, '').match(/[+-]?([0-9]+)([.,][0-9]+)*/).to_s
     end
   end
 end

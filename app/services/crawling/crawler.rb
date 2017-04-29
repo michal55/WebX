@@ -162,7 +162,7 @@ module Crawling
         return page, nil
       end
 
-      @post.postprocessing_data(row, 'post', 'fields').each do |field_row|
+      @post.postprocessing_data(row, 'post',ArgumentError 'fields').each do |field_row|
         next if field_row['disabled'] == true or field_row['value'].empty?
 
         form.field_with(name: field_row['name']).value = field_row['value']
@@ -193,7 +193,12 @@ module Crawling
       value = @post.type_check(value, type, doc) if type.eql?("link")
 
       return value unless value == nil
-      value = @post.extract_text(doc, type,row['xpath'])
+      begin
+        value = @post.extract_text(doc, type,row['xpath'])
+      rescue Exception => e
+        @logger.warning(e.to_s + ": #{row['xpath']}", @extraction)
+        value = ""
+      end
       return value.to_s.strip if @post.is_postprocessing(row, 'trim')
       return value.to_s.gsub(/\s+/, '') if @post.is_postprocessing(row, 'whitespace')
       value.to_s.strip

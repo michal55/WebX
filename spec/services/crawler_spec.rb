@@ -120,4 +120,37 @@ describe 'Extracting data from rubygems.org' do
     expect(datum.value.to_f).not_to eq 0
   end
 
+  it 'should extract date to date field' do
+    script = create(:script)
+    fields = DataField.create(name: "date", data_type: "date", project: script.project)
+
+    json = {}
+    json['url'] = "https://rubygems.org/gems/a"
+    json['data'] = []
+    json['data'][0] = {}
+    json['data'][0]['name'] = "date"
+    json['data'][0]['xpath'] = "/html/body/main/div/div/div[1]/div[2]/div/ol/li[1]/small"
+    script.xpaths = json.to_json
+    script.log_level = 1
+    script.save
+
+    Crawling::Crawler.execute(script)
+    extraction = Extraction.find_by(script_id: script.id)
+    expect(extraction.success).to eq true
+    datum = ExtractionDatum.find_by(field_name: "date", extraction_id: extraction.id)
+    expect(datum.value).not_to eq ""
+  end
+
+  it 'should check number data type' do
+    processor = Crawling::Postprocessing.new()
+    expect(processor.type_float("abc$12,345,678.9asl").to_f).to eq 12345678.9
+    expect(processor.type_float("abc$12.345.678,9asl").to_f).to eq 12345678.9
+    expect(processor.type_float("abc$12.345.678,9asl").to_f).to eq 12345678.9
+    expect(processor.type_float("abc$12 345 678,9asl").to_f).to eq 12345678.9
+    expect(processor.type_integer("abc$12,345,678.9asl").to_i).to eq 12345678
+    expect(processor.type_integer("abc$12.345.678,9asl").to_i).to eq 12345678
+    expect(processor.type_integer("abc$12.345.678,9asl").to_i).to eq 12345678
+    expect(processor.type_integer("abc$12 345 678,9asl").to_i).to eq 12345678
+  end
+
 end
