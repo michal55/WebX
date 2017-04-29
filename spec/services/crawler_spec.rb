@@ -139,4 +139,16 @@ describe 'Extracting data from rubygems.org' do
     expect(extraction.success).to eq true
   end
 
+  it 'should check number data type' do
+    processor = Crawling::Postprocessing.new()
+    expect(processor.type_float("abc$12,345,678.9asl").to_f).to eq 12345678.9
+    expect(processor.type_float("abc$12.345.678,9asl").to_f).to eq 12345678.9
+    expect(processor.type_float("abc$12.345.678,9asl").to_f).to eq 12345678.9
+    expect(processor.type_float("abc$12 345 678,9asl").to_f).to eq 12345678.9
+    expect(processor.type_integer("abc$12,345,678.9asl").to_i).to eq 12345678
+    expect(processor.type_integer("abc$12.345.678,9asl").to_i).to eq 12345678
+    expect(processor.type_integer("abc$12.345.678,9asl").to_i).to eq 12345678
+    expect(processor.type_integer("abc$12 345 678,9asl").to_i).to eq 12345678
+  end
+
 end

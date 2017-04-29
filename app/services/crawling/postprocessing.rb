@@ -126,15 +126,19 @@ module Crawling
     end
 
     def type_float(new_data)
-      new_data.gsub(/[[:space:]]/, '').match(/[+-]?([0-9]+)([.,][0-9]+)?/).to_s.sub(',', '.')
+      Monetize.parse("USD" + regex_number(new_data)).to_f.to_s
     end
 
     def type_integer(new_data)
-      new_data.gsub(/[[:space:]]/, '').match(/\d+/).to_s
+      Monetize.parse("USD" + regex_number(new_data)).to_i.to_s
     end
 
     def type_date(new_data)
       Date.parse(new_data).strftime('%F')
+    end
+
+    def regex_number (input)
+      input.gsub(/[[:space:]]/, '').match(/[+-]?([0-9]+)([.,][0-9]+)*/).to_s
     end
   end
 end
