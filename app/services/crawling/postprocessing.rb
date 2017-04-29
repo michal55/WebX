@@ -111,6 +111,7 @@ module Crawling
           begin
             new_data = type_date(data.to_s)
           rescue Exception => e
+            new_data = ""
             raise e
           end
         else
@@ -140,7 +141,7 @@ module Crawling
     def type_date(new_data)
       begin
         Date.parse(new_data).strftime('%F')
-      rescue ArgumentError => e
+      rescue Exception => e
         raise e
       end
     end
