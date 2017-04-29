@@ -93,6 +93,8 @@ module Crawling
             new_data << type_float(d.to_s)
           when 'link'
             new_data << type_link(d, page)
+          when 'date'
+            new_data << type_date(d.to_s)
           else
             new_data << d.to_s
           end
@@ -105,6 +107,8 @@ module Crawling
           new_data = type_float(data.to_s)
         when 'link'
           new_data = type_link(data, page)
+        when 'date'
+          new_data = type_date(data.to_s)
         else
           new_data = data.to_s
         end
@@ -127,6 +131,10 @@ module Crawling
 
     def type_integer(new_data)
       new_data.gsub(/[[:space:]]/, '').match(/\d+/).to_s
+    end
+
+    def type_date(new_data)
+      Date.parse(new_data).strftime('%F')
     end
   end
 end
