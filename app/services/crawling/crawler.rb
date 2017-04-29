@@ -195,8 +195,8 @@ module Crawling
       return value unless value == nil
       begin
         value = @post.extract_text(doc, type,row['xpath'])
-      rescue Exception
-        @logger.warning("Date not parsed (invalid string): #{row['xpath']}", @extraction)
+      rescue ArgumentError => e
+        @logger.warning(e.to_s + ": #{row['xpath']}", @extraction)
         value = ""
       end
       return value.to_s.strip if @post.is_postprocessing(row, 'trim')

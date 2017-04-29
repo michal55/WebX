@@ -110,8 +110,8 @@ module Crawling
         when 'date'
           begin
             new_data = type_date(data.to_s)
-          rescue Exception
-            raise Exception
+          rescue Exception => e
+            raise e
           end
         else
           new_data = data.to_s
@@ -140,8 +140,8 @@ module Crawling
     def type_date(new_data)
       begin
         Date.parse(new_data).strftime('%F')
-      rescue ArgumentError
-        raise Exception.new("Date not parsed: Wrong string")
+      rescue ArgumentError => e
+        raise e
       end
     end
 
