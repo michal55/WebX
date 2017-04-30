@@ -12,7 +12,7 @@ module ScriptsHelper
   end
 
   def api_list_link(script)
-    root_url + "api/export/list?token=#{script.project.user.api_key}&id=#{script.id}"
+    root_url + "api/export/list?token=#{script.project.user.api_key}&script_id=#{script.id}"
   end
 
   def api_export_link(script)
