@@ -39,9 +39,18 @@ describe 'Exporting API' do
     # Incorrect limit
     get "/api/export/list?token=#{user.api_key}&script_id=#{script.id}&offset=0&limit=xy10"
     expect(response.response_code).to eq(404)
+    # Incorrect since
+    get "/api/export/list?token=#{user.api_key}&script_id=#{script.id}&since=2200-01-01"
+    expect(response.response_code).to eq(404)
+    get "/api/export/list?token=#{user.api_key}&script_id=#{script.id}&since=xyz"
+    expect(response.response_code).to eq(404)
+    # Incorrext last extracton id
+    get "/api/export/extraction?token=#{user.api_key}&id=#{script.id}&last_extraction_id=xyz"
+    expect(response.response_code).to eq(404)
     # Correct
-    get "/api/export/list?token=#{user.api_key}&script_id=#{script.id}&offset=0&limit=10"
+    get "/api/export/list?token=#{user.api_key}&script_id=#{script.id}&offset=0&limit=10&since=1990-01-01&last_extraction_id=5000"
     expect(response.response_code).to eq(200)
+
   end
 
   it 'Listing token and script id must match' do
@@ -116,8 +125,16 @@ describe 'Exporting API' do
     # Incorrect limit
     get "/api/export/extraction?token=#{user.api_key}&id=#{extraction.id}&offset=0&limit=xy10"
     expect(response.response_code).to eq(404)
+    # Incorrect since
+    get "/api/export/extraction?token=#{user.api_key}&id=#{extraction.id}&since=2200-01-01"
+    expect(response.response_code).to eq(404)
+    get "/api/export/extraction?token=#{user.api_key}&id=#{extraction.id}&since=xyz"
+    expect(response.response_code).to eq(404)
+    # Incorrect last instance
+    get "/api/export/extraction?token=#{user.api_key}&id=#{extraction.id}&last_instance_id=xyz"
+    expect(response.response_code).to eq(404)
     # Correct
-    get "/api/export/extraction?token=#{user.api_key}&id=#{extraction.id}&offset=0&limit=10"
+    get "/api/export/extraction?token=#{user.api_key}&id=#{extraction.id}&&last_instance_id=1"
     expect(response.response_code).to eq(200)
   end
 

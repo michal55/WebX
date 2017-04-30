@@ -7,8 +7,11 @@
     <li><%= t('instructions.api_listing.script_id') %></li>
     <li><%= t('instructions.api_listing.limit') %></li>
     <li><%= t('instructions.api_listing.offset') %></li>
+    <li><%= t('instructions.api_listing.last_extraction_id') %></li>
+    <li><%= t('instructions.api_listing.since') %></li>
   </ul>
   <p><%= t('instructions.example')%><code><%= 'GET ' +  root_url + t('instructions.api_listing.example_url') %></code><p>
+  <p><%= t('instructions.example2')%><code><%= 'GET ' +  root_url + t('instructions.api_listing.example_url2') %></code><p>
 
   <h3><%= t('instructions.api_extraction.header')%></h3>
   <p><code><%= root_url + t('instructions.api_extraction.url') %></code><p>
@@ -19,6 +22,9 @@
     <li><%= t('instructions.api_extraction.script_id') %></li>
     <li><%= t('instructions.api_extraction.limit') %></li>
     <li><%= t('instructions.api_extraction.offset') %></li>
+    <li><%= t('instructions.api_extraction.last_instance_id') %></li>
+    <li><%= t('instructions.api_extraction.since') %></li>
+
   </ul>
   <p><%= t('instructions.example')%><code><%= 'GET ' +  root_url + t('instructions.api_extraction.example_url') %></code><p>
   <p><%= t('instructions.example2')%><code><%= 'GET ' +  root_url + t('instructions.api_extraction.example_url2') %></code><p>

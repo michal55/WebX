@@ -18,6 +18,8 @@ module API
             script_id = (Integer params[:script_id]).abs
             limit = limit_init(params[:limit])
             offset = offset_init(params[:offset])
+            last_extraction_id = last_extraction_id_init(params[:last_extraction_id])
+            since = since_init(params[:since])
           rescue
             error!(make_error_json('Parameters not valid.'),404)
           end
@@ -32,7 +34,7 @@ module API
 
           authorize_user(user,token)
 
-          extractions = Extraction.where(script_id: script_id).order('created_at DESC').offset(offset).limit(limit)
+          extractions = Extraction.where(script_id: script_id).where("created_at >= ?",since).where("id < ?", last_extraction_id).order('created_at DESC').offset(offset).limit(limit)
           extractions_array = []
 
           extractions.each do |ext|
@@ -71,6 +73,8 @@ module API
             end
             limit = limit_init(params[:limit])
             offset = offset_init(params[:offset])
+            last_instance_id = last_instance_id_init(params[:last_instance_id])
+            since = since_init(params[:since])
           rescue
             error!(make_error_json('Parameters not valid.'),404)
           end
@@ -91,7 +95,7 @@ module API
 
           authorize_user(user, token)
 
-          leafs = Instance.where(extraction_id: extraction_id).where(is_leaf: true).order('created_at ASC').offset(offset).limit(limit)
+          leafs = Instance.where(extraction_id: extraction_id).where('"instances"."created_at" >= ?', since).where("id > ?", last_instance_id).where(is_leaf: true).order('created_at ASC').offset(offset).limit(limit)
           if leafs.length == 0
             error!(make_error_json('Unavailable data.'),404)
           end
@@ -102,6 +106,7 @@ module API
           leafs.each do |leaf|
             leaf_dict = {}
             leaf_dict['id'] = leaf.id
+            leaf_dict['created_at'] = leaf.created_at
             row = ExtractionDatumMapper.make_row(leaf,fields_array)
             (0..(row.length-1)).each do |i|
               leaf_dict[fields_array[i]] = row[i]
@@ -143,6 +148,36 @@ module API
           offset
         end
 
+        def last_instance_id_init(param)
+          if param
+            last_instance_id = (Integer param).abs
+          else
+            last_instance_id = 0
+          end
+          last_instance_id
+        end
+
+        def last_extraction_id_init(param)
+          if param
+            last_extraction_id = (Integer param).abs
+          else
+            if Extraction.all.size == 0
+              last_extraction_id = 1
+            else
+              last_extraction_id = Extraction.last.id + 1
+            end
+          end
+          last_extraction_id
+        end
+
+        def since_init(param)
+          if param
+            since = DateTime.iso8601(param.tr(' ','+'))
+          else
+            since = DateTime.iso8601('1970-01-01T00:00:00+00:00')
+          end
+          since
+        end
         def authorize_user(user, token)
           if user.api_key != token
             error!(make_error_json('Invalid token.'),404)
