@@ -1,5 +1,6 @@
 require 'rspec'
 require 'rails_helper'
+
 describe 'Logging into elastic' do
 
   it 'Logs factory user'   do
@@ -40,5 +41,8 @@ describe 'Logging into elastic' do
     )
     expect(error_response[0]['msg']).to eq("error")
 
+
   end
 end
+
+

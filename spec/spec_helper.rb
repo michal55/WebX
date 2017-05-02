@@ -108,4 +108,5 @@ RSpec.configure do |config|
   config.after(:suite) do
     Log.__elasticsearch__.client.indices.delete index: Log.index_name
   end
+
 end
