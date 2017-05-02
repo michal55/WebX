@@ -247,7 +247,11 @@ en:
       script_id: "script_id - required, ID of a script results of which you want to list"
       limit: "limit - optional, number of extractions to return, default is 10"
       offset: "offset - optional, offset for extractions starting from the latest, default is 0"
+      last_extraction_id: "last_extraction_id - optional, extraction_id which from you want to export, shows lower ids "
+      since: "since - optional, since you want list extractions,format iso 8601"
       example_url: "api/export/list?token=YourToken&script_id=1&limit=10&offset=0"
+      example_url2: "api/export/list?token=YourToken&script_id=1&since=1970-01-01T12:00:00.000+00:00"
+
     api_extraction:
       header: "Extracted data"
       url: "api/export/extraction"
@@ -256,8 +260,10 @@ en:
       script_id: "script_id - required only if id=last, ID of a script"
       limit: "limit - optional, number of instances to return, default is 10"
       offset: "offset - optional, offset for data instances of an extraction, default is 0"
+      last_instance_id: "last_instance_id - optional, instance_id which from you want to export"
+      since: "since - optional, since you want extraction data, format iso 8601"
       example_url: "api/export/extraction?token=YourToken&id=1&limit=10&offset=0"
-      example_url2: "api/export/extraction?token=YourToken&id=last&script_id=1"
+      example_url2: "api/export/extraction?token=YourToken&id=last&script_id=1&last_instance_id=456&since=1970-01-01T12:00:00.000+00:00"
 
   dashboard:
     header: "Last 5 extractions"

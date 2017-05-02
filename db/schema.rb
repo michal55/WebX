@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170406114613) do
+ActiveRecord::Schema.define(version: 20170502192721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,7 +48,10 @@ ActiveRecord::Schema.define(version: 20170406114613) do
     t.datetime "deleted_at"
   end
 
+  add_index "extractions", ["created_at"], name: "index_extractions_on_created_at", using: :btree
   add_index "extractions", ["deleted_at"], name: "index_extractions_on_deleted_at", using: :btree
+  add_index "extractions", ["id"], name: "index_extractions_on_id", using: :btree
+  add_index "extractions", ["script_id"], name: "index_extractions_on_script_id", using: :btree
 
   create_table "frequencies", force: :cascade do |t|
     t.integer  "interval"
@@ -72,7 +75,11 @@ ActiveRecord::Schema.define(version: 20170406114613) do
     t.boolean  "is_leaf"
   end
 
+  add_index "instances", ["created_at"], name: "index_instances_on_created_at", using: :btree
   add_index "instances", ["deleted_at"], name: "index_instances_on_deleted_at", using: :btree
+  add_index "instances", ["extraction_id"], name: "index_instances_on_extraction_id", using: :btree
+  add_index "instances", ["id"], name: "index_instances_on_id", using: :btree
+  add_index "instances", ["is_leaf"], name: "index_instances_on_is_leaf", using: :btree
 
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", null: false
@@ -124,6 +131,7 @@ ActiveRecord::Schema.define(version: 20170406114613) do
   end
 
   add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at", using: :btree
+  add_index "projects", ["id"], name: "index_projects_on_id", using: :btree
 
   create_table "scripts", force: :cascade do |t|
     t.string   "name"
@@ -137,6 +145,7 @@ ActiveRecord::Schema.define(version: 20170406114613) do
   end
 
   add_index "scripts", ["deleted_at"], name: "index_scripts_on_deleted_at", using: :btree
+  add_index "scripts", ["id"], name: "index_scripts_on_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at",                          null: false
