@@ -22,7 +22,7 @@ module Crawling
       @agent.user_agent_alias = 'Mac Safari'
       @agent.verify_mode = OpenSSL::SSL::VERIFY_NONE
       @post = Postprocessing.new
-      @logged_in = false
+      @break = false
 
       script_json = script.xpaths
       @parent_stack = []
@@ -60,7 +60,23 @@ module Crawling
       instance.is_leaf = true
 
       data_row.each do |row|
-        create_extraction_data(instance, page, row)
+        extracted_data = create_extraction_data(instance, page, row)
+
+        #TODO: necheckuje sa ci je hodnota typu date
+        if @post.is_postprocessing(row, 'filter')
+          @logger.debug("Filtering date #{extracted_data.value}", @extraction)
+          if @post.filter(row, extracted_data.value.to_date, false)
+            @logger.debug("Breaking - date: #{extracted_data.value}", @extraction)
+            instance.destroy
+            @break = true
+            break
+          end
+          if @post.filter(row, extracted_data.value.to_date, true)
+            @logger.debug("Skipping - date: #{extracted_data.value}", @extraction)
+            instance.destroy
+            break
+          end
+        end
 
         if @post.is_postprocessing(row, 'nested')
           instance.is_leaf = false
@@ -77,7 +93,7 @@ module Crawling
             new_instance = Instance.create(extraction_id: @extraction.id, parent_id: @parent_stack[-1])
             nested_row = @post.postprocessing_data(row, 'nested', 'data')
 
-            iterate_json(nested_row, nested_page, new_instance, url, row['name'])
+            iterate_json(nested_row, nested_page, new_instance, url, row['name']) unless @break
           end
 
           @parent_stack.pop
@@ -91,10 +107,10 @@ module Crawling
           @logger.debug("Restrict htmls: #{partial_htmls.size}", @extraction)
 
           partial_htmls.each do |html|
-            restricted_page = mechanize_page(html)
+            restricted_page = mechanize_page(html, page.uri)
             new_instance = Instance.create(extraction_id: @extraction.id, parent_id: @parent_stack[-1])
             nested_row = @post.postprocessing_data(row, 'restrict', 'data')
-            iterate_json(nested_row, restricted_page, new_instance, nil, row['name'])
+            iterate_json(nested_row, restricted_page, new_instance, nil, row['name']) unless @break
           end
 
           @parent_stack.pop
@@ -109,10 +125,11 @@ module Crawling
 
       unless next_page_xpath.nil?
         next_url = page.parser.xpath(next_page_xpath)
+        @logger.debug("Next page url: #{next_url}", @extraction)
         next_page = try_get_url(@extraction, next_url)
         return if next_page.nil?
 
-        iterate_json(data_row, next_page, instance, next_url, 'url', page_number+1)
+        iterate_json(data_row, next_page, instance, next_url, 'url', page_number+1) unless @break
       end
 
     end
@@ -129,10 +146,11 @@ module Crawling
         field_name:  row['name'], value: extract_value(page, row)
       )
       @logger.debug(log_msg(extraction_datum, row), @extraction)
+      extraction_datum
     end
 
-    def mechanize_page(html)
-      page = Mechanize::Page.new(nil, { 'content-type' => 'text/html' }, html.to_s, nil, @agent)
+    def mechanize_page(html, uri)
+      page = Mechanize::Page.new(uri, { 'content-type' => 'text/html' }, html.to_s, nil, @agent)
       page.encoding = "utf-8"
       page
     end
@@ -194,7 +212,7 @@ module Crawling
 
       return value unless value == nil
       begin
-        value = @post.extract_text(doc, type,row['xpath'])
+        value = @post.extract_text(doc, type, row['xpath'])
       rescue Exception => e
         @logger.warning(e.to_s + ": #{row['xpath']}", @extraction)
         value = ""

@@ -55,7 +55,6 @@ module Crawling
       else
         parsed_text = doc.parser.xpath "#{xpath}//text()"
       end
-
       type_check(parsed_text, type, doc)
     end
 
@@ -94,7 +93,12 @@ module Crawling
           when 'link'
             new_data << type_link(d, page)
           when 'date'
-            new_data << type_date(d.to_s)
+            begin
+              new_data = type_date(data.to_s)
+            rescue Exception => e
+              new_data = ""
+              raise e
+            end
           else
             new_data << d.to_s
           end
@@ -146,8 +150,41 @@ module Crawling
       end
     end
 
-    def regex_number (input)
+    def regex_number(input)
       input.gsub(/[[:space:]]/, '').match(/[+-]?([0-9]+)([.,][0-9]+)*/).to_s
     end
+
+    def filter row, date, greater
+      filter_date = postprocessing_data(row, 'filter', 'filter')
+
+      case filter_date
+      when 'yesterday'
+        if greater
+          return date > yesterday
+        else
+          return date < yesterday
+        end
+      when 'before-yesterday'
+        if greater
+          return date > before_yesterday
+        else
+          return date < before_yesterday
+        end
+
+      end
+    end
+
+    def today
+      Time.now.strftime("%Y-%m-%d").to_date
+    end
+
+    def yesterday
+      Time.now.strftime("%Y-%m-%d").to_date - 1.day
+    end
+
+    def before_yesterday
+      Time.now.strftime("%Y-%m-%d").to_date - 2.day
+    end
+
   end
 end
