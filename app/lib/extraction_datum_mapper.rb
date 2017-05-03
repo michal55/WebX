@@ -11,7 +11,7 @@ module ExtractionDatumMapper
     Instance.where(id: parents_set.to_a).order('id ASC')
   end
 
-  def ExtractionDatumMapper.get_field_array(leafs)
+  def ExtractionDatumMapper.deprecated_get_field_array(leafs)
     fields_set = Set.new
     if leafs.length == 0
       return []
@@ -32,6 +32,20 @@ module ExtractionDatumMapper
     fields_set.to_a
   end
 
+  def ExtractionDatumMapper.get_field_array(leafs)
+    fields_array = ['url']
+    if leafs.length == 0
+      return []
+    end
+
+    project = leafs[0].extraction.script.project
+    data_fields = DataField.where(project_id: project.id)
+    data_fields.each do |f|
+      fields_array << f.name
+    end
+    fields_array
+  end
+
   def ExtractionDatumMapper.make_row(instance,fields_array)
     extraction_data_arr = []
     inst = instance
@@ -45,7 +59,11 @@ module ExtractionDatumMapper
 
     extraction_data_arr.each do |extraction_data|
       extraction_data.each do |ext|
-        array[fields_array.index(ext.field_name)] = ext.value if array[fields_array.index(ext.field_name)] == '-'
+        index = fields_array.index(ext.field_name)
+        if index == nil
+          next
+        end
+        array[index] = ext.value if array[index] == '-'
       end
     end
 
