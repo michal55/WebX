@@ -33,15 +33,16 @@ module ExtractionDatumMapper
   end
 
   def ExtractionDatumMapper.get_field_array(leafs)
-    fields_array = ['url']
+    fields_array = []
     if leafs.length == 0
-      return []
+      return fields_array
     end
 
-    project = leafs[0].extraction.script.project
-    data_fields = DataField.where(project_id: project.id)
+    extraction = leafs[0].extraction
+    #data_fields = DataField.where(project_id: project.id).order(:id)
+    data_fields = ExtractionDatum.select("id, field_name").where(extraction_id: extraction.id).order(:id).pluck(:field_name).uniq
     data_fields.each do |f|
-      fields_array << f.name
+      fields_array << f
     end
     fields_array
   end
