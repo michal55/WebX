@@ -62,8 +62,7 @@ module Crawling
       data_row.each do |row|
         extracted_data = create_extraction_data(instance, page, row)
 
-        #TODO: necheckuje sa ci je hodnota typu date
-        if @post.is_postprocessing(row, 'filter')
+        if @post.is_postprocessing(row, 'filter') and is_date(row)
           @logger.debug("Filtering date #{extracted_data.value}", @extraction)
           if @post.filter(row, extracted_data.value.to_date, false)
             @logger.debug("Breaking - date: #{extracted_data.value}", @extraction)
@@ -220,6 +219,10 @@ module Crawling
       return value.to_s.strip if @post.is_postprocessing(row, 'trim')
       return value.to_s.gsub(/\s+/, '') if @post.is_postprocessing(row, 'whitespace')
       value.to_s.strip
+    end
+
+    def is_date row
+      DataField.find_by(name: row['name'], project_id: @extraction.script.project_id).name.eql?('date')
     end
 
   end
