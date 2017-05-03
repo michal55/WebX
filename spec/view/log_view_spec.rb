@@ -15,9 +15,10 @@ describe 'Displaying logs ', :type => :feature do
     fill_in 'user[password]', with: user.password
     click_button I18n.t('auth.login.submit')
 
+    Log.refresh_index!
+
     visit project_script_extraction_logs_path(extraction.script.project_id,extraction.script_id, extraction.id)
     expect(page).to have_text("debug_text")
     expect(page).to have_text("error_text")
-
   end
 end

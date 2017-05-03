@@ -41,7 +41,7 @@ describe 'Exporting API' do
     expect(response.response_code).to eq(404)
     # Incorrect since
     get "/api/export/list?token=#{user.api_key}&script_id=#{script.id}&since=2200-01-01"
-    expect(response.response_code).to eq(404)
+    expect(response.response_code).to eq(200)
     get "/api/export/list?token=#{user.api_key}&script_id=#{script.id}&since=xyz"
     expect(response.response_code).to eq(404)
     # Incorrext last extracton id

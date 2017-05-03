@@ -41,8 +41,8 @@ describe 'Logging into elastic' do
     )
     expect(error_response[0]['msg']).to eq("error")
 
-
   end
 end
+
 
 
