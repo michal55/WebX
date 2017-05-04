@@ -35,6 +35,16 @@ module DebugHelper
                                ]
                            },
                            {
+                               "name"=>"asked",
+                               "xpath"=>"//*[@class='relativetime']/@title",
+                               "postprocessing"=>[
+                                   {
+                                       "type"=>"filter",
+                                       "filter"=>"yesterday"
+                                   }
+                               ]
+                           },
+                           {
                                "name"=>"next_page",
                                "xpath"=>"//*[@rel='next']",
                                "postprocessing"=>[

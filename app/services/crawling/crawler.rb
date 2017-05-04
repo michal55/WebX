@@ -222,7 +222,7 @@ module Crawling
     end
 
     def is_date row
-      DataField.find_by(name: row['name'], project_id: @extraction.script.project_id).name.eql?('date')
+      DataField.find_by(name: row['name'], project_id: @extraction.script.project_id).data_type.eql?('date')
     end
 
   end

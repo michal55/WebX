@@ -17,6 +17,13 @@
       <img src="<%= Rails.configuration.relative_url_root %>/assets/nested_example" width="600px">
     </div>
     <div class="row">
+      <h2>Filter</h2>
+      <p>Skipping extraction cycle or ending it all together when a certain value (date) is extracted.</p>
+      <p>Filter set to 'yesterday' will skip all rows of a greater date than yesterday and the extraction ends
+        when a smaller date appears. Similarly with 'before-yesterday'.</p>
+      <p>Filter yesterday-or-older will skip all dates greater than yesterday but the extraction will go on until it ends naturally.</p>
+    </div>
+    <div class="row">
       <h2>Pagination</h2>
       <p>This xpaths describes an element that points to the next page. Usually, it's a link with a rel='next' attribute.</p>
       <p>After scraping all the user-specified data from the page, the crawler repeats the process on the next page.</p>

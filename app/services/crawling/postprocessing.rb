@@ -156,8 +156,13 @@ module Crawling
 
     def filter row, date, greater
       filter_date = postprocessing_data(row, 'filter', 'filter')
-
       case filter_date
+      when 'yesterday-or-older'
+        if greater
+          return date > yesterday
+        else
+          return false
+        end
       when 'yesterday'
         if greater
           return date > yesterday
