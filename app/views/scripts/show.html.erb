@@ -39,7 +39,7 @@
               <div class="col-md-6">
                 <% extractions = Extraction.where(script_id: @script.id) %>
                 <h4>
-                  <%= t('scripts.columns.instance_count') %> -
+                  <%= t('scripts.columns.instance_count') %>:
                   <%= Instance.where(extraction_id: extractions, is_leaf: true).size %>
                 </h4>
               </div>

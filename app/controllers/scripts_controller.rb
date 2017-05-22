@@ -15,7 +15,7 @@ class ScriptsController < ApplicationController
 
   def create
     @script_new = Script.new
-    @script_new.assign_attributes({name: params[:script][:name], project_id:  params[:project_id], log_level: 2, xpaths: {}.to_json, retries: 0 })
+    @script_new.assign_attributes({name: params[:script][:name], project_id:  params[:project_id], log_level: 2, xpaths: {}.to_json, retries: 0, retries_left: 0 })
     @script_new.save!
     flash[:notice] = I18n.t('scripts.flash_create', script_name: @script_new.name)
     redirect_to project_path(params[:project_id])
@@ -39,6 +39,7 @@ class ScriptsController < ApplicationController
     @script.xpaths = params[:script][:xpaths].gsub("\n","").to_json
     @script.log_level = params[:script][:log_level].to_i
     @script.retries = params[:script][:retries]
+    @script.retries_left = @script.retries
     begin
       @script.save!
     rescue
