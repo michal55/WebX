@@ -11,6 +11,10 @@ module Crawling
         try_execute(script)
       rescue Exception => e
         @logger.error(e.to_s, @extraction)
+        e.backtrace.each do |msg|
+          break unless msg.include?('WebX')
+          @logger.error(msg, @extraction)
+        end
         @extraction.success = false
         @extraction.save!
         puts e.to_s
