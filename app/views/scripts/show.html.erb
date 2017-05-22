@@ -17,15 +17,34 @@
             <div class="col-md-7">
               <h4><%= t('scripts.columns.name') %></h4>
               <%= f.text_area :xpaths, value: pretty_json(@script), rows: json_height(@script), cols: 70, class: 'form-control codeblock'  %>
-              <h4><%= t('scripts.columns.log_level') %></h4>
-              <%= f.select :log_level, Script.log_levels, {}, class: 'form-control'%>
+              <div class="col-md-6">
+                <h4><%= t('scripts.columns.log_level') %></h4>
+                <%= f.select(
+                    :log_level,
+                    Script.log_levels,
+                    {},
+                    {
+                        class: 'form-control',
+                        :'ng-init' => "mapper.types['#{@script.id}']='#{Script.log_levels[@script.log_level]}'",
+                        :'ng-model' => "mapper.types['#{@script.id}']",
+                        :'ng-change' => "dirty('#{@script.id}')"
+                    }
+                    )
+                %>
+              </div>
+              <div class="col-md-6">
+                <h4><%= t('scripts.columns.retries') %></h4>
+                <%= f.select(:retries, options_for_select([0,1,2,3], :selected => f.object.retries), {}, class: 'form-control')%>
+              </div>
+              <div class="col-md-6">
+                <% extractions = Extraction.where(script_id: @script.id) %>
+                <h4>
+                  <%= t('scripts.columns.instance_count') %> -
+                  <%= Instance.where(extraction_id: extractions, is_leaf: true).size %>
+                </h4>
+              </div>
             </div>
             <div class="col-md-5">
-              <% extractions = Extraction.where(script_id: @script.id) %>
-              <h4>
-                <%= t('scripts.columns.instance_count') %> -
-                <%= Instance.where(extraction_id: extractions, is_leaf: true).size %>
-              </h4>
               <%= render('last_extraction', extraction: extractions.first) if extractions.size > 0%>
             </div>
             <div class="col-md-12 submit-area">
