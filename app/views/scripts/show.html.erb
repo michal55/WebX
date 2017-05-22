@@ -21,7 +21,11 @@
               <%= f.select :log_level, Script.log_levels, {}, class: 'form-control'%>
             </div>
             <div class="col-md-5">
-              <h4><%= t('extractions.no_extraction') unless extractions.size > 0 %></h4>
+              <% extractions = Extraction.where(script_id: @script.id) %>
+              <h4>
+                <%= t('scripts.columns.instance_count') %> -
+                <%= Instance.where(extraction_id: extractions, is_leaf: true).size %>
+              </h4>
               <%= render('last_extraction', extraction: extractions.first) if extractions.size > 0%>
             </div>
             <div class="col-md-12 submit-area">

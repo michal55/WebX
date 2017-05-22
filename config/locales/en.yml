@@ -109,6 +109,7 @@ en:
     new: "New script"
     edit: "Edit script"
     columns:
+      instance_count: "Data instances extracted"
       name: "Script"
       extract: "Extractions"
       action: "Actions"
