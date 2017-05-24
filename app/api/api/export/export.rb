@@ -95,6 +95,8 @@ module API
 
           authorize_user(user, token)
 
+          Logging::Logger.new(severity: 'debug').debug("API call extraction: #{extraction_id}", script)
+
           leafs = Instance.where(extraction_id: extraction_id).where('"instances"."created_at" >= ?', since).where("id > ?", last_instance_id).where(is_leaf: true).order('created_at ASC').offset(offset).limit(limit)
           if leafs.length == 0
             error!(make_error_json('Unavailable data.'),404)

@@ -9,11 +9,24 @@ module Crawling
       @logger.debug('Extraction created', @extraction)
       begin
         try_execute(script)
+        #reset retries after successful extraction
+        script.retries_left = script.retries
+        script.save
       rescue Exception => e
         @logger.error(e.to_s, @extraction)
+        e.backtrace.each do |msg|
+          break unless msg.include?('WebX')
+          @logger.error(msg, @extraction)
+        end
         @extraction.success = false
         @extraction.save!
-        puts e.to_s
+        if script.retries_left > 0
+          #ENQUEUE
+          Resque.enqueue(CrawlerExecuter, script.id)
+          @logger.debug("Re-trying extraction", @extraction)
+          script.retries_left -= 1
+          script.save
+        end
       end
     end
 

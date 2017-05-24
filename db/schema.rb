@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170502192721) do
+ActiveRecord::Schema.define(version: 20170522210722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,13 +135,15 @@ ActiveRecord::Schema.define(version: 20170502192721) do
 
   create_table "scripts", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.integer  "project_id"
     t.datetime "deleted_at"
     t.json     "xpaths"
     t.datetime "last_run"
     t.integer  "log_level"
+    t.integer  "retries"
+    t.integer  "retries_left"
   end
 
   add_index "scripts", ["deleted_at"], name: "index_scripts_on_deleted_at", using: :btree

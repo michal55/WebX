@@ -32,7 +32,7 @@
           <thead>
           <tr>
             <th><%= t('dashboard.row_script')%></th>
-            <th><%= t('dashboard.row_extraction')%></th>
+            <th><%= t('dashboard.row_next_extraction')%></th>
             <th class="number-column"><%= t('scripts.columns.extract') %></th>
             <th><%= t('dashboard.row_status')%></th>
           </tr>
@@ -42,7 +42,8 @@
               <% extraction = script.extractions.order(:created_at)[-1]  %>
               <tr>
                 <td><%= link_to script.name, project_script_path(script.project.id,script.id) %></td>
-                <td><%= link_to  extraction.created_at.strftime(t('time.format_extended')),project_script_extraction_extraction_datum_index_path(script.project.id,script.id,extraction.id) %></td>
+                <% f = script.frequencies[-1] %>
+                <td><%= (script.extractions[-1].created_at + eval(f.interval.to_s + '.' + f.period)).strftime(t('time.format_extended'))%></td>
                 <td>
                   <%= link_to project_script_extractions_path(script.project.id, script.id) do %>
                       <span><%= script.extractions.size %>&nbsp<i class="glyphicon glyphicon-link"></i></span>

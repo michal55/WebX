@@ -1,6 +1,5 @@
 <%= extends :basic_panel do %>
-    <% extractions = Extraction.where(script_id: @script.id).order('created_at DESC') %>
-    <%= form_for(@script, remote: true, url: project_script_path(@script.project, @script)) do |f|  %>
+    <%= form_for(@script,  url: project_script_path(@script.project, @script)) do |f|  %>
         <%= extends :basic_panel_heading do %>
             <%= f.text_field(:name, class: 'form-control editable heading') %>
             <div class="row">
@@ -12,36 +11,79 @@
               </div>
             </div>
         <% end %>
-        <%= extends :basic_panel_body do %>
-            <div class="row">
-            <div class="col-md-7">
-              <h4><%= t('scripts.columns.name') %></h4>
-              <%= f.text_area :xpaths, value: pretty_json(@script), rows: json_height(@script), cols: 70, class: 'form-control codeblock'  %>
-              <h4><%= t('scripts.columns.log_level') %></h4>
-              <%= f.select :log_level, Script.log_levels, {}, class: 'form-control'%>
-            </div>
-            <div class="col-md-5">
-              <h4><%= t('extractions.no_extraction') unless extractions.size > 0 %></h4>
-              <%= render('last_extraction', extraction: extractions.first) if extractions.size > 0%>
-            </div>
-            <div class="col-md-12 submit-area">
-              <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
-            </div>
-          </div>
-        <% end %>
     <% end %>
     <%= extends :basic_panel_body do %>
-      <%= link_to(t('scripts.button_api_list'), api_list_link(@script), method: :get,class: 'btn btn-primary') %>
-      <%= link_to(t('scripts.button_api_export'), api_export_link(@script), method: :get,class: 'btn btn-primary') %>
-      <%= form_tag(project_script_run_now_path(@script.project,@script), class: "form-inline") do  %>
-          <%= submit_tag(t('scripts.button_run_now'), class: 'btn btn-primary') %>
-      <% end %>
-      <% if extractions.length >0 %>
-        <%= link_to(t('extraction_datum.logs_script_link'), project_script_extraction_logs_path(@script.project,@script, extractions.first.id), method: :get,class: 'btn btn-primary') %>
-      <% end %>
-        <%= link_to t('extractions.index'), project_script_extractions_path(@script.project, @script), method: :get,class: 'btn btn-primary' %>
+        <div class="row">
+        <div class="col-md-7">
+          <%= form_for(@script,  url: project_script_path(@script.project, @script)) do |f|  %>
+
+          <h2><%= t('scripts.columns.name') %></h2>
+          <%= f.text_area :xpaths, value: pretty_json(@script), rows: json_height(@script), cols: 70, class: 'form-control codeblock'  %>
+          <div class="col-md-6">
+            <h4><%= t('scripts.columns.log_level') %></h4>
+            <%= f.select(
+                :log_level,
+                Script.log_levels,
+                {},
+                {
+                    class: 'form-control',
+                    :'ng-init' => "mapper.types['#{@script.id}']='#{Script.log_levels[@script.log_level]}'",
+                    :'ng-model' => "mapper.types['#{@script.id}']",
+                    :'ng-change' => "dirty('#{@script.id}')"
+                }
+                )
+            %>
+          </div>
+          <div class="col-md-6">
+            <h4><%= t('scripts.columns.retries') %></h4>
+            <%= f.select(:retries, options_for_select([0,1,2,3], :selected => f.object.retries), {}, class: 'form-control')%>
+          </div>
+
+          <div class="col-md-1 submit-area form-inline">
+            <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
+          </div>
+          <%end%>
+
+          <div class="col-md-1 run-now-wrapper form-inline">
+            <%= form_tag(project_script_run_now_path(@script.project,@script)) do  %>
+                <%= submit_tag(t('scripts.button_run_now'), class: 'btn btn-primary') %>
+            <% end %>
+          </div>
+        </div>
+
+
+        <div class="col-md-5">
+          <% extractions = Extraction.where(script_id: @script.id).order('created_at DESC') %>
+
+          <div class="form-inline container-script">
+            <h2 class="form-inline"> <%= t('scripts.header_extraction')%></h2>
+            <div class="form-inline">
+              <%= link_to t('extractions.index'), project_script_extractions_path(@script.project, @script), method: :get,class: 'btn btn-primary right' %>
+            </div>
+          </div>
+          <h4>
+          <%= t('scripts.columns.instance_count') %>
+          </h4>
+          <%= Instance.where(extraction_id: extractions, is_leaf: true).size %>
+
+          <%= render('last_extraction', extraction: extractions.first) if extractions.size > 0%>
+
+          <% if extractions.length >0 %>
+              <%= link_to(t('extraction_datum.logs_script_link'), project_script_extraction_logs_path(@script.project,@script, extractions.first.id), method: :get,class: 'btn btn-primary') %>
+          <% end %>
+
+          <h4>API</h4>
+          <%= link_to(t('scripts.button_api_list'), api_list_link(@script), method: :get,class: 'btn btn-primary') %>
+          <%= link_to(t('scripts.button_api_export'), api_export_link(@script), method: :get,class: 'btn btn-primary') %>
+        </div>
+
+
+      </div>
     <% end %>
 <% end %>
+
+
+
 <%= extends :basic_panel do %>
     <%= extends :basic_panel_body do %>
        <%= render 'frequencies/index', script: @script, project: @project, frequencies: @script.frequencies, frequency_new: @new_frequency %>

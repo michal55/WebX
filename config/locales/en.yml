@@ -57,6 +57,7 @@ en:
       surname: "surname"
       password_placeholder: "password"
       retype_placeholder: "retype password"
+      new_password_placeholder: "new password"
       minimum: " characters minimum"
       submit: "Sign up"
     login:
@@ -73,6 +74,10 @@ en:
       submit: "Resend unlock instructions"
     confirm:
       did_not:  "Didn't receive confirmation instructions?"
+    delete:
+      header: "Unhappy ?"
+      password_placeholer: "enter password to delete account"
+      flash_error: "Can't delete this user - incorrect password"
 
   email:
     normal:
@@ -108,7 +113,9 @@ en:
     new_button: "+ script"
     new: "New script"
     edit: "Edit script"
+    header_extraction: "Results"
     columns:
+      instance_count: "Total instances: "
       name: "Script"
       extract: "Extractions"
       action: "Actions"
@@ -164,6 +171,7 @@ en:
   extractions:
     index: "Extractions"
     columns:
+      header_table: "Summary of last extraction"
       created_at: "Created"
       executed: "Executed"
       execution_time: "Execution time"
@@ -269,4 +277,5 @@ en:
     header: "Last 5 extractions"
     row_script: "Script"
     row_extraction: "Extraction time"
+    row_next_extraction: "Next extraction"
     row_status: "Status"
