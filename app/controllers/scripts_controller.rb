@@ -35,11 +35,32 @@ class ScriptsController < ApplicationController
 
   def update
     @script = Script.find(params[:id])
-    @script.name = params[:script][:name]
-    @script.xpaths = params[:script][:xpaths].gsub("\n","").to_json
-    @script.log_level = params[:script][:log_level].to_i
-    @script.retries = params[:script][:retries]
-    @script.retries_left = @script.retries
+    if params[:script][:name]
+      @script.name = params[:script][:name]
+    end
+
+    if params[:script][:xpaths]
+      @script.xpaths = params[:script][:xpaths].gsub("\n","").to_json
+    end
+
+    if params[:script][:log_level]
+      @script.log_level = params[:script][:log_level].to_i
+    end
+
+    if params[:script][:retries]
+      @script.retries = params[:script][:retries]
+      @script.retries_left = @script.retries
+    end
+
+    begin
+      @script.save!
+      flash[:notice] = I18n.t('scripts.flash_update', script_name: @script.name)
+      redirect_to project_script_path(@script.project.id,@script.id)
+    rescue
+      flash[:error] = I18n.t('scripts.flash_update_error', script_name: @script.name)
+      redirect_to project_script_path(@script.project.id,@script.id)
+    end
+=begin
     begin
       @script.save!
     rescue
@@ -53,6 +74,7 @@ class ScriptsController < ApplicationController
       format.text { render(nothing: true, status: 200, content_type: "text/html") }
       format.js { render :js => "flash(\"#{ I18n.t('scripts.flash_update', script_name: @script.name)}\");"  }
     end
+=end
   end
 
   def destroy

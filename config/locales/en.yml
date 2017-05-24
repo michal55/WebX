@@ -113,8 +113,9 @@ en:
     new_button: "+ script"
     new: "New script"
     edit: "Edit script"
+    header_extraction: "Results"
     columns:
-      instance_count: "Data instances extracted"
+      instance_count: "Total instances: "
       name: "Script"
       extract: "Extractions"
       action: "Actions"
@@ -170,6 +171,7 @@ en:
   extractions:
     index: "Extractions"
     columns:
+      header_table: "Summary of last extraction"
       created_at: "Created"
       executed: "Executed"
       execution_time: "Execution time"

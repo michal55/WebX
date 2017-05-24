@@ -25,7 +25,7 @@ before_filter :configure_account_update_params, only: [:update]
   # DELETE /resource
   def destroy
     user = User.find_for_authentication(:id => params[:user][:id])
-    valid = user.valid_password?(params[:user][:current_password])
+    valid = user.valid_password?(params[:user][:current_password_delete])
     if valid
       super
     else
