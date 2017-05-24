@@ -14,7 +14,7 @@ class Ability
         can [:update, :destroy, :edit, :index, :show, :read, :create], Script, project_id: Project.where(user_id: user.id).ids
     end
 
-    can(:profile, User)
+    can([:profile,:refresh_api_key], User)
 
     # Define abilities for the passed in user here. For example:
     #
