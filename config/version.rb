@@ -4,7 +4,7 @@ module WebX
     MINOR = 4
     PATCH = 2
 
-    PRE = '--no-push'
+    PRE = nil
 
     STRING = [MAJOR, MINOR, PATCH, PRE].compact * '.'
   end
