@@ -39,12 +39,12 @@
             <%= f.select(:retries, options_for_select([0,1,2,3], :selected => f.object.retries), {}, class: 'form-control')%>
           </div>
 
-          <div class="col-md-7 submit-area">
+          <div class="col-md-1 submit-area form-inline">
             <%= f.submit(t('buttons.submit'), class: 'btn btn-primary') %>
           </div>
           <%end%>
 
-          <div class="col-md-12 run-now-wrapper">
+          <div class="col-md-1 run-now-wrapper form-inline">
             <%= form_tag(project_script_run_now_path(@script.project,@script)) do  %>
                 <%= submit_tag(t('scripts.button_run_now'), class: 'btn btn-primary') %>
             <% end %>
