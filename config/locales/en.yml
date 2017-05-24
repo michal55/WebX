@@ -275,4 +275,5 @@ en:
     header: "Last 5 extractions"
     row_script: "Script"
     row_extraction: "Extraction time"
+    row_next_extraction: "Next extraction"
     row_status: "Status"
