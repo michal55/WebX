@@ -1,8 +1,14 @@
 <div class="flash-msg">
 	<% flash.each do |name, msg| %>
-		<div class="msg-container">
-			<%= content_tag :div, msg, class: [name, 'msg'], :id => "flash_#{name}" %>
-		</div>
+    <% if name == 'error' %>
+      <div class="msg-container error">
+        <%= content_tag :div, msg, class: [name, 'msg'], :id => "flash_#{msg}" %>
+      </div>
+    <% else %>
+      <div class="msg-container">
+        <%= content_tag :div, msg, class: [name, 'msg'], :id => "flash_#{msg}" %>
+      </div>
+    <% end %>
 	<% end %>
 </div>
 

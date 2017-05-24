@@ -23,9 +23,16 @@ before_filter :configure_account_update_params, only: [:update]
   # end
 
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+  def destroy
+    user = User.find_for_authentication(:id => params[:user][:id])
+    valid = user.valid_password?(params[:user][:current_password])
+    if valid
+      super
+    else
+      flash[:error] = I18n.t('auth.delete.flash_error')
+      redirect_to edit_user_registration_path(user.id)
+    end
+  end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign

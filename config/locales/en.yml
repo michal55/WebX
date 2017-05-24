@@ -57,6 +57,7 @@ en:
       surname: "surname"
       password_placeholder: "password"
       retype_placeholder: "retype password"
+      new_password_placeholder: "new password"
       minimum: " characters minimum"
       submit: "Sign up"
     login:
@@ -73,6 +74,10 @@ en:
       submit: "Resend unlock instructions"
     confirm:
       did_not:  "Didn't receive confirmation instructions?"
+    delete:
+      header: "Unhappy ?"
+      password_placeholer: "enter password to delete account"
+      flash_error: "Can't delete this user - incorrect password"
 
   email:
     normal:
