@@ -1,7 +1,7 @@
 require 'rspec'
 require 'rails_helper'
 
-describe 'Extracting data from rubygems.org' do
+describe 'Extracting data from various sites' do
 
   it 'should extract first header' do
     script = create(:script)
@@ -21,7 +21,7 @@ describe 'Extracting data from rubygems.org' do
     Crawling::Crawler.execute(script)
     extraction = Extraction.find_by(script_id: script.id)
     expect(extraction.success).to eq true
-    expect(extraction.instances.first.extraction_data[1].value).to eq "Gems"
+    expect(extraction.instances.first.extraction_data[1].value).to eq "News"
     expect(extraction.instances.first.extraction_data[2].value).to eq "Find, install, and publish RubyGems."
     script = Script.find(script.id)
     expect(script.last_run).to be > script.created_at
@@ -34,17 +34,17 @@ describe 'Extracting data from rubygems.org' do
     json['data'] = []
     json['data'][0] = {}
     json['data'][0]['name'] = "title"
-    json['data'][0]['xpath'] = '//*[@id="js-repo-pjax-container"]/div[2]/div[1]/div[1]/div[1]/div/span'
+    json['data'][0]['xpath'] = '//*[@itemprop=\'about\']'
     json['data'][1] = {}
     json['data'][1]['name'] = "branches_url"
-    json['data'][1]['xpath'] = '//*[@id="js-repo-pjax-container"]/div[2]/div[1]/div[2]/div/div/ul/li[2]/a'
+    json['data'][1]['xpath'] = '//a[@href=\'/michal55/WebX-Team16/branches\']'
     json['data'][1]['postprocessing'] = []
     json['data'][1]['postprocessing'][0] = {}
     json['data'][1]['postprocessing'][0]['type'] = "nested"
     json['data'][1]['postprocessing'][0]['data'] = []
     json['data'][1]['postprocessing'][0]['data'][0] = {}
     json['data'][1]['postprocessing'][0]['data'][0]['name'] = "name_of_branch"
-    json['data'][1]['postprocessing'][0]['data'][0]['xpath'] = '//*[@id="branch-autoload-container"]/div/div[2]/div/span[1]/a'
+    json['data'][1]['postprocessing'][0]['data'][0]['xpath'] = '//a[contains(@class,\'branch-name\')]'
     script.xpaths = json.to_json
     script.log_level = 0
     script.save
@@ -52,11 +52,8 @@ describe 'Extracting data from rubygems.org' do
     Crawling::Crawler.execute(script)
     extraction = Extraction.find_by(script_id: script.id)
     expect(extraction.success).to eq true
-    datum = ExtractionDatum.find_by(field_name: "title")
+    datum = ExtractionDatum.find_by(field_name: "title", extraction: extraction)
     expect(datum.value).to eq "Web page of team 16"
-    datum = ExtractionDatum.find_by(field_name: "branches_url")
-    #TODO: vymysliet to lepsie, do PG sa uklada pole ako string, cize sa porovnava "http/url" s "[\"http/url\"]", match() to zatial riesi
-    expect("/michal55/WebX-Team16/branches").to eq datum.value.match("/michal55/WebX-Team16/branches").to_s
     datum = ExtractionDatum.find_by(field_name: "name_of_branch")
     expect(datum.value).to eq "master"
     script = Script.find(script.id)
