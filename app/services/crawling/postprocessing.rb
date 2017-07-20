@@ -175,6 +175,13 @@ module Crawling
         else
           return date < before_yesterday
         end
+      else
+        parsed_date = type_date(filter_date).to_date
+        if greater
+          return date > parsed_date
+        else
+          return date < parsed_date
+        end
 
       end
     end
