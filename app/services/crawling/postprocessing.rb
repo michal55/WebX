@@ -198,5 +198,28 @@ module Crawling
       Time.now.strftime("%Y-%m-%d").to_date - 2.day
     end
 
+    def remove_duplicates extraction, field_name, substring = "", delete = true
+      # find all values for specified uniq column
+      instances = Instance.where(is_leaf: true, extraction: extraction)
+      data = ExtractionDatum.where(extraction: extraction, field_name: field_name, instance_id: instances).pluck(:value)
+      substring_data = []
+      duplicates = []
+
+      # get substring of selected values, remove params from lins so two identical links will match even though they were visited from different pages (pagination)
+      data.each {|x| substring_data << x[eval(substring)]}
+      # get only duplicate values
+      substring_data.each {|x| duplicates << x if substring_data.count(x) > 1}
+      # we just need one of two duplicate values
+      duplicates.uniq!
+      # find extraction data by value and destroy its instance
+      duplicates.each do |value|
+        duplicate = ExtractionDatum.where(extraction: extraction, field_name: field_name).where("value LIKE ?", "#{value}%")[0]
+        duplicate.instance.destroy if delete
+        puts duplicate.instance unless delete
+      end
+      # return numner of duplicates for logging purposes
+      duplicates.size
+    end
+
   end
 end

@@ -57,6 +57,11 @@ module Crawling
       @extraction.success = true
       @extraction.save!
       @logger.debug("Execution time: #{@extraction.execution_time}", @extraction)
+
+      if script_json['uniq']
+        duplicates = @post.remove_duplicates(@extraction, script_json['uniq'], script_json['substring'])
+        @logger.debug("Duplicate rows removed: #{duplicates}", @extraction)
+      end
     end
 
     def iterate_json(data_row, page, instance, parent_url, field_name, page_number=0)
