@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/pavolzbell/bump.git
+  remote: https://github.com/pavolzbell/bump.git
   revision: 136e59f21d8effccd4c259e7b22066f27a904942
   specs:
     bump (0.3.0)
@@ -269,7 +269,7 @@ GEM
       activerecord (>= 4.0, < 5.1)
     pg (0.19.0)
     public_suffix (2.0.4)
-    rack (1.6.5)
+    rack (1.6.13)
     rack-accept (0.4.5)
       rack (>= 0.4)
     rack-protection (1.5.3)
